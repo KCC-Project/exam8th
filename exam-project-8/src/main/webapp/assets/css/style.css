@@ -1,0 +1,228 @@
+.dashboard-container {
+	top: 0;
+	position: fixed;
+	z-index: 10;
+	width: 100%;
+	background: #293846;
+	color: #ffffff;
+	margin-bottom: 2px;
+	height: 60px;
+	position: fixed;
+}
+
+#dashboard-header>div {
+	float: left;
+}
+
+#dash-info {
+	padding: 10px 0px;
+	margin-left: 25px;
+	margin-right: 20px;
+}
+
+#dashboard-header .search-field {
+	padding: 10px 0px;
+	display: none; //
+	width: 145px;
+}
+
+#side-menu {
+	margin-top: 60px;
+	background-color: #2f4050;
+	padding: 0px;
+	background-color: #2f4050;
+}
+
+#side-menu h1 {
+	color: #fff;
+	text-align: center;
+	margin: 10px 0px;
+	font-size: 25px;
+}
+
+#side-menu ul {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#side-menu a {
+	padding: 12px 20px;
+	text-decoration: none;
+	color: #9fb1c2;
+	font-weight: bold;
+	font-size: 13px;
+	display: block;
+}
+
+#side-menu glyphicon {
+	margin-right: 6px;
+}
+
+#side-menu a:hover {
+	background-color: #293846;
+	color: #fff;
+	display: block;
+}
+
+#side-menu .active a {
+	color: #fff;
+	background-color: #293846;
+}
+
+#side-menu .settings-btn {
+	background-color: #e74c3c;
+}
+
+#side-menu .settings-btn a {
+	color: #fff;
+}
+
+#side-menu .settings-btn a:hover {
+	background-color: #e74c3c;
+}
+
+#side-menu .collapseable li {
+	padding-left: 20px;
+	padding-top: 5px;
+}
+
+#side-menu .collapseable a {
+	color: #9fb1c2;
+	font-size: 12px;
+	padding: 0px 10px;
+	text-decoration: none;
+	display: block;
+}
+
+#side-menu .collapseable a:hover {
+	color: #fff;
+}
+
+#side-menu .collapseable {
+	border-left: 4px solid #1ab394;
+	background-color: #293846;
+}
+
+#side-menu .link>ul>li {
+	padding-bottom: 10px;
+}
+
+.panel-default>.panel-heading {
+	letter-spacing: 1px;
+	font-weight: bold;
+	background-color: #2e935b;
+}
+
+.breadcrumb {
+	font-weight: bold;
+	background-color: #41a46e ;
+	margin-bottom: 10px;
+}
+
+.breadcrumb li a {
+	letter-spacing: 1px;
+	color: white;
+}
+#success_message{ 
+	display: none;
+	position: fixed;
+	margin: 0 auto;
+	top: 0;
+	z-index:1000;
+}
+
+/* Do not remove anything above here */
+
+/* Remove later */
+html, body {
+	font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background-color: #eeeeee;
+	color: black;
+	height: 100%;
+	margin: 0px;
+}
+
+.box {
+	padding: 0px;
+	background: #ffffff;
+	border-top: 2px solid #c1c1c1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	width: 100%;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.box.box-primary {
+	border-top-color: #3c8dbc;
+}
+
+.box .box-header {
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-right-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	-moz-border-radius-bottomright: 0;
+	-moz-border-radius-bottomleft: 0;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+	border-bottom: 0px solid #f4f4f4;
+	color: #444;
+}
+
+.with-border {
+	border-bottom: 1px solid #f4f4f4 !important;
+	/* overflow: hidden; */
+}
+
+.border {
+	border: 2px solid black;
+}
+
+.box-body {
+	padding-left: 10px;
+	-webkit-border-top-left-radius: 0;
+	-webkit-border-top-right-radius: 0;
+	-webkit-border-bottom-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-topleft: 0;
+	-moz-border-radius-topright: 0;
+	-moz-border-radius-bottomright: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+.black {
+	color: black;
+}
+
+.btn-active {
+	background-color: rgba(41, 56, 70, 0.9);
+	color: #e74c3c; //
+	font-size: 1.2em;
+	letter-spacing: 1px;
+}
+
+.btn-active:hover {
+	background-color: rgba(41, 56, 70, 1);
+	color: red;
+}
+
+.btn-inactive {
+	background-color: rgba(41, 56, 70, 0.6);
+	color: lightblue;
+}
+
+.btn-inactive:hover {
+	background-color: rgba(41, 56, 70, 0.8);
+	color: lightblue;
+}
+
