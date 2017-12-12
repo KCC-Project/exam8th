@@ -111,7 +111,7 @@ public class LoginLogOutController {
 		String uri = req.getScheme() + "://" +   // "http" + "://
 				req.getServerName() +       // "myhost"
 	             ":" +                           // ":"
-	             req.getServerPort() + "/exam-project-7/";     
+	             req.getServerPort() + "/exam-project-8/";     
 	           
 		// req.getRequestURI() ;    
 		System.out.println("url ="+uri);
@@ -129,7 +129,7 @@ public class LoginLogOutController {
 		String uri = req.getScheme() + "://" +   // "http" + "://
 				req.getServerName() +       // "myhost"
 	             ":" +                           // ":"
-	             req.getServerPort() + "/exam-project-7/";   
+	             req.getServerPort() + "/exam-project-8/";   
 		URI targetURIForRedirection = new URI(uri);
 		return Response.seeOther(targetURIForRedirection).build();
 		
