@@ -8,7 +8,7 @@ public interface FacultyDAO
 {
 	public List<Faculty> getFacultyList();
 	public Faculty addFaculty(Faculty faculty);
-	public Faculty getFaculty(int s_Id);
+	public List<Faculty> getFaculty(int s_Id);
 	public Faculty updateFaculty(Faculty faculty);
 	public int deleteFaculty(int s_Id);
 

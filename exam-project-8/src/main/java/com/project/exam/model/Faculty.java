@@ -1,29 +1,50 @@
 package com.project.exam.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+@Table(name="faculty")
 public class Faculty {
 
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="faculty_id")
 	private int faculty_id;
 	
 	private String faculty_name;
 	
 	private int status;
 
+	/*@OneToMany(mappedBy="faculty",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	private Collection<Program> program=new ArrayList<Program>();
+	*/
+
 	public Faculty() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Faculty(int faculty_id, String faculty_name, int status) {
-		super();
-		this.faculty_id = faculty_id;
-		this.faculty_name = faculty_name;
-		this.status = status;
+	/*
+	public Collection<Program> getProgram() {
+		return program;
 	}
 
+	public void setProgram(Collection<Program> program) {
+		this.program = program;
+	}
+
+*/
 	public int getFaculty_id() {
 		return faculty_id;
 	}
@@ -52,6 +73,7 @@ public class Faculty {
 	public String toString() {
 		return "Faculty [faculty_id=" + faculty_id + ", faculty_name=" + faculty_name + ", status=" + status + "]";
 	}
+	
 	
 	
 	

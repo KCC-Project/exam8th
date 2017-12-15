@@ -221,6 +221,7 @@
             });
 
             // when view all subject button is clicked
+            //not used  shrawan
             $("#view-all-subject").click(function () {
                 if (confirm('Do you want to load All Subjects ? ')) {
                     var url = window.context + "/ApiSubject/GetAllSubject";

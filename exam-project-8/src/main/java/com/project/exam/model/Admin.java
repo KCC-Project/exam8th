@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Admin {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private int admin_id;
 	
 	private String admin_username;
@@ -22,11 +22,7 @@ public class Admin {
 	
 	public Admin() {
 	}
-	public Admin(String admin_username, String admin_password, int status) {
-		this.admin_username = admin_username;
-		this.admin_password = admin_password;
-		this.status = status;
-	}
+	
 	public int getAdmin_id() {
 		return admin_id;
 	}

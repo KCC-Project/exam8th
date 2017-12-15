@@ -182,7 +182,7 @@
             }, {
                 "data" : "program_years"
             }, {
-                "data" : "faculty_id"
+                "data" : "faculty.faculty_name"
             }, {
                 data : null,
                 render : function (data, type, row) {
@@ -347,11 +347,13 @@
 				"program_name" : $('#program-add-form').find('[name="program_name"]').val(),
 				"program_years" : $('#program-add-form').find('[name="program_years"]').val(),
 				"status" : $('#program-add-form').find('[name="status"]:checked').val(),
-				"faculty_id" : $('#program-add-form').find('[name="faculty_id"]').val(),
-				
+				"faculty" : { 
+					"faculty_id":$('#program-add-form').find('[name="faculty_id"]').val(),
+				}
 
 			});
-			alert(data);
+			
+			//alert(data);
 			return data;
 		}
     });
@@ -430,11 +432,12 @@
 				"program_name" : $('#program-edit-form').find('[name="program_name"]').val(),
 				"program_years" : $('#program-edit-form').find('[name="program_years"]').val(),
 				"status" : $('#program-edit-form').find('[name="status"]:checked').val(),
-				"faculty_id" : $('#program-edit-form').find('[name="fe_faculty_id"]').val(),
-				
+				"faculty" : { 
+					"faculty_id":$('#program-edit-form').find('[name="fe_faculty_id"]').val(),
+				}
 
 			});
-			alert(data);
+			//alert(data);
 			return data;
 		}
     });

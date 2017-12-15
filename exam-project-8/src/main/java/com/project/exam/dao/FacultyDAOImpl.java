@@ -1,144 +1,65 @@
 package com.project.exam.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Query;
+
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.exam.model.Faculty;
 
 @Repository("FacultyDao")
 public class FacultyDAOImpl implements FacultyDAO {
-	private Connection conn;
-	private String sql;
-	private PreparedStatement pst;
-	private ResultSet rs;
 
+	@Autowired
+	private SessionFactory sessionFactory;
+	Session session = null;
+	
 	@Override
+	@Transactional
 	public List<Faculty> getFacultyList() {
-		List<Faculty> listFaculty = new ArrayList<Faculty>();
-		try {
-			conn = DatabaseConnection.connectToDatabase();
-			sql = "Select * from faculty";
-			pst = conn.prepareStatement(sql);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				Faculty model = new Faculty();
-				model.setFaculty_id(rs.getInt("faculty_id"));
-				model.setFaculty_name(rs.getString("faculty_name"));
-				model.setStatus(rs.getInt("status"));
-				listFaculty.add(model);
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		session = sessionFactory.getCurrentSession();
+		List<Faculty> listFaculty = session.createCriteria(Faculty.class).list();
 		return listFaculty;
 	}
 
 	@Override
+	@Transactional
 	public Faculty addFaculty(Faculty faculty) {
-		boolean status = false;
-		try {
-			conn = DatabaseConnection.connectToDatabase();
-			sql = "insert into faculty(faculty_name,status) values(?,?)";
-			pst = conn.prepareStatement(sql);
-			int col = 1;
-			pst.setString(col++, faculty.getFaculty_name());
-		
-			pst.setInt(col++, faculty.getStatus());
-			int count = pst.executeUpdate();
-			if (count > 0) {
-				status = true;
-			}
-		} catch (Exception e) {
-			System.out.println("Error from saving faculty=" + e);
-		} finally {
-			try {
-				pst.close();
-				rs.close();
-				conn.close();
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
-		}
-		if (status==true) {
-			return faculty;
-		}
-		return new Faculty();
+		session = sessionFactory.getCurrentSession();
+		session.save(faculty);
+		return faculty;
 	}
 
 	@Override
-	public Faculty getFaculty(int s_Id) {
-		Faculty model= new Faculty();
-		try {
-			conn = DatabaseConnection.connectToDatabase();
-			sql = "Select * from faculty where faculty_id=?";
-			pst = conn.prepareStatement(sql);
-			pst.setInt(1, s_Id);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				
-				model.setFaculty_id(rs.getInt("faculty_id"));
-				model.setFaculty_name(rs.getString("faculty_name"));
-				model.setStatus(rs.getInt("status"));
-				
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return model;
+	@Transactional
+	public List<Faculty> getFaculty(int id) {
+		session = sessionFactory.getCurrentSession();
+		String hql = "FROM Faculty where faculty_id = '" + id + "'";
+		Query query = session.createQuery(hql);
+		List<Faculty> facultyList = query.getResultList();
+		return facultyList;
 	}
 
 	@Override
+	@Transactional
 	public Faculty updateFaculty(Faculty faculty) {
-		
-		try {
-			conn = DatabaseConnection.connectToDatabase();
-			sql = "update faculty set faculty_name=? , status=? where faculty_id=?";
-			pst = conn.prepareStatement(sql);
-			int col = 1;
-			
-			pst.setString(col++, faculty.getFaculty_name());
-			pst.setInt(col++, faculty.getStatus());
-			pst.setInt(col++, faculty.getFaculty_id());
-			int count = pst.executeUpdate();
-			if (count > 0) {
-				
-				return faculty;
-				
-				
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return new Faculty();
+		session = sessionFactory.getCurrentSession();
+		session.update(faculty);
+		return faculty;
 	}
 
 	@Override
-	public int deleteFaculty(int s_Id) {
-		int result = 0;
-		//System.out.println("deleting id form ecaminfoModel="+id);
-		try {
-			Connection connection = DatabaseConnection.connectToDatabase();
-			sql = "delete from faculty where faculty_id =?";
-			pst = connection.prepareStatement(sql);
-			pst.setInt(1,s_Id);
-			result = pst.executeUpdate();
-		} catch (Exception e) {
-			//System.out.println("Error in deleting examInfo model="+e.getMessage());
-		} finally {
-			try {
-				pst.close();
-				rs.close();
-				conn.close();
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
-		}
-		return result;
+	@Transactional
+	public int deleteFaculty(int id) {
+		session = sessionFactory.getCurrentSession();
+		Faculty faculty = session.get(Faculty.class, id);
+		session.delete(faculty);
+		return 1;
 	}
-
 }

@@ -1,8 +1,5 @@
 package com.project.exam.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,15 +14,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.exam.model.Admin;
-import com.project.exam.model.Program;
-import com.project.exam.model.Student;
-import com.project.exam.services.AdminService;
 
 @Repository("adminDao")
 public class AdminDAOImpl implements AdminDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+	
 	Session session = null;
 
 	@Override

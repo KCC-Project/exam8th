@@ -44,7 +44,7 @@ public class FacultyController {
 	@GET
 	@Path("/GetFaculty/{id}")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public Faculty getFaculty(@PathParam("id") int id) {
+	public List<Faculty> getFaculty(@PathParam("id") int id) {
 		return FacultyService.getFaculty(id);
 	}
 	

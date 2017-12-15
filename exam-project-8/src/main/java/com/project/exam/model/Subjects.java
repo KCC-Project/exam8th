@@ -1,11 +1,25 @@
 package com.project.exam.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+@Table(name="subjects")
 public class Subjects {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="subject_id")
 	private int subject_id;
+	
 	private int semester_no;
 	private String subject_name;
 	private String subject_code;
@@ -16,30 +30,25 @@ public class Subjects {
 	private int final_theory;
 	private String syllabus_file;
 	private int status;
-	private int program_id;
+	
+	@ManyToOne
+	@JoinColumn(name="program_id", nullable=false)
+	private Program program;
 
 	public Subjects() {
-		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
-	public Subjects(int subject_id, int semester_no, String subject_name, String subject_code, int theory_cr,
-			int tutorial_cr, int internal_theory, int internal_practical, int final_theory, String syllabus_file,
-			int status, int program_id) {
-		super();
-		this.subject_id = subject_id;
-		this.semester_no = semester_no;
-		this.subject_name = subject_name;
-		this.subject_code = subject_code;
-		this.theory_cr = theory_cr;
-		this.tutorial_cr = tutorial_cr;
-		this.internal_theory = internal_theory;
-		this.internal_practical = internal_practical;
-		this.final_theory = final_theory;
-		this.syllabus_file = syllabus_file;
-		this.status = status;
-		this.program_id = program_id;
+	
+	public Program getProgram() {
+		return program;
 	}
+
+
+	public void setProgram(Program program) {
+		this.program = program;
+	}
+
 
 	public int getSubject_id() {
 		return subject_id;
@@ -129,21 +138,6 @@ public class Subjects {
 		this.status = status;
 	}
 
-	public int getProgram_id() {
-		return program_id;
-	}
-
-	public void setProgram_id(int program_id) {
-		this.program_id = program_id;
-	}
-
-	@Override
-	public String toString() {
-		return "Subjects [subject_id=" + subject_id + ", semester_no=" + semester_no + ", subject_name=" + subject_name
-				+ ", subject_code=" + subject_code + ", theory_cr=" + theory_cr + ", tutorial_cr=" + tutorial_cr
-				+ ", internal_theory=" + internal_theory + ", internal_practical=" + internal_practical
-				+ ", final_theory=" + final_theory + ", syllabus_file=" + syllabus_file + ", status=" + status
-				+ ", program_id=" + program_id + "]";
-	}
-
+	
+	
 }

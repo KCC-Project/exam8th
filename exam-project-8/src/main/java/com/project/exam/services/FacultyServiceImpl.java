@@ -25,7 +25,7 @@ public class FacultyServiceImpl implements FacultyService{
 	}
 
 	@Override
-	public Faculty getFaculty(int s_Id) {
+	public List<Faculty> getFaculty(int s_Id) {
 		return facultyDao.getFaculty(s_Id);
 	}
 

@@ -92,11 +92,27 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-md-3 control-label">Semester No</label>
+					<div class="col-md-9">
+						<select class="form-control" id="semester-no" name="semester_no">
+										<option value="" selected>Select Semester</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+										<option value="8">8</option>
+									</select>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-md-3 control-label">Available</label>
 					<div class="col-md-9">
-						<label> Yes <input type="radio" value=0 name="status"
+						<label> Yes <input type="radio" value=1 name="status"
 							checked>
-						</label> <label> No <input type="radio" value=1 name="status">
+						</label> <label> No <input type="radio" value=0 name="status">
 						</label>
 					</div>
 				</div>
@@ -262,7 +278,9 @@
 					"final_theory" : $('#add-subject-form').find('[name="final_theory"]').val(),
 					"syllabus_file" : $('#add-subject-form').find('[name="syllabus_file"]').val(),
 					"status" : $('#add-subject-form').find('[name="status"]:checked').val(),
-					"program_id" : $('#add-subject-form').find('[name="program_id"]').val(),
+					"program" : { 
+						"program_id":$('#add-subject-form').find('[name="program_id"]').val(),
+					}
 
 				});
 				alert(data);

@@ -1,11 +1,22 @@
 package com.project.exam.model;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+@Table(name="program")
 public class Program {
 
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int program_id;
 	
 	private String program_name;
@@ -15,21 +26,25 @@ public class Program {
 	
 	private int status;
 	
-	private int faculty_id;
 
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="faculty_id", nullable=false)
+	private Faculty faculty;
+	
 	public Program() {
-		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
-	public Program(int program_id, String program_name, int program_years, int status, int faculty_id) {
-		super();
-		this.program_id = program_id;
-		this.program_name = program_name;
-		this.program_years = program_years;
-		this.status = status;
-		this.faculty_id = faculty_id;
+	
+	public Faculty getFaculty() {
+		return faculty;
 	}
+
+
+	public void setFaculty(Faculty faculty) {
+		this.faculty = faculty;
+	}
+
 
 	public int getProgram_id() {
 		return program_id;
@@ -63,21 +78,14 @@ public class Program {
 		this.status = status;
 	}
 
-	public int getFaculty_id() {
-		return faculty_id;
-	}
-
-	public void setFaculty_id(int faculty_id) {
-		this.faculty_id = faculty_id;
-	}
 
 	@Override
 	public String toString() {
 		return "Program [program_id=" + program_id + ", program_name=" + program_name + ", program_years="
-				+ program_years + ", status=" + status + ", faculty_id=" + faculty_id + "]";
+				+ program_years + ", status=" + status + "]";
 	}
 
-	
+
 	
 	
 	 
