@@ -20,7 +20,6 @@ public class AdminDAOImpl implements AdminDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
 	Session session = null;
 
 	@Override

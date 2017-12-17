@@ -90,10 +90,9 @@ public class SubjectDAOImpl implements SubjectDAO {
 	}
 
 	@Override
+	@Transactional
 	public List<Subjects> getSubjectByParameters(Object[] obj) {
-		List<Object> parameters = new ArrayList<Object>();
-		List<Subjects> listSubjects = new ArrayList<Subjects>();
-
+		
 		int subject_id = 0;
 		int program_id = 0;
 		String subject_name = null;
@@ -105,7 +104,6 @@ public class SubjectDAOImpl implements SubjectDAO {
 		int final_theory = 0;
 		int semester_no = 0;
 		int status = 0;
-
 
 		if (obj[0] != null) {  subject_id = Integer.parseInt(obj[0].toString()); }
 		if (obj[1] != null) {  program_id = Integer.parseInt(obj[1].toString()); }
@@ -120,104 +118,60 @@ public class SubjectDAOImpl implements SubjectDAO {
 		if (obj[10] != null) {  status = Integer.parseInt(obj[10].toString()); }
 		
 		
-		try {
-			  StringBuilder query = new StringBuilder("SELECT * FROM subjects where 1=1");
+			  StringBuilder query = new StringBuilder("FROM Subjects where 1=1");
 			  
 				if (subject_id != 0) {
-		            query.append(" AND subject_id = ?");
-		            parameters.add(subject_id);
+		            query.append(" AND subject_id ="+obj[0]);
+		           
 		        }
 				if (program_id != 0) {
-		            query.append(" AND program_id = ?");
-		            parameters.add(program_id);
+		            query.append(" AND program_id ="+obj[1]);
+		           
 		        }
 				if (subject_name != null) {
-		            query.append(" AND subject_name = ?");
-		            parameters.add(subject_name);
+		            query.append(" AND subject_name ="+obj[2]);
+		           
 		        }
 				if (subject_code != null) {
-		            query.append(" AND subject_code = ?");
-		            parameters.add(subject_code);
+		            query.append(" AND subject_code ="+obj[3]);
+		           
 		        }
 				if (theory_cr != 0) {
-		            query.append(" AND theory_cr = ?");
-		            parameters.add(theory_cr);
+		            query.append(" AND theory_cr ="+obj[4]);
+		           
 		        }
 				if (tutorial_cr != 0) {
-		            query.append(" AND tutorial_cr = ?");
-		            parameters.add(tutorial_cr);
+		            query.append(" AND tutorial_cr ="+obj[5]);
+		        
 		        }
 				if (internal_theory != 0) {
-		            query.append(" AND internal_theory = ?");
-		            parameters.add(internal_theory);
+		            query.append(" AND internal_theory ="+obj[6]);
+		          
 		        }
 				if (internal_practical != 0) {
-		            query.append(" AND internal_practical = ?");
-		            parameters.add(internal_practical);
+		            query.append(" AND internal_practical ="+obj[7]);
+		          
 		        }
 				if (final_theory != 0) {
-		            query.append(" AND final_theory = ?");
-		            parameters.add(final_theory);
+		            query.append(" AND final_theory ="+obj[8]);
+		       
 		        }
 				if (semester_no != 0) {
-		            query.append(" AND semester_no = ?");
-		            parameters.add(semester_no);
+		            query.append(" AND semester_no ="+obj[9]);
+		          
 		        }
 				if (status != 0) {
-		            query.append(" AND status = ?");
-		            parameters.add(status);
+		            query.append(" AND status ="+obj[10]);
+		           
 		        }
 				  String Query = query.toString();
 			        System.out.println(Query);
-			        
-			        conn = DatabaseConnection.connectToDatabase();
-			        pst = conn.prepareStatement(Query);
-			        
-			        int i = 1;
-			        for (Object parameter : parameters) {
-			            pst.setObject(i++, parameter);
-			        }
-			        rs = pst.executeQuery();
-			        if (rs != null) {
-			        	
-			        	while(rs.next()){
-			        		/*
-			        		Map<String, Object> map= new HashMap<>();
-			        		map.put("subject_id", rs.getInt("subject_id"));
-			        		map.put("subject_name", rs.getString("subject_name"));
-			        		map.put("subject_code", rs.getInt("subject_code"));
-			        		map.put("theory_cr",rs.getString("theory_cr") );
-			        		map.put("tutorial_cr", rs.getString("tutorial_cr"));
-			        		map.put("internal_theory",rs.getString("internal_theory") );
-			        		map.put("internal_practical", rs.getInt("internal_practical"));		
-			        		map.put("final_theory", rs.getString("final_theory"));
-			        		map.put("semester_no", rs.getString("semester_no"));
-			        		map.put("status", rs.getString("status"));
-			        		
-			        		subjectModel.add(map);
-			        		*/
-			        		Subjects model = new Subjects();
-							model.setSubject_id(rs.getInt("subject_id"));
-							//model.setProgram_id(rs.getInt("program_id"));
-							model.setFinal_theory(rs.getInt("final_theory"));
-							model.setInternal_practical(rs.getInt("internal_practical"));
-							model.setInternal_theory(rs.getInt("internal_theory"));
-							model.setSemester_no(rs.getInt("semester_no"));
-							model.setStatus(rs.getInt("status"));
-							model.setSubject_code(rs.getString("subject_code"));
-							model.setSubject_name(rs.getString("subject_name"));
-							model.setSyllabus_file(rs.getString("syllabus_file"));
-							model.setTheory_cr(rs.getInt("theory_cr"));
-							model.setTutorial_cr(rs.getInt("tutorial_cr"));
-							listSubjects.add(model);
-						}
-
-			        }
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		System.out.println(Arrays.deepToString(listSubjects.toArray()));
-		return listSubjects;
+			 
+			        session = sessionFactory.getCurrentSession();
+			        String q1= new String(query);
+			    	Query query1 = session.createQuery(q1);
+					List<Subjects> subjectsList = query1.getResultList();
+					return subjectsList;
 
 	}
 

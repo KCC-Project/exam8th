@@ -50,37 +50,19 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-sm-12">
-							<div class="col-sm-6">
+							<div class="col-sm-4">
 								<div class="form-group " style="margin-bottom: 0px;">
 									<select required class="form-control" id="p-faculty-box" name="faculty_id">
 									</select>
 								</div>
 							</div>
-							<div class="form-group col-sm-6" style="margin-bottom: 0px;">
+							<div class="form-group col-sm-4" style="margin-bottom: 0px;">
 								<select required class="form-control" id="p-program-box" name="program_id">
 									<option value="" disabled selected>Select Program</option>
 								</select>
 							</div>
-							<div class="col-sm-12 form-group">
-								<h4 class="text-danger">The fields Below are Optional</h4>
-							</div>
-
-							<div class="row form-group">
-								<div class="col-sm-4">
-									<label class="control-label">Subject Name</label>
-									<div class="input-group">
-										<input name="s_subject_name" id="subject-name" placeholder="Enter Subject Name" class="form-control" type="text">
-									</div>
-								</div>
-
-								<div class="col-sm-4">
-									<label class=" control-label">Subject Code</label>
-									<div class="input-group">
-										<input name="s_subject_code" id="subject-code" placeholder="Enter Subject code" class="form-control" type="text">
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<label>Semester no.: </label> <select class="form-control" id="s-semester-no" name="s_semester_no">
+							<div class="form-group col-sm-4" style="margin-bottom: 0px;">
+								<select class="form-control" id="s-semester-no" name="s_semester_no">
 										<option value="" selected>Select Semester</option>
 										<option value="1">1</option>
 										<option value="2">2</option>
@@ -91,9 +73,8 @@
 										<option value="7">7</option>
 										<option value="8">8</option>
 									</select>
-								</div>
-
 							</div>
+
 
 						</div>
 					</div>
@@ -164,6 +145,22 @@
 			<div class="col-md-9">
 				<select required class="form-control" id="all-program-box" name="program_id" required>
 				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-3 control-label">Semester</label>
+			<div class="col-md-9">
+				<select class="form-control" id="e-semester-no" name="e_semester_no">
+										<option value="" selected>Select Semester</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+										<option value="8">8</option>
+									</select>
 			</div>
 		</div>
 		<div class="form-group">
@@ -241,37 +238,19 @@
             var placeholder = "Subject Name";
             select2Function(url1, url2, method1, method2, placeholder, loadSubjectInformation);
 
-        function load_subject(e) {
-            //alert(programId);
-            //alert(batchyear);
-            $('input[type=number]').each(function() {
-				var t = $(this);
-				if (t.val() != 0) {
-					//alert(t.val());
-				} else {
-					t.val('0');
-				}
-			});
-            /*
-            var program_id = $('#p-program-box').val();
-            var subject_name = $('#subject-name').val();
-            if (subject_name == ""){
-            subject_name = null;
-        }
-            var subject_code = $('#subject-code').val();
-            if (subject_code == ""){
-                subject_code = null;
-            }
-            var semester_no = $('#s-semester-no').val();
-            */
-            
+        function load_subject(e) {  
             function formToJSON() {
 				var data = JSON.stringify({
 					"semester_no" : $('#searchSubjectModal').find('[name="s_semester_no"]').val(),
-					"subject_name" : $('#searchSubjectModal').find('[name="_subject_name"]').val(),
-					"subject_code" : $('#searchSubjectModal').find('[name="s_subject_code"]').val(),
-					"program_id" : $('#searchSubjectModal').find('[name="program_id"]').val(),
-
+					//"subject_name" : $('#searchSubjectModal').find('[name="_subject_name"]').val(),
+					//"subject_code" : $('#searchSubjectModal').find('[name="s_subject_code"]').val(),
+				 	/* "program" : { 
+						"program_id":$('#searchSubjectModal').find('[name="program_id"]').val(),
+						"faculty" : { 
+							"faculty_id":$('#searchSubjectModal').find('[name="faculty_id"]').val(),
+						} 
+					} 
+ */
 				});
 				alert(data);
 				return data;
@@ -299,7 +278,7 @@
                     "data" : data,
                     "dataSrc" : "",
                     "dataType" : "json",
-                    "contentType" : 'application/json',
+                   "contentType" : 'application/json',
                     "async" : false
                 },
                 "columns" : [ {
@@ -493,7 +472,7 @@
 			function formToJSON() {
 				var data = JSON.stringify({
 					"subject_id" : $('#subject-edit-form').find('[name="subject_id"]').val(),
-					"semester_no" : $('#subject-edit-form').find('[name="semester_no"]').val(),
+					"semester_no" : $('#subject-edit-form').find('[name="e_semester_no"]').val(),
 					"subject_name" : $('#subject-edit-form').find('[name="subject_name"]').val(),
 					"subject_code" : $('#subject-edit-form').find('[name="subject_code"]').val(),
 					"theory_cr" : $('#subject-edit-form').find('[name="theory_cr"]').val(),
@@ -503,7 +482,9 @@
 					"final_theory" : $('#subject-edit-form').find('[name="final_theory"]').val(),
 					"syllabus_file" : $('#subject-edit-form').find('[name="syllabus_file"]').val(),
 					"status" : $('#subject-edit-form').find('[name="status"]:checked').val(),
-					"program_id" : $('#subject-edit-form').find('[name="program_id"]').val(),
+					 "program" : { 
+							"program_id":$('#searchSubjectModal').find('[name="program_id"]').val(),
+						} 
 
 				});
 				alert(data);

@@ -2,6 +2,7 @@ package com.project.exam.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ public class Subjects {
 	private String syllabus_file;
 	private int status;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="program_id", nullable=false)
 	private Program program;
 
@@ -136,6 +137,14 @@ public class Subjects {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return "Subjects [subject_id=" + subject_id + ", semester_no=" + semester_no + ", subject_name=" + subject_name
+				+ ", subject_code=" + subject_code + ", theory_cr=" + theory_cr + ", tutorial_cr=" + tutorial_cr
+				+ ", internal_theory=" + internal_theory + ", internal_practical=" + internal_practical
+				+ ", final_theory=" + final_theory + ", syllabus_file=" + syllabus_file + ", status=" + status + "]";
 	}
 
 	

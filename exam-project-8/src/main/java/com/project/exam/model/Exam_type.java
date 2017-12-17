@@ -1,25 +1,29 @@
 package com.project.exam.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+@Table(name="exam_type")
 public class Exam_type {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int exam_type_id;
+	
 	private int status;
 	private String type_name;
 
 	public Exam_type() {
-		super();
-		// TODO Auto-generated constructor stub
+	
 	}
 
-	public Exam_type(int exam_type_id, int status, String type_name) {
-		super();
-		this.exam_type_id = exam_type_id;
-		this.status = status;
-		this.type_name = type_name;
-	}
+
 
 	public int getExam_type_id() {
 		return exam_type_id;

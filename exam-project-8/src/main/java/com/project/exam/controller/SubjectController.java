@@ -14,6 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.exam.model.Subjects;
 import com.project.exam.services.SubjectService;
@@ -76,15 +78,14 @@ public class SubjectController {
 	@POST
 	@Path("/GetSubjectByParameters")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public List getSubjectByParameters(@FormParam("program_id") int program_id,
-			@FormParam("subject_name") String subject_name, @FormParam("subject_code") String subject_code,
-			@FormParam("semester_no") int semester_no) {
-		System.out.println("from controller =" + program_id + " " + subject_name + subject_code + " " + semester_no);
+	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public List getSubjectByParameters(Subjects subject) {
+		System.out.println("from controller program_id=" + subject.getSemester_no() );
 		Object[] ob = new Object[11];
-		ob[1] = program_id;
+	/*	ob[1] = program_id;
 		ob[2] = subject_name;
 		ob[3] = subject_code;
-		ob[9] = semester_no;
+		ob[9] = semester_no;*/
 		return subjectService.getSubjectByParameters(ob);
 	}
 
