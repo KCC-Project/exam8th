@@ -166,6 +166,7 @@
 			<div class="col-md-9">
 				<div class="col-md-6">
 					<select required class="form-control" id="all-program-box" name="e_program_id">
+					<option value="" selected >Select Program</option>
 					</select>
 				</div>
 				<div class="col-md-6">
@@ -193,8 +194,8 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label">Available</label>
 			<div class="col-md-9">
-				<label> Yes <input type="radio" value=0 name="status">
-				</label> <label> No <input type="radio" value=1 name="status">
+				<label> Yes <input type="radio" value=1 name="status" checked>
+				</label> <label> No <input type="radio" value=0 name="status">
 				</label>
 			</div>
 		</div>
@@ -304,8 +305,16 @@
                 }, {
                     "data" : "current_semester"
                 }, {
-                    "data" : "status"
-                }, {
+                    data : null,
+                    render : function (data, type, row) {
+                        // Combine the two data
+                        if (data.status == 1) {
+                            return 'Active/NotOut';
+                        } else {
+                            return '<button class="btn btn-danger">PassOut/Left</button>';
+                        }
+                    },
+                },{
                     data : null,
                     render : function (data, type, row) {
                         return '<button class="btn btn-success editStud">Edit</button>';
@@ -482,13 +491,13 @@
             dataType : 'json',
             contentType : 'application/json',
             data: formToJSON(),
-            
+            async:false,
             cache : true,
             success : function (data) {
-                var message = "Student has been added Successfully";
-                $("#success_message").html(message);
-                alert("Thanks for the submission!");
-                $("#edit-student-form")[0].reset();
+               // var message = "Student has been updated Successfully";
+                //$("#success_message").html(message);
+                //alert("Thanks for the submission!");
+                //$("#edit-student-form")[0].reset();
             },
             error : function () {
                 alert("Error...!!!");
@@ -509,9 +518,37 @@
 				"phone" : $('#edit-student-form').find('[name="phone"]').val(),
 				"address" : $('#edit-student-form').find('[name="address"]').val(),
 				"image" : $('#edit-student-form').find('[name="image"]').val(),
-				"current_semester" : $('#edit-student-form').find('[name="current_semester"]').val(),
+				"current_semester" : $('#edit-student-form').find('[name="s_semester_no"]').val(),
 				"status" : $('#edit-student-form').find('[name="status"]:checked').val(),	
 
+			});
+			//alert(data);
+			return data;
+		}
+        $.ajax({
+            url : window.context + "/ApiStudentsProgram/UpdateStudentsProgram",
+            method : "PUT",
+            dataType : 'json',
+            contentType : 'application/json',
+            data: formToJSON(),
+            async:false,
+            cache : true,
+            success : function (data) {
+                var message = "Student has been updated Successfully";
+                $("#success_message").html(message);
+                alert("Thanks for the submission!");
+                $("#edit-student-form")[0].reset();
+            },
+            error : function () {
+                alert("Error...!!!");
+            }
+        }); 
+        formToJSONProgram();
+        function formToJSONProgram() {
+			var data = JSON.stringify({
+				"program" : {
+					"program_id":$('#edit-student-form').find('[name="e_program_id"]').val()
+					},
 			});
 			alert(data);
 			return data;

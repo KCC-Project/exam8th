@@ -32,13 +32,13 @@
 						<label class="col-md-3 control-label">Student Name</label>
 						<div class="col-md-9">
 							<div class="col-md-4">
-								First_Name:<input type="text" class="form-control" name="first_name" />
+								<input type="text" class="form-control" name="first_name" placeholder="First Name"/>
 							</div>
 							<div class="col-md-4">
-								Middle_Name<input type="text" class="form-control" name="middle_name" />
+							<input type="text" class="form-control" name="middle_name" placeholder="Middle Name" />
 							</div>
 							<div class="col-md-4">
-								Last_Name<input type="text" class="form-control" name="last_name" />
+								<input type="text" class="form-control" name="last_name" placeholder="Last Name"/>
 							</div>
 						</div>
 					</div>
@@ -73,10 +73,10 @@
 						<label class="col-md-3 control-label">Login Info</label>
 						<div class="col-md-9">
 							<div class="col-md-6">
-								Username<input type="text" class="form-control" name="username" />
+								<input type="text" class="form-control" name="username" placeholder="Username"/>
 							</div>
 							<div class="col-md-6">
-								Password<input type="password" class="form-control" name="password" />
+								<input type="password" class="form-control" name="password" placeholder="password" />
 							</div>
 						</div>
 					</div>
@@ -94,7 +94,7 @@
 								</select>
 							</div>
 							<div class="col-md-6">
-								Semester no.:<select class="form-control" id="s-semester-no" name="s_semester_no">
+							<select class="form-control" id="s-semester-no" name="s_semester_no">
 									<option value="" selected>Select Semester</option>
 									<option value="1">1</option>
 									<option value="2">2</option>

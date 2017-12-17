@@ -1,10 +1,19 @@
 package com.project.exam.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+@Table(name="student")
 public class Student {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int s_id;
 
 	private String first_name;
@@ -24,6 +33,7 @@ public class Student {
 	private String date_of_birth;
 
 	private String phone;
+	
 	private String address;
 
 	private String image;
@@ -33,29 +43,10 @@ public class Student {
 	private int status;
 
 	public Student() {
-		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
-	public Student(int s_id, String first_name, String middle_name, String last_name, String username, String password,
-			String email, int gender, String date_of_birth, String phone, String address, String image,
-			int current_semester, int status) {
-		super();
-		this.s_id = s_id;
-		this.first_name = first_name;
-		this.middle_name = middle_name;
-		this.last_name = last_name;
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.gender = gender;
-		this.date_of_birth = date_of_birth;
-		this.phone = phone;
-		this.address = address;
-		this.image = image;
-		this.current_semester = current_semester;
-		this.status = status;
-	}
+
 
 	public int getS_id() {
 		return s_id;
