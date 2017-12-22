@@ -1,39 +1,41 @@
 package com.project.exam.model;
 
-import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+@Table(name = "studentProgram")
 public class StudentsProgram {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int student_program_id;
 
-	private int s_id;
+	@ManyToOne
+	@JoinColumn(name="student_id")
+	private Student student;
 
-	private int program_id;
+	@ManyToOne
+	@JoinColumn(name="program_id")
+	private Program program;
 
 	private int batch_year;
-	
+
 	private String enroll_date;
-	
+
 	private int status;
 
 	public StudentsProgram() {
-		super();
-		// TODO Auto-generated constructor stub
+		
 	}
-
-	public StudentsProgram(int student_program_id, int s_id, int program_id, int batch_year, String enroll_date,
-			int status) {
-		super();
-		this.student_program_id = student_program_id;
-		this.s_id = s_id;
-		this.program_id = program_id;
-		this.batch_year = batch_year;
-		this.enroll_date = enroll_date;
-		this.status = status;
-	}
-
+	
 	public int getStudent_program_id() {
 		return student_program_id;
 	}
@@ -42,21 +44,6 @@ public class StudentsProgram {
 		this.student_program_id = student_program_id;
 	}
 
-	public int getS_id() {
-		return s_id;
-	}
-
-	public void setS_id(int s_id) {
-		this.s_id = s_id;
-	}
-
-	public int getProgram_id() {
-		return program_id;
-	}
-
-	public void setProgram_id(int program_id) {
-		this.program_id = program_id;
-	}
 
 	public int getBatch_year() {
 		return batch_year;
@@ -82,14 +69,32 @@ public class StudentsProgram {
 		this.status = status;
 	}
 
-	@Override
-	public String toString() {
-		return "StudentsProgram [student_program_id=" + student_program_id + ", s_id=" + s_id + ", program_id="
-				+ program_id + ", batch_year=" + batch_year + ", enroll_date=" + enroll_date + ", status=" + status
-				+ "]";
-	}
-	
 
 	
+	public Student getStudent() {
+		return student;
+	}
+
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+
+	public Program getProgram() {
+		return program;
+	}
+
+
+	public void setProgram(Program program) {
+		this.program = program;
+	}
+
+
+	@Override
+	public String toString() {
+		return "StudentsProgram [student_program_id=" + student_program_id + ", batch_year=" + batch_year
+				+ ", enroll_date=" + enroll_date + ", status=" + status + "]";
+	}
 
 }

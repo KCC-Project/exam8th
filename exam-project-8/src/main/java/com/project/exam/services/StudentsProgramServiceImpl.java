@@ -24,7 +24,7 @@ public class StudentsProgramServiceImpl implements StudentsProgramService {
 	}
 
 	@Override
-	public StudentsProgram getStudentsProgram(int s_Id) {
+	public List<StudentsProgram> getStudentsProgram(int s_Id) {
 		return studentsProgramDao.getStudentsProgram(s_Id);
 	}
 
@@ -38,10 +38,6 @@ public class StudentsProgramServiceImpl implements StudentsProgramService {
 		return studentsProgramDao.deleteStudentsProgram(s_Id);
 	}
 
-	@Override
-	public List<StudentsProgram> getStudentsProgramByProgramId(int s_Id) {
-		return studentsProgramDao.getStudentsProgramByProgramId(s_Id);
-	}
 
 	@Override
 	public List<StudentsProgram> searchByField(Object[] obj) {
@@ -49,15 +45,15 @@ public class StudentsProgramServiceImpl implements StudentsProgramService {
 	}
 
 	@Override
-	public void saveStudentProgram(int programID, int batch, String enrollDate) {
-		studentsProgramDao.saveStudentProgram(programID, batch, enrollDate);
-		
-	}
-
-	@Override
-	public StudentsProgram getStudentsProgramByStudentId(int s_Id) {
+	public List<StudentsProgram> getStudentsProgramByStudentId(int s_Id) {
 		return studentsProgramDao.getStudentsProgramByStudentId(s_Id);
 	}
 
+	@Override
+	public List<StudentsProgram> getStudentsProgramByProgramId(int s_Id) {
+		return studentsProgramDao.getStudentsProgramByProgramId(s_Id);
+	}
+
+	
 
 }

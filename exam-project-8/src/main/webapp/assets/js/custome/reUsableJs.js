@@ -1,10 +1,10 @@
 
 //url1 for search Param ,url2 for get getting data with the help of selected id, fxn calling datatable load 
 function select2Function(url1,url2,method1,method2,placeholder,fxn){
-		$("select").select2({
+	/*	$("select").select2({
 			theme : "bootstrap",
 			width : "auto"
-		});
+		});*/
 
 		$("#sel1").select2({
 			theme : "bootstrap",
@@ -50,6 +50,7 @@ function select2Function(url1,url2,method1,method2,placeholder,fxn){
 			var select_val = selected_element.val();
 			//console.log("program Id=" + select_val);
 			//alert(select_val);
+			idOfSelectedIteam=select_val;
 			var url3 = url2 +"/"+select_val;
 			var method3 = method2;
 			var data3 = "";

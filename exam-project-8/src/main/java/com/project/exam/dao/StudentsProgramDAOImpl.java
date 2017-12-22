@@ -6,8 +6,17 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import javax.persistence.Query;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.project.exam.model.Admin;
+import com.project.exam.model.Student;
 import com.project.exam.model.StudentsProgram;
 
 @Repository("/studemtsProgramDao")
@@ -18,187 +27,71 @@ public class StudentsProgramDAOImpl implements StudentsProgramDAO {
 	private PreparedStatement pst;
 	private ResultSet rs;
 
+	
+	@Autowired
+	private SessionFactory sessionFactory;
+	Session session = null;
+
 	@Override
+	@Transactional
 	public List<StudentsProgram> getStudentsProgramList() {
-		List<StudentsProgram> listStudentsProgram = new ArrayList<StudentsProgram>();
-		try {
-			conn = DatabaseConnection.connectToDatabase();
-			sql = "Select * from students_program";
-			pst = conn.prepareStatement(sql);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				StudentsProgram model = new StudentsProgram();
-				model.setStudent_program_id(rs.getInt("student_program_id"));
-				model.setBatch_year(rs.getInt("batch_year"));
-				model.setEnroll_date(rs.getString("enroll_date"));
-				model.setStatus(rs.getInt("status"));
-				model.setProgram_id(rs.getInt("program_id"));
-				model.setS_id(rs.getInt("s_id"));
-				listStudentsProgram.add(model);
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return listStudentsProgram;
+		session = sessionFactory.getCurrentSession();
+		List<StudentsProgram> listStudentProgram = session.createCriteria(StudentsProgram.class).list();
+		return listStudentProgram;
 	}
 
 	@Override
+	@Transactional
 	public StudentsProgram addStudentsProgram(StudentsProgram studentsProgram) {
-		boolean status = false;
-
-		try {
-			conn = DatabaseConnection.connectToDatabase();
-			sql = "insert into students_program(batch_year,enroll_date,status,program_id,s_id) values(?,?,?,?,?)";
-			pst = conn.prepareStatement(sql);
-			int col = 1;
-
-			pst.setInt(col++, studentsProgram.getBatch_year());
-			pst.setString(col++, studentsProgram.getEnroll_date());
-			pst.setInt(col++, studentsProgram.getStatus());
-			pst.setInt(col++, studentsProgram.getProgram_id());
-			pst.setInt(col++, studentsProgram.getS_id());
-
-			int count = pst.executeUpdate();
-			if (count > 0) {
-				status = true;
-			}
-		} catch (Exception e) {
-			System.out.println("Error from saving studentsProgram=" + e);
-		} finally {
-			try {
-				pst.close();
-				rs.close();
-				conn.close();
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
-		}
-		if (status == true) {
-			return studentsProgram;
-		}
-		return new StudentsProgram();
+		session = sessionFactory.getCurrentSession();
+		session.save(studentsProgram);
+		return studentsProgram;
 	}
 
 	@Override
-	public StudentsProgram getStudentsProgram(int s_Id) {
-		StudentsProgram model = new StudentsProgram();
-		try {
-			conn = DatabaseConnection.connectToDatabase();
-			sql = "Select * from students_program where student_program_id=?";
-			pst = conn.prepareStatement(sql);
-			pst.setInt(1, s_Id);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				model.setStudent_program_id(rs.getInt("student_program_id"));
-				model.setBatch_year(rs.getInt("batch_year"));
-				model.setEnroll_date(rs.getString("enroll_date"));
-				model.setStatus(rs.getInt("status"));
-				model.setProgram_id(rs.getInt("program_id"));
-				model.setS_id(rs.getInt("s_id"));
-
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return model;
+	@Transactional
+	public List<StudentsProgram> getStudentsProgram(int s_Id) {
+		session = sessionFactory.getCurrentSession();
+		String hql = "FROM StudentProgram where student_program_id = '" + s_Id + "'";
+		Query query = session.createQuery(hql);
+		List<StudentsProgram> studentProgramList = query.getResultList();
+		return studentProgramList;
 	}
 	@Override
-	public StudentsProgram getStudentsProgramByStudentId(int s_Id) {
-		StudentsProgram model = new StudentsProgram();
-		try {
-			conn = DatabaseConnection.connectToDatabase();
-			sql = "Select * from students_program where s_id=?";
-			pst = conn.prepareStatement(sql);
-			pst.setInt(1, s_Id);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				model.setStudent_program_id(rs.getInt("student_program_id"));
-				model.setBatch_year(rs.getInt("batch_year"));
-				model.setEnroll_date(rs.getString("enroll_date"));
-				model.setStatus(rs.getInt("status"));
-				model.setProgram_id(rs.getInt("program_id"));
-				model.setS_id(rs.getInt("s_id"));
-
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
+	@Transactional
+	public List<StudentsProgram> getStudentsProgramByStudentId(int s_Id) {
+		session = sessionFactory.getCurrentSession();
+		List<StudentsProgram> listStudentProgram = session.createCriteria(StudentsProgram.class).add(Restrictions.eq("student.s_id", s_Id)).list();
+		for (StudentsProgram studentsProgram : listStudentProgram) {
+			System.out.println("list = "+studentsProgram);
 		}
-		return model;
+		return listStudentProgram;
 	}
 	@Override
-	public StudentsProgram updateStudentsProgram(StudentsProgram studentsProgram) {
-
-		try {
-			conn = DatabaseConnection.connectToDatabase();
-			sql = "update students_program set batch_year=? , enroll_date=?, status=?, program_id=?,s_id=? where student_program_id=?";
-			pst = conn.prepareStatement(sql);
-			int col = 1;
-			pst.setInt(col++, studentsProgram.getBatch_year());
-			pst.setString(col++, studentsProgram.getEnroll_date());
-			pst.setInt(col++, studentsProgram.getStatus());
-			pst.setInt(col++, studentsProgram.getProgram_id());
-			pst.setInt(col++, studentsProgram.getS_id());
-			pst.setInt(col++, studentsProgram.getStudent_program_id());
-			int count = pst.executeUpdate();
-			if (count > 0) {
-
-				return studentsProgram;
-
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return new StudentsProgram();
-	}
-
-	@Override
-	public int deleteStudentsProgram(int s_Id) {
-		int result = 0;
-		// System.out.println("deleting id form ecaminfoModel="+id);
-		try {
-			Connection connection = DatabaseConnection.connectToDatabase();
-			sql = "delete from students_program where student_program_id =?";
-			pst = connection.prepareStatement(sql);
-			pst.setInt(1, s_Id);
-			result = pst.executeUpdate();
-		} catch (Exception e) {
-			// System.out.println("Error in deleting examInfo model="+e.getMessage());
-		} finally {
-			try {
-				pst.close();
-				rs.close();
-				conn.close();
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
-		}
-		return result;
-	}
-
-	@Override
+	@Transactional
 	public List<StudentsProgram> getStudentsProgramByProgramId(int s_Id) {
-		List<StudentsProgram> listStudentsProgram = new ArrayList<StudentsProgram>();
-		try {
-			conn = DatabaseConnection.connectToDatabase();
-			sql = "Select * from students_program where program_id=? ORDER BY batch_year";
-			pst = conn.prepareStatement(sql);
-			pst.setInt(1, s_Id);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				StudentsProgram model = new StudentsProgram();
-				model.setStudent_program_id(rs.getInt("student_program_id"));
-				model.setBatch_year(rs.getInt("batch_year"));
-				model.setEnroll_date(rs.getString("enroll_date"));
-				model.setStatus(rs.getInt("status"));
-				model.setProgram_id(rs.getInt("program_id"));
-				model.setS_id(rs.getInt("s_id"));
-				listStudentsProgram.add(model);
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return listStudentsProgram;
+		session = sessionFactory.getCurrentSession();
+		List<StudentsProgram> listStudentProgram = session.createCriteria(StudentsProgram.class).add(Restrictions.eq("program.program_id", s_Id)).list();
+		return listStudentProgram;
 	}
+	@Override
+	@Transactional
+	public StudentsProgram updateStudentsProgram(StudentsProgram studentsProgram) {
+		session = sessionFactory.getCurrentSession();
+		session.update(studentsProgram);
+		return studentsProgram;
+	}
+
+	@Override
+	@Transactional
+	public int deleteStudentsProgram(int s_Id) {
+		session = sessionFactory.getCurrentSession();
+		StudentsProgram stp = session.get(StudentsProgram.class, s_Id);
+		session.delete(stp);
+		return 1;
+	}
+
+
 
 	@Override
 	public List<StudentsProgram> searchByField(Object[] obj) {
@@ -266,8 +159,7 @@ public class StudentsProgramDAOImpl implements StudentsProgramDAO {
 							model.setBatch_year(rs.getInt("batch_year"));
 							model.setEnroll_date(rs.getString("enroll_date"));
 							model.setStatus(rs.getInt("status"));
-							model.setProgram_id(rs.getInt("program_id"));
-							model.setS_id(rs.getInt("s_id"));
+							
 							studentsProgramModel.add(model);
 						}
 
@@ -279,29 +171,10 @@ public class StudentsProgramDAOImpl implements StudentsProgramDAO {
 		return studentsProgramModel;
 	}
 
-	@Override
-	public void saveStudentProgram(int programID, int batch, String enrollDate) {
-	try {
-		conn = DatabaseConnection.connectToDatabase();
-		sql = "SELECT * FROM students ORDER BY s_id DESC LIMIT 1";
-		pst = conn.prepareStatement(sql);
-		rs = pst.executeQuery();
-		while(rs.next()) {
-			sql = "insert into students_program(batch_year,enroll_date,status,program_id,s_id) values(?,?,?,?,?)";
-			pst = conn.prepareStatement(sql);
-			int col = 1;
+	
 
-			pst.setInt(col++, batch);
-			pst.setString(col++, enrollDate);
-			pst.setInt(col++, 0);
-			pst.setInt(col++, programID);
-			pst.setInt(col++, rs.getInt("s_id"));
-			int count = pst.executeUpdate();
-		}
-	} catch (Exception e) {
-		// TODO: handle exception
-	}
-		
-	}
+	
+
+	
 
 }

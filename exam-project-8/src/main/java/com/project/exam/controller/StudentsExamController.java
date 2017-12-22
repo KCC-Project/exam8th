@@ -128,11 +128,11 @@ public class StudentsExamController {
 		System.out.println("programId = " + studentId);
 
 		List list = new ArrayList<>();
-		StudentsProgram pr = studentsProgramService.getStudentsProgramByStudentId(studentId);
-		int program_id = pr.getProgram_id();
+		//StudentsProgram pr = studentsProgramService.getStudentsProgramByStudentId(studentId);
+		//int program_id = pr.getProgram_id();
 
 		Object[] obj = new Object[15];
-		obj[1] = program_id;
+		//obj[1] = program_id;
 		obj[9] = semester_no;
 
 		List<Subjects> sub = subjectser.getSubjectByParameters(obj);

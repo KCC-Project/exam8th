@@ -20,7 +20,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Student addStudent(Student student) {
+	public int addStudent(Student student) {
 		return studentDao.addStudent(student);
 	}
 
@@ -47,6 +47,11 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public List getStudentsByStudentsProgram(Object[] obj) {
 		return studentDao.getStudentsByStudentsProgram(obj);
+	}
+
+	@Override
+	public List<Student> search(int id,int year) {
+		return studentDao.search(id,year);
 	}
 
 	

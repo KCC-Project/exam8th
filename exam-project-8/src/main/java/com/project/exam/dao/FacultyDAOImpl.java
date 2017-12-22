@@ -25,6 +25,7 @@ public class FacultyDAOImpl implements FacultyDAO {
 	public List<Faculty> getFacultyList() {
 		session = sessionFactory.getCurrentSession();
 		List<Faculty> listFaculty = session.createCriteria(Faculty.class).list();
+		System.out.println("List of faculty = "+listFaculty.toString());
 		return listFaculty;
 	}
 

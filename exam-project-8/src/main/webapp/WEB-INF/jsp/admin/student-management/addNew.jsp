@@ -45,8 +45,8 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">Gender</label>
 						<div class="col-md-9">
-							<label> Male <input type="radio" value=0 name="gender" checked>
-							</label> <label> Female <input type="radio" value=1 id="gender" name="gender" >
+							<label> Male <input type="radio" value=1 name="gender" checked>
+							</label> <label> Female <input type="radio" value=0 id="gender" name="gender" >
 							</label>
 						</div>
 					</div>
@@ -91,6 +91,7 @@
 						<div class="col-md-9">
 							<div class="col-md-6">
 								<select required class="form-control" id="all-program-box" name="program_id">
+									<option value="" selected>Select Program</option>
 								</select>
 							</div>
 							<div class="col-md-6">
@@ -118,8 +119,8 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">Available</label>
 						<div class="col-md-9">
-							<label> Yes <input type="radio" value=0 name="status" checked>
-							</label> <label> No <input type="radio" value=1 name="status">
+							<label> Yes <input type="radio" value=1 name="status" checked>
+							</label> <label> No <input type="radio" value=0 name="status">
 							</label>
 						</div>
 					</div>
@@ -140,6 +141,7 @@
 <script>
 var semesterno;
 var p_id;
+var studentId;
     $(document).ready(function () {
     	
         $.when( $.ajax(load_all_program("all-program-box")) ).done(function() {
@@ -155,6 +157,7 @@ var p_id;
         $("#all-program-box").change(function(event) {
 			var getid = event.target.id;
 			p_id = $('#' + getid).find(":selected").val();
+			alert("program id="+p_id);
 			//load_subject(event, "p-subject-box");
 		});
         $("#add-student-form").bootstrapValidator({
@@ -240,6 +243,8 @@ var p_id;
                 cache : true,
                 async: false,
                 success : function (data) {
+                	studentId=data;
+                	
                     var message = "Student has been added Successfully";
                     $("#success_message").html(message);
                     alert("Thanks for the submission!");
@@ -272,22 +277,14 @@ var p_id;
 				return data;
 			}
             function saveStudentProgram() {
-            	var utc = new Date().toJSON().slice(0,10).replace(/-/g,'-');
-            	//alert(utc);
-            	var today = new Date();
-            	var yyyy = today.getFullYear();
-            	//alert(yyyy);
+            	
         		$.ajax({
-        			url : window.context + "/ApiStudentsProgram/GetStudentProgramInfoTOSave",
+        			url : window.context + "/ApiStudentsProgram/SaveStudentsProgram",
         			method : "POST",
         			cache : true,
         			 async: false,
-        			data : {
-        				p_id : p_id,
-        				enroll_date : utc,
-        				batch	: yyyy
-
-        			},
+        			 contentType : 'application/json',
+        			data : formToJSONtostudentprogram(),
         			success : function(data) {
         				alert("sucess in insert studet program");
         			
@@ -297,6 +294,29 @@ var p_id;
         			}
         		});
         	}
+            function formToJSONtostudentprogram() {
+            	var utc = new Date().toJSON().slice(0,10).replace(/-/g,'-');
+            	//alert(utc);
+            	var today = new Date();
+            	var yyyy = today.getFullYear();
+            	//alert(yyyy);
+				var data = JSON.stringify({
+					"enroll_date" : utc,
+					"batch_year" :yyyy,
+					"status" : 1,
+					
+					"student" :{
+						"s_id":studentId,
+					},
+					"program" : { 
+						"program_id":p_id,
+					}
+
+				});
+				//alert(data);
+				return data;
+			}
+           
         });
      
     });

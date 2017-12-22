@@ -12,10 +12,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.project.exam.model.Student;
+import com.project.exam.model.StudentsProgram;
 import com.project.exam.services.StudentService;
 
 @Path("/ApiStudent")
@@ -28,7 +30,7 @@ public class StudentController {
 	@Path("/GetAllStudent")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public List<Student> getAllStudent() {
-		System.out.println("indiseee");
+		//System.out.println("indiseee");
 		return studentService.getStudentList();
 	}
 	
@@ -37,10 +39,8 @@ public class StudentController {
 	@Path("/SaveStudent")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public Student saveStudent(Student student ) {
-		System.out.println("in save student");
-		
-		//return null;
+	public int saveStudent(Student student ) {
+		//System.out.println("in save student");
 		return studentService.addStudent(student);
 	}
 	
@@ -81,16 +81,14 @@ public class StudentController {
 	}
 	
 	
-	@POST
-	@Path("/SearchStudentsByProgram")
+	@GET
+	@Path("/SearchStudentsByProgram/{programId}/{batchyear}")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public List searchStudentsByProgram(@FormParam("programId") int programId,@FormParam("batchyear") int batchyear) {
-		System.out.println("from controller =" +programId +" "+batchyear);
-		Object[] ob= new Object[7];
-		ob[2]=programId;
-		ob[3]=batchyear;
-		System.out.println("form server = "+studentService.getStudentsByStudentsProgram(ob));
-		return studentService.getStudentsByStudentsProgram(ob);
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public List searchStudentsByProgram(@PathParam("programId") int programId,@PathParam("batchyear") int batchyear) {
+	System.out.println("from jsp programId = "+programId);
+	System.out.println("from jsp batchyear = "+batchyear);
+		return studentService.search(programId,batchyear);
 	}
 	
 }

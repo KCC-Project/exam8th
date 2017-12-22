@@ -120,8 +120,8 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label">Gender</label>
 			<div class="col-md-9">
-				<label> Male <input type="radio" value=0 name="gender">
-				</label> <label> Female <input type="radio" value=1 name="gender">
+				<label> Male <input type="radio" value=1 name="gender">
+				</label> <label> Female <input type="radio" value=0 name="gender">
 				</label>
 			</div>
 		</div>
@@ -166,12 +166,12 @@
 			<div class="col-md-9">
 				<div class="col-md-6">
 					<select required class="form-control" id="all-program-box" name="e_program_id">
-					<option value="" selected >Select Program</option>
+					<option  selected >Select Program</option>
 					</select>
 				</div>
 				<div class="col-md-6">
-					Semester no.:<select class="form-control" id="s-semester-no" name="s_semester_no">
-						<option value="" selected>Select Semester</option>
+				<select class="form-control" id="s-semester-no" name="s_semester_no">
+						<option value="0" selected disabled>Select Semester</option>
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -211,6 +211,17 @@
 <script>
     var programId = 0;
     var batchyear = 0;
+var idOfSelectedIteam=0;
+
+//id for auto selecting program when update is cliced
+var programId2=0;
+
+//for auto updating program id from student
+var studentProgramId2=0;
+
+var batchyear2=0;
+var enrolldate2=0;
+var studentid2=0;
 
     $(document).ready(function () {
 
@@ -247,8 +258,17 @@
         var placeholder = "Student";
         select2Function(url1, url2, method1, method2, placeholder, loadStudentInformation);
 
+        function load_student(e, target) {
+            //var data = 'programId='+ programId  + '&batchyear='+ batchyear;
+            var url = window.context + "/ApiStudent/SearchStudentsByProgram/"+programId+"/"+batchyear;
+            var method = "GET";
+            var data="";
+            loadStudentInformation(url,method,data);
+        }
+        
         function loadStudentInformation(url, method, data) {
             // Initializing Datatable
+            //alert("from load ="+data);
             $('#view_student').DataTable({
                 destroy : true,
                 paging : true,
@@ -270,7 +290,7 @@
                 }, {
                     data : null,
                     render : function (data, type, row) {
-                        console.log(JSON.stringify(data));
+                        console.log("data = "+JSON.stringify(data));
                         var full_name = "";
                         full_name += data.first_name + " ";
                         if (data.middle_name == undefined) {
@@ -317,7 +337,7 @@
                 },{
                     data : null,
                     render : function (data, type, row) {
-                        return '<button class="btn btn-success editStud">Edit</button>';
+                        return '<button value='+data.s_id+' class="btn btn-success editStud">Edit</button>';
                     },
                 } ]
             });
@@ -326,14 +346,74 @@
             $(".editStud").click(function (event) {
                 var table = $("#view_student").DataTable();
                 var data = table.row($(this).parents('tr')).data();
-                console.log(data);
-
+                console.log("data of row = "+JSON.stringify(data));
+            
+                //initializing selected student id to get student program
+                idOfSelectedIteam=data.s_id;
+               
                 // Populate the form fields
-                $('#edit-student-form').find('[name="s_id"]').val(data['s_id']).end().find('[name="first_name"]').val(data['first_name']).end().find('[name="last_name"]').val(data['last_name']).end().find('[name="username"]').val(data['username']).end().find('[name="password"]').val(data['password']).end().find('[name="email"]').val(data['email']).end().find('[name="date_of_birth"]').val(data['date_of_birth']).end().find('[name="phone"]').val(data['phone']).end().find('[name="address"]').val(data['address']).end().find('[name="image"]').val(data['image']).end();
+                $('#edit-student-form').find('[name="s_id"]').val(data['s_id']).end()
+                .find('[name="first_name"]').val(data['first_name']).end()
+                  .find('[name="middle_name"]').val(data['middle_name']).end()
+                .find('[name="last_name"]').val(data['last_name']).end()
+                .find('[name="username"]').val(data['username']).end()
+                .find('[name="password"]').val(data['password']).end()
+                .find('[name="email"]').val(data['email']).end()
+                .find('[name="date_of_birth"]').val(data['date_of_birth']).end()
+                .find('[name="phone"]').val(data['phone']).end()
+                .find('[name="address"]').val(data['address']).end()
+                .find('[name="image"]').val(data['image']).end();
 
                 $("input[name=gender][value=" + data['gender'] + "]").prop('checked', true);
                 $("input[name=status][value=" + data['status'] + "]").prop('checked', true);
-                $("input[name=s_semester_no][value=" + data['semester_no'] + "]").attr('selected', 'selected');
+               // $("input[name=s_semester_no][value=" + data['current_semester'] + "]").attr('selected', 'selected');
+                $('#s-semester-no option').each(function() {
+                	//alert($(this).val());
+      
+                    if($(this).val() == data['current_semester']) {
+                    	//alert("inside");
+                    	//$('select option[value="1"]').attr("selected",true);
+                    	$(this).prop("selected", true);
+                 
+                    }
+                });
+                
+                //loading student program to find which student belong to which program and to select that program in 
+                //update automatically
+                loadStudentProgram();
+               
+                function loadStudentProgram() {
+                	
+            		$.ajax({
+            			url : window.context + "/ApiStudentsProgram/GetStudentsProgramByStudentId/"+idOfSelectedIteam,
+            			method : "GET",
+            			cache : true,
+            			 async: false,
+            			  dataType : 'json',
+            			
+            			success : function(data) {
+            			alert("from stud ="+JSON.stringify(data));
+            			programId2=data[0].program.program_id;
+            			studentProgramId2=data[0].student_program_id;
+            			//alert(programId2);
+            			
+            			 batchyear2=data[0].batch_year;
+            			enrolldate2=data[0].enroll_date;
+            			 studentid2=data[0].student.s_id;
+            			//alert(studentid2);
+            			//alert(studentProgramId2);
+            			},
+            			error : function() {
+            				alert("Error...!!!");
+            			}
+            		});
+            	}
+              
+                $('#all-program-box option').each(function() {
+                    if($(this).val() == programId2) {
+                    	$(this).prop("selected", true);
+                    }
+                });
 
                 bootbox.dialog({
                     title : 'Edit the Student',
@@ -355,6 +435,7 @@
 
     });
 
+    
     function load_batch_year(e, target) {
         var getid = e.target.id;
         var id = $('#' + getid).find(":selected").val();
@@ -397,18 +478,7 @@
         });
     }
 
-    function load_student(e, target) {
-        //alert(programId);
-        //alert(batchyear);
-        var url = window.context + "/ApiStudent/SearchStudentsByProgram";
-        var method = "POST";
-        //var data = "{'programId':'" + programId + "','batchyear':'" + batchyear + "'}";
-        var data = {
-            "programId" : programId,
-            "batchyear" : batchyear
-        };
-        loadStudentInformation(url, method, data);
-    }
+  
     
     
     // form validator for student edit form
@@ -494,10 +564,11 @@
             async:false,
             cache : true,
             success : function (data) {
-               // var message = "Student has been updated Successfully";
-                //$("#success_message").html(message);
+                var message = "Student has been updated Successfully";
+               $("#success_message").html(message);
                 //alert("Thanks for the submission!");
-                //$("#edit-student-form")[0].reset();
+               // $("#edit-student-form")[0].reset();
+               updateStudentProgram();
             },
             error : function () {
                 alert("Error...!!!");
@@ -513,7 +584,7 @@
 				"username" : $('#edit-student-form').find('[name="username"]').val(),
 				"password" : $('#edit-student-form').find('[name="password"]').val(),
 				"email" : $('#edit-student-form').find('[name="email"]').val(),
-				"gender" : $('#edit-student-form').find('[name="gender"]').val(),
+				"gender" : $('#edit-student-form').find('[name="gender"]:checked').val(),
 				"date_of_birth" : $('#edit-student-form').find('[name="date_of_birth"]').val(),
 				"phone" : $('#edit-student-form').find('[name="phone"]').val(),
 				"address" : $('#edit-student-form').find('[name="address"]').val(),
@@ -522,15 +593,16 @@
 				"status" : $('#edit-student-form').find('[name="status"]:checked').val(),	
 
 			});
-			//alert(data);
+			alert(data);
 			return data;
 		}
-        $.ajax({
+        function updateStudentProgram(){
+         $.ajax({
             url : window.context + "/ApiStudentsProgram/UpdateStudentsProgram",
             method : "PUT",
             dataType : 'json',
             contentType : 'application/json',
-            data: formToJSON(),
+            data: formToJSONProgram(),
             async:false,
             cache : true,
             success : function (data) {
@@ -542,13 +614,21 @@
             error : function () {
                 alert("Error...!!!");
             }
-        }); 
-        formToJSONProgram();
+        });  
+         }
+        //formToJSONProgram();
         function formToJSONProgram() {
 			var data = JSON.stringify({
-				"program" : {
-					"program_id":$('#edit-student-form').find('[name="e_program_id"]').val()
+
+				"student_program_id":studentProgramId2,
+				"batch_year":batchyear2,
+				"enroll_date":enrolldate2,
+				"status":$('#edit-student-form').find('[name="status"]:checked').val(),	
+				"student":{"s_id":studentid2,},
+				"program":{
+					"program_id":$('#edit-student-form').find('[name="e_program_id"]').val(),
 					},
+					
 			});
 			alert(data);
 			return data;

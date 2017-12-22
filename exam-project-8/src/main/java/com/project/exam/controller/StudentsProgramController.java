@@ -37,6 +37,7 @@ public class StudentsProgramController {
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public StudentsProgram saveStudentsProgram(StudentsProgram studentsProgram) {
+		System.out.println(studentsProgram.toString());
 		return studentsProgramService.addStudentsProgram(studentsProgram);
 	}
 	
@@ -44,7 +45,7 @@ public class StudentsProgramController {
 	@GET
 	@Path("/GetStudentsProgram/{id}")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public StudentsProgram getStudentsProgram(@PathParam("id") int id) {
+	public List<StudentsProgram> getStudentsProgram(@PathParam("id") int id) {
 		return studentsProgramService.getStudentsProgram(id);
 	}
 	
@@ -61,6 +62,13 @@ public class StudentsProgramController {
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public int deleteStudentsProgram(@PathParam("id") int id) {
 		return studentsProgramService.deleteStudentsProgram(id);
+	}
+	@GET
+	@Path("/GetStudentsProgramByStudentId/{id}")
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public List<StudentsProgram> GetStudentsProgramByStudentId(@PathParam("id") int id) {
+		System.out.println("id of student = "+id);
+		return studentsProgramService.getStudentsProgramByStudentId(id);
 	}
 	
 	@GET
@@ -79,10 +87,10 @@ public class StudentsProgramController {
 		ob[3]=batchyear;
 		return studentsProgramService.searchByField(ob);
 	}
-	@POST
+	/*@POST
 	@Path("/GetStudentProgramInfoTOSave")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public void getRequiredInfoTOSave(@FormParam("p_id") int p_id,@FormParam("enroll_date") String enroll_date,@FormParam("batch") int batch) {
 		studentsProgramService.saveStudentProgram(p_id, batch, enroll_date);
-	}
+	}*/
 }

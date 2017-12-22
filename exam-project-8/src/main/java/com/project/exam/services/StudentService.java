@@ -11,10 +11,11 @@ import com.project.exam.model.StudentsProgram;
 public interface StudentService {
 	
 	public List<Student> getStudentList();
-	public Student addStudent(Student student);
+	public int addStudent(Student student);
 	public List<Student> getStudent(int s_Id);
 	public Student updateStudent(Student student);
 	public int deleteStudent(int s_Id);
 	public List searchStudent(String searchPara);
 	public List getStudentsByStudentsProgram(Object[] obj);
+	public List<Student> search(int id,int year);
 }

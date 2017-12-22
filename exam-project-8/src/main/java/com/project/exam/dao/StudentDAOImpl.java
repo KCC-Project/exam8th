@@ -13,10 +13,12 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.exam.entity.Students;
 import com.project.exam.model.Exam_type;
 import com.project.exam.model.Student;
 import com.project.exam.model.StudentsProgram;
@@ -42,10 +44,11 @@ public class StudentDAOImpl implements StudentDAO {
 
 	@Override
 	@Transactional
-	public Student addStudent(Student student) {
+	public int addStudent(Student student) {
 		session = sessionFactory.getCurrentSession();
-		session.save(student);
-		return student;
+	int studentId=(Integer)session.save(student);
+	System.out.println("student id after save is = "+studentId);
+		return studentId;
 	}
 
 	@Override
@@ -104,6 +107,19 @@ public class StudentDAOImpl implements StudentDAO {
 		return listOfReslut;
 	}
 
+	@Override
+	@Transactional
+	public List<Student> search(int id,int year) {
+		session = sessionFactory.getCurrentSession();
+		List<StudentsProgram> listStudent = session.createCriteria(StudentsProgram.class).add(Restrictions.eq("program.program_id", id)).add(Restrictions.eq("batch_year",year)).list();
+		List studentList = new ArrayList<>();
+		for (StudentsProgram studentsProgram : listStudent) {
+			Student s=(Student)session.get(Student.class, studentsProgram.getStudent().getS_id());
+			studentList.add(s);
+		}	
+		return studentList;
+	}
+	
 	@Override
 	public List getStudentsByStudentsProgram(Object[] obj) {
 		List<Object> parameters = new ArrayList<Object>();
@@ -188,38 +204,7 @@ public class StudentDAOImpl implements StudentDAO {
 			        		map.put("enroll_date", rs.getString("enroll_date"));
 			        		map.put("status",rs.getInt("status") );
 			        		map.put("program_id",rs.getInt("program_id") );
-			        	/*	
-			        		Student model = new Student();
-							model.setS_id(rs.getInt("s_id"));
-							model.setAddress(rs.getString("address"));
-							model.setCurrent_semester(rs.getInt("current_semester"));
-							model.setDate_of_birth(rs.getString("date_of_birth"));
-							model.setEmail(rs.getString("email"));
-							model.setFirst_name(rs.getString("first_name"));
-							model.setGender(rs.getInt("gender"));
-							model.setImage(rs.getString("image"));
-							model.setLast_name(rs.getString("last_name"));
-							model.setMiddle_name(rs.getString("middle_name"));
-							model.setPassword(rs.getString("password"));
-							model.setPhone(rs.getString("phone"));
-							model.setStatus(rs.getInt("status"));
-							model.setUsername(rs.getString("username"));
-						
-							
-						
-			        					        		
-			        		
-							StudentsProgram model1 = new StudentsProgram();
-							model1.setStudent_program_id(rs.getInt("student_program_id"));
-							model1.setBatch_year(rs.getInt("batch_year"));
-							model1.setEnroll_date(rs.getString("enroll_date"));
-							model1.setStatus(rs.getInt("status"));
-							model1.setProgram_id(rs.getInt("program_id"));
-							model1.setS_id(rs.getInt("s_id"));
-							
-							studentsModel.add(model);
-							studentsModel.add(model1);*/
-			        		
+		      		
 			        		studentsModel.add(map);
 			        		
 						
@@ -232,5 +217,7 @@ public class StudentDAOImpl implements StudentDAO {
 		System.out.println(Arrays.deepToString(studentsModel.toArray()));
 		return studentsModel;
 	}
+
+	
 
 }
