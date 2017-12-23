@@ -112,9 +112,9 @@ public class StudentsExamDAOImpl implements StudentsExamDAO {
 				+ "AND e.status=0;");
 		List<Object[]> result = query.getResultList();
 	for (Object[] objects : result) {
-		System.out.println("exam_id = "+objects[0]);
+		/*System.out.println("exam_id = "+objects[0]);
 		System.out.println("subject name = "+objects[1]);
-		System.out.println("exam type name = "+objects[2]);
+		System.out.println("exam type name = "+objects[2]);*/
 		Query query1 = session.createSQLQuery("SELECT CONCAT(s.first_name ,' ',s.middle_name,' ' ,s.last_name) AS fullname ,"
 				+ " s.s_id,s.current_semester,se.students_exams_id,se.attendance_status,se.grade,"
 				+ "se.obtained_marks,se.status FROM student s INNER JOIN student_exam se "
@@ -122,14 +122,14 @@ public class StudentsExamDAOImpl implements StudentsExamDAO {
 				+ "WHERE e.exam_id="+objects[0]+" AND s.status=1");
 		List<Object[]> result1 = query1.getResultList();
 		for (Object[] objects2 : result1) {
-			System.out.println("fullname = "+objects2[0]);
+			/*System.out.println("fullname = "+objects2[0]);
 			System.out.println("student id = "+objects2[1]);
 			System.out.println("current semester = "+objects2[2]);
 			System.out.println("student exam id = "+objects2[3]);
 			System.out.println("attandance = "+objects2[4]);
 			System.out.println("grade = "+objects2[5]);
 			System.out.println("obtain marks = "+objects2[6]);
-			System.out.println("status = "+objects2[7]);
+			System.out.println("status = "+objects2[7]);*/
 			
 			
 			
