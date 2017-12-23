@@ -1,16 +1,31 @@
 package com.project.exam.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+@Table(name="student_exam")
 public class StudentsExam {
 
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int students_exams_id;
 
-	private int s_id;
+	@ManyToOne
+	@JoinColumn(name="student_id")
+	private Student student;
 
-	private int exam_id;
+	@ManyToOne
+	@JoinColumn(name="exam_id")
+	private Exam exam;
 
 	// additional field
 	private int attendance_status;
@@ -18,38 +33,16 @@ public class StudentsExam {
 	private String grade;
 	private int status;
 	public StudentsExam() {
-		super();
-		// TODO Auto-generated constructor stub
+		
 	}
-	public StudentsExam(int students_exams_id, int s_id, int exam_id, int attendance_status, int obtained_marks,
-			String grade, int status) {
-		super();
-		this.students_exams_id = students_exams_id;
-		this.s_id = s_id;
-		this.exam_id = exam_id;
-		this.attendance_status = attendance_status;
-		this.obtained_marks = obtained_marks;
-		this.grade = grade;
-		this.status = status;
-	}
+	
 	public int getStudents_exams_id() {
 		return students_exams_id;
 	}
 	public void setStudents_exams_id(int students_exams_id) {
 		this.students_exams_id = students_exams_id;
 	}
-	public int getS_id() {
-		return s_id;
-	}
-	public void setS_id(int s_id) {
-		this.s_id = s_id;
-	}
-	public int getExam_id() {
-		return exam_id;
-	}
-	public void setExam_id(int exam_id) {
-		this.exam_id = exam_id;
-	}
+	
 	public int getAttendance_status() {
 		return attendance_status;
 	}
@@ -74,13 +67,27 @@ public class StudentsExam {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	@Override
-	public String toString() {
-		return "StudentsExam [students_exams_id=" + students_exams_id + ", s_id=" + s_id + ", exam_id=" + exam_id
-				+ ", attendance_status=" + attendance_status + ", obtained_marks=" + obtained_marks + ", grade=" + grade
-				+ ", status=" + status + "]";
+	public Student getStudent() {
+		return student;
 	}
 
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+	public Exam getExam() {
+		return exam;
+	}
+
+	public void setExam(Exam exam) {
+		this.exam = exam;
+	}
+	@Override
+	public String toString() {
+		return "StudentsExam [students_exams_id=" + students_exams_id + ", attendance_status=" + attendance_status
+				+ ", obtained_marks=" + obtained_marks + ", grade=" + grade + ", status=" + status + "]";
+	}
+	
 	
 	
 

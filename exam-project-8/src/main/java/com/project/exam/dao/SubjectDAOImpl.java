@@ -13,10 +13,13 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.exam.model.Student;
+import com.project.exam.model.StudentsProgram;
 import com.project.exam.model.Subjects;
 
 @Repository("subjectDao")
@@ -91,90 +94,26 @@ public class SubjectDAOImpl implements SubjectDAO {
 
 	@Override
 	@Transactional
-	public List<Subjects> getSubjectByParameters(Object[] obj) {
-		
-		int subject_id = 0;
-		int program_id = 0;
-		String subject_name = null;
-		String subject_code = null;
-		int theory_cr = 0;
-		int tutorial_cr = 0;
-		int internal_theory = 0;
-		int internal_practical = 0;
-		int final_theory = 0;
-		int semester_no = 0;
-		int status = 0;
-
-		if (obj[0] != null) {  subject_id = Integer.parseInt(obj[0].toString()); }
-		if (obj[1] != null) {  program_id = Integer.parseInt(obj[1].toString()); }
-		if (obj[2] != null) {  subject_name = obj[2].toString(); }
-		if (obj[3] != null) {  subject_code = obj[3].toString(); }
-		if (obj[4] != null) {  theory_cr = Integer.parseInt(obj[4].toString()); }
-		if (obj[5] != null) {  tutorial_cr = Integer.parseInt(obj[5].toString()); }
-		if (obj[6] != null) {  internal_theory = Integer.parseInt(obj[6].toString()); }
-		if (obj[7] != null) {  internal_practical = Integer.parseInt(obj[7].toString()); }
-		if (obj[8] != null) {  final_theory = Integer.parseInt(obj[8].toString()); }
-		if (obj[9] != null) {  semester_no = Integer.parseInt(obj[9].toString()); }
-		if (obj[10] != null) {  status = Integer.parseInt(obj[10].toString()); }
-		
-		
-			  StringBuilder query = new StringBuilder("FROM Subjects where 1=1");
-			  
-				if (subject_id != 0) {
-		            query.append(" AND subject_id ="+obj[0]);
-		           
-		        }
-				if (program_id != 0) {
-		            query.append(" AND program_id ="+obj[1]);
-		           
-		        }
-				if (subject_name != null) {
-		            query.append(" AND subject_name ="+obj[2]);
-		           
-		        }
-				if (subject_code != null) {
-		            query.append(" AND subject_code ="+obj[3]);
-		           
-		        }
-				if (theory_cr != 0) {
-		            query.append(" AND theory_cr ="+obj[4]);
-		           
-		        }
-				if (tutorial_cr != 0) {
-		            query.append(" AND tutorial_cr ="+obj[5]);
-		        
-		        }
-				if (internal_theory != 0) {
-		            query.append(" AND internal_theory ="+obj[6]);
-		          
-		        }
-				if (internal_practical != 0) {
-		            query.append(" AND internal_practical ="+obj[7]);
-		          
-		        }
-				if (final_theory != 0) {
-		            query.append(" AND final_theory ="+obj[8]);
-		       
-		        }
-				if (semester_no != 0) {
-		            query.append(" AND semester_no ="+obj[9]);
-		          
-		        }
-				if (status != 0) {
-		            query.append(" AND status ="+obj[10]);
-		           
-		        }
-				  String Query = query.toString();
-			        System.out.println(Query);
-			 
-			        session = sessionFactory.getCurrentSession();
-			        String q1= new String(query);
-			    	Query query1 = session.createQuery(q1);
-					List<Subjects> subjectsList = query1.getResultList();
-					return subjectsList;
+	public List<Subjects> getSubjectByParameters(int programId,int semester) {
+		session = sessionFactory.getCurrentSession();
+		List<Subjects> listSubject = session.createCriteria(Subjects.class).add(Restrictions.eq("program.program_id", programId)).add(Restrictions.eq("semester_no",semester)).list();
+		List subjectList = new ArrayList<>();
+		for (Subjects subjectList1 : listSubject) {
+			Subjects s=(Subjects)session.get(Subjects.class, subjectList1.getSubject_id());
+			subjectList.add(s);
+		}	
+		return subjectList;
 
 	}
 
+	@Override
+	@Transactional
+	public List<Subjects> getSubjectByProgram(int programId) {
+		session = sessionFactory.getCurrentSession();
+		List<Subjects> listSubject = session.createCriteria(Subjects.class).add(Restrictions.eq("program.program_id", programId)).list();
+		return listSubject;
+	}
+	
 	@Override
 	public List getSubjectByProgram(Object[] obj) {
 		List<Object> parameters = new ArrayList<Object>();
@@ -310,5 +249,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 		System.out.println(Arrays.deepToString(listSubjects.toArray()));
 		return listSubjects;
 	}
+
+	
 
 }

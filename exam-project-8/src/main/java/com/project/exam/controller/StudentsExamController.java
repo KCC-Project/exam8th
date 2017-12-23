@@ -53,14 +53,14 @@ public class StudentsExamController {
 	@Path("/SaveStudentsExam")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public StudentsExam saveStudentsExam(StudentsExam studentsExamModel) {
+	public int saveStudentsExam(StudentsExam studentsExamModel) {
 		return studentsExamService.addstudentsExam(studentsExamModel);
 	}
 
 	@GET
 	@Path("/GetStudentsExams/{id}")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public StudentsExam getStudentsExam(@PathParam("id") int id) {
+	public List<StudentsExam> getStudentsExam(@PathParam("id") int id) {
 		return studentsExamService.getstudentsExam(id);
 	}
 
@@ -80,14 +80,15 @@ public class StudentsExamController {
 		return studentsExamService.deletestudentsExam(id);
 	}
 
-	@POST
-	@Path("/GetRequiredInfoTOSave")
+	@GET
+	@Path("/GetRequiredInfoTOSave/{programId}/{semester}/{examId}")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public void getRequiredInfoTOSave(@FormParam("a_program_id") int a_program_id,
-			@FormParam("examTypeId") int examTypeId, @FormParam("semester_no") int semester_no) {
-		System.out.println("a_program_id examTypeId semester_no" + a_program_id + examTypeId + semester_no);
+	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public void getRequiredInfoTOSave(@PathParam("programId") int programId,
+			@PathParam("semester") int semester, @PathParam("examId") int examId) {
+		System.out.println("programId semester examId" + programId + semester + examId);
 
-		studentsExamService.getRequiredInfoTOSave(a_program_id, examTypeId, semester_no);
+		studentsExamService.getRequiredInfoTOSave(programId, semester, examId);
 	}
 
 	@POST
@@ -126,7 +127,7 @@ public class StudentsExamController {
 		System.out.println("semesterNo = " + semester_no);
 		System.out.println("programeName = " + exam_type_id);
 		System.out.println("programId = " + studentId);
-
+/*
 		List list = new ArrayList<>();
 		//StudentsProgram pr = studentsProgramService.getStudentsProgramByStudentId(studentId);
 		//int program_id = pr.getProgram_id();
@@ -160,8 +161,8 @@ public class StudentsExamController {
 			}
 		}
 
-		return list;
-		// return
+		return list;*/
+		 return null;
 		// studentsExamService.updatestudentExamModel(semesterNo,programeName,programId,batchyear,examTypeName,subjectId,examtypeId,subjectName);
 	}
 

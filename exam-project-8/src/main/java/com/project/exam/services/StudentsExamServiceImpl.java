@@ -19,13 +19,13 @@ public class StudentsExamServiceImpl implements StudentsExamService {
 	}
 
 	@Override
-	public StudentsExam addstudentsExam(StudentsExam studentsExam) {
+	public int addstudentsExam(StudentsExam studentsExam) {
 		// TODO Auto-generated method stub
 		return studentExamDao.addstudentsExam(studentsExam);
 	}
 
 	@Override
-	public StudentsExam getstudentsExam(int s_Id) {
+	public List<StudentsExam> getstudentsExam(int s_Id) {
 		// TODO Auto-generated method stub
 		return studentExamDao.getstudentsExam(s_Id);
 	}

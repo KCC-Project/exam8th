@@ -21,12 +21,12 @@ public class ExamServiceImpl implements ExamService {
 	}
 
 	@Override
-	public Exam addExam(Exam exam) {
+	public int addExam(Exam exam) {
 		return examDao.addExam(exam);
 	}
 
 	@Override
-	public Exam getExam(int s_Id) {
+	public List<Exam> getExam(int s_Id) {
 		return examDao.getExam(s_Id);
 	}
 
@@ -41,8 +41,8 @@ public class ExamServiceImpl implements ExamService {
 	}
 
 	@Override
-	public List<Exam> searchByField(Object[] obj) {
-		return examDao.searchByField(obj);
+	public List<Exam> searchByField(int examTypeId,int subjectId) {
+		return examDao.searchByField(examTypeId,subjectId);
 	}
 
 }

@@ -1,13 +1,30 @@
 package com.project.exam.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@Entity
+@Table(name="exam")
 public class Exam {
-
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int exam_id;
-	private int exam_type_id;
-	private int subject_id;
+	
+	@ManyToOne
+	@JoinColumn(name="exam_type_id")
+	private Exam_type examtype;
+	
+	@ManyToOne
+	@JoinColumn(name="subject_id")
+	private Subjects subject;
+	
 	private String exam_date;
 	private int full_marks;
 	private int pass_marks;
@@ -15,7 +32,27 @@ public class Exam {
 	private String time_from;
 	private String time_to;
 
-	
+
+
+	public Exam_type getExamtype() {
+		return examtype;
+	}
+
+	public void setExamtype(Exam_type examtype) {
+		this.examtype = examtype;
+	}
+
+	public Subjects getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subjects subject) {
+		this.subject = subject;
+	}
+
+
+
+
 	public int getExam_id() {
 		return exam_id;
 	}
@@ -72,48 +109,15 @@ public class Exam {
 		this.time_to = time_to;
 	}
 
-	public int getExam_type_id() {
-		return exam_type_id;
-	}
-
-	public void setExam_type_id(int exam_type_id) {
-		this.exam_type_id = exam_type_id;
-	}
-
-	public int getSubject_id() {
-		return subject_id;
-	}
-
-	public void setSubject_id(int subject_id) {
-		this.subject_id = subject_id;
-	}
-
-	public Exam(int exam_id, String exam_date, int full_marks, int pass_marks, int status, String time_from,
-			String time_to, int exam_type_id, int subject_id) {
-		super();
-		this.exam_id = exam_id;
-		this.exam_date = exam_date;
-		this.full_marks = full_marks;
-		this.pass_marks = pass_marks;
-		this.status = status;
-		this.time_from = time_from;
-		this.time_to = time_to;
-		this.exam_type_id = exam_type_id;
-		this.subject_id = subject_id;
-	}
+	
 
 	public Exam() {
-		super();
-		// TODO Auto-generated constructor stub
+		
 	}
-
-	
 
 	@Override
 	public String toString() {
 		return "Exam [exam_id=" + exam_id + ", exam_date=" + exam_date + ", full_marks=" + full_marks + ", pass_marks="
-				+ pass_marks + ", status=" + status + ", time_from=" + time_from + ", time_to=" + time_to
-				+ ", exam_type_id=" + exam_type_id + ", subject_id=" + subject_id + "]";
+				+ pass_marks + ", status=" + status + ", time_from=" + time_from + ", time_to=" + time_to + "]";
 	}
-
 }

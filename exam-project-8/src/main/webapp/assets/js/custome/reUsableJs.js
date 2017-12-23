@@ -90,7 +90,7 @@ function load_faculty(e, target) {
 				$('#' + target).html(content);
 			},
 			error : function() {
-				alert("Error...!!!");
+				alert("Error...loading faculties");
 			}
 		});
 	}
@@ -117,7 +117,7 @@ function load_faculty(e, target) {
 				$('#' + target).html(content);
 			},
 			error : function() {
-				alert("Error...!!!");
+				alert("Error...loading programs");
 			}
 		});
 	}
@@ -134,6 +134,7 @@ function load_faculty(e, target) {
 
                 //console.log("program size=" + JSON.stringify(data));
                 var content = '';
+                content += "<option selected='true' > Select Program </option>"
                 for (var i = 0; i < data.length; i++) {
                     var programeName = data[i].program_name;
                     var programeId = data[i].program_id;
@@ -144,7 +145,7 @@ function load_faculty(e, target) {
                 $('#' + target).html(content);
             },
             error : function() {
-                alert("Error...!!!");
+                alert("Error...all programs");
             }
         });
     }
@@ -159,6 +160,7 @@ function load_faculty(e, target) {
             success : function(data) {
 
                 var content = '';
+                content += "<option selected='true' > Select Exam Type </option>"
                 for (var i = 0; i < data.length; i++) {
                     var exam_type_id = data[i].exam_type_id;
                     var type_name = data[i].type_name;
@@ -168,22 +170,22 @@ function load_faculty(e, target) {
                 $('#' + target).html(content);
             },
             error : function() {
-                alert("Error...!!!");
+                alert("Error...loading exam type");
             }
         });
     }
 	
 	
-	function search_subject(data, target) {
+	function search_subject(data, target, url1 ,method) {
         $.ajax({
-            url : window.context + "/ApiSubject/GetSubjectByParameters",
-            method : "POST",
+            url :url1,
+            method :method,
             data: data,
             dataType : 'json',
             cache : true,
             success : function(data) {
-
                 var content = '';
+                content += '<option disabled> Select Subject </option>';
                 for (var i = 0; i < data.length; i++) {
                     var subject_id = data[i].subject_id;
                     var subject_name = data[i].subject_name;
@@ -193,7 +195,8 @@ function load_faculty(e, target) {
                 $('#' + target).html(content);
             },
             error : function() {
-                alert("Error...!!!");
+            	alert(url1);
+                alert("Error...from search subject function....!!!");
             }
         });
     }

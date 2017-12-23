@@ -86,8 +86,8 @@ public class StudentController {
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public List searchStudentsByProgram(@PathParam("programId") int programId,@PathParam("batchyear") int batchyear) {
-	System.out.println("from jsp programId = "+programId);
-	System.out.println("from jsp batchyear = "+batchyear);
+	//System.out.println("from jsp programId = "+programId);
+	//System.out.println("from jsp batchyear = "+batchyear);
 		return studentService.search(programId,batchyear);
 	}
 	

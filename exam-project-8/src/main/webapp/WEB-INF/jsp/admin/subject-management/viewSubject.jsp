@@ -166,14 +166,14 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label">Available</label>
 			<div class="col-md-9">
-				<label> Yes <input type="radio" value=0 name="status">
-				</label> <label> No <input type="radio" value=1 name="status">
+				<label> Yes <input type="radio" value=1 name="status">
+				</label> <label> No <input type="radio" value=0 name="status">
 				</label>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="col-md-12">
-				<button type="submit" id="updateSubject" class="btn btn-info btn-block">Save</button>
+				<button type="submit" id="updateSubject" class="btn btn-info btn-block">Update</button>
 			</div>
 		</div>
 	</form>
@@ -184,13 +184,13 @@
 		<thead>
 			<tr class="info">
 				<th>Id</th>
-				<th>Subject_name</th>
-				<th>Subject_code</th>
-				<th>Subject_credit</th>
-				<th>Subject_marks</th>
+				<th>Subject name</th>
+				<th>Code</th>
+				<th>Credit</th>
+				<th>Marks</th>
 				<th>Syllabus_file</th>
-				<th>Program_id</th>
-				<th>Semester_no</th>
+				<th>Program</th>
+				<th>Semester</th>
 				<th>Option</th>
 			</tr>
 		</thead>
@@ -239,27 +239,11 @@
             select2Function(url1, url2, method1, method2, placeholder, loadSubjectInformation);
 
         function load_subject(e) {  
-            function formToJSON() {
-				var data = JSON.stringify({
-					"semester_no" : $('#searchSubjectModal').find('[name="s_semester_no"]').val(),
-					//"subject_name" : $('#searchSubjectModal').find('[name="_subject_name"]').val(),
-					//"subject_code" : $('#searchSubjectModal').find('[name="s_subject_code"]').val(),
-				 	/* "program" : { 
-						"program_id":$('#searchSubjectModal').find('[name="program_id"]').val(),
-						"faculty" : { 
-							"faculty_id":$('#searchSubjectModal').find('[name="faculty_id"]').val(),
-						} 
-					} 
- */
-				});
-				alert(data);
-				return data;
-			}
-            var data = formToJSON();
-            var url = window.context + "/ApiSubject/GetSubjectByParameters";
-            var method = "POST";
-           
-            console.log(data);
+					var semester_no = $('#searchSubjectModal').find('[name="s_semester_no"]').val();
+				var program_id =$('#searchSubjectModal').find('[name="program_id"]').val();
+            var url = window.context + "/ApiSubject/GetSubjectByParameters/"+program_id+"/"+semester_no;
+            var method = "GET";
+            var data="";
             loadSubjectInformation(url, method, data);
         }
 
@@ -290,7 +274,7 @@
                 }, {
                     data : null,
                     render : function (data, type, row) {
-                        console.log(data);
+                        console.log("return data = "+JSON.stringify(data));
                         // Combine the two data
                         return 'Theory_credit: ' + data.theory_cr + '</br> Tutorial_credit: ' + data.tutorial_cr;
                     },
@@ -307,9 +291,10 @@
                         return '<a href='+window.context +'file/'+data+'>view Syllabus</a>';
                     },
                 }, {
-                    "data" : "program_id",
+                    "data" : null,
                     render : function (data, type, row) {
-                        return '<a href='+ window.context +'/program/'+data+'>Program_id: ' + data + '</a>';
+                    	//alert(data.program.program_name);
+                        return '<a href='+ window.context +'/program/'+data+'>' + data.program.program_name + '</a>';
                     },
                 }, {
                     "data" : "semester_no"
@@ -325,14 +310,26 @@
             $(".editSub").click(function (event) {
                 var table = $("#view_subject").DataTable();
                 var data = table.row($(this).parents('tr')).data();
-                console.log(data);
+                console.log("data when clicked = "+JSON.stringify(data));
 
                 // Populate the form fields
                 $('#subject-edit-form').find('[name="subject_id"]').val(data['subject_id']).end().find('[name="subject_name"]').val(data['subject_name']).end().find('[name="subject_code"]').val(data['subject_code']).end().find('[name="theory_cr"]').val(data['theory_cr']).end().find('[name="tutorial_cr"]').val(data['tutorial_cr']).end().find('[name="internal_theory"]').val(data['internal_theory']).end().find('[name="internal_practical"]').val(data['internal_practical']).end().find('[name="final_theory"]').val(data['final_theory']).end().find('[name="syllabus_file"]').val(data['syllabus_file']).end();
 
                 $("input[name=status][value=" + data['status'] + "]").prop('checked', true);
                 $("input[name=program_id][value=" + data['program_id'] + "]").attr('selected', 'selected');
-
+               // alert(data.semester_no);
+                $('#e-semester-no option').each(function() {
+                	//alert($(this).val());
+                    if($(this).val() == data.semester_no) {
+                    	//alert("inside");
+                    	$(this).prop("selected", true);
+                    }
+                });
+                $('#all-program-box option').each(function() {
+                    if($(this).val() == data.program.program_id) {
+                    	$(this).prop("selected", true);
+                    }
+                });
                 bootbox.dialog({
                     title : 'Edit the Subject',
                     message : $('#subject-edit-form'),
@@ -483,7 +480,7 @@
 					"syllabus_file" : $('#subject-edit-form').find('[name="syllabus_file"]').val(),
 					"status" : $('#subject-edit-form').find('[name="status"]:checked').val(),
 					 "program" : { 
-							"program_id":$('#searchSubjectModal').find('[name="program_id"]').val(),
+							"program_id":$('#subject-edit-form').find('[name="program_id"]').val(),
 						} 
 
 				});

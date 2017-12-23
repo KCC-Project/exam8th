@@ -75,39 +75,20 @@ public class SubjectController {
 
 	}
 
-	@POST
-	@Path("/GetSubjectByParameters")
+	@GET
+	@Path("/GetSubjectByParameters/{programId}/{semester}")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public List getSubjectByParameters(Subjects subject) {
-		System.out.println("from controller program_id=" + subject.getSemester_no() );
-		Object[] ob = new Object[11];
-	/*	ob[1] = program_id;
-		ob[2] = subject_name;
-		ob[3] = subject_code;
-		ob[9] = semester_no;*/
-		return subjectService.getSubjectByParameters(ob);
+	public List getSubjectByParameters(@PathParam("programId") int programId,@PathParam("semester") int semester) {
+		return subjectService.getSubjectByParameters(programId,semester);
 	}
 
 	@GET
-	@Path("/GetSubjectByParameters1/{id}")
+	@Path("/GetSubjectByProgram/{programId}")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public List getSubjectByParameters1(@PathParam("id") int programId) {
-
-		Object[] ob = new Object[11];
-		ob[1] = programId;
-		return subjectService.getSubjectByParameters(ob);
+	@Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public List getSubjectByProgram(@PathParam("programId") int programId) {
+		return subjectService.getSubjectByProgram(programId);
 	}
-
-	@POST
-	@Path("/GetSubjectByProgram")
-	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public List getSubjectByProgram(@FormParam("programId") int programId, @FormParam("semester_no") int semester_no) {
-		System.out.println("program_id: "+ programId +" semester_no: "+ semester_no);
-		
-		Object[] ob = new Object[11];
-		ob[1] = programId;
-		ob[9] = semester_no;
-		return subjectService.getSubjectByProgram(ob);
-	}
+	
 }

@@ -37,7 +37,7 @@ public class ExamController {
 	@Path("/SaveExam")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public Exam saveExam(Exam exam) {
+	public int saveExam(Exam exam) {
 		return examService.addExam(exam);
 	}
 	
@@ -45,7 +45,7 @@ public class ExamController {
 	@GET
 	@Path("/GetExam/{id}")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public Exam getExam(@PathParam("id") int id) {
+	public List<Exam> getExam(@PathParam("id") int id) {
 		return examService.getExam(id);
 	}
 	
@@ -64,17 +64,13 @@ public class ExamController {
 		return examService.deleteExam(id);
 	}
 	
-	@POST
-	@Path("/GetExamByExamTypeAndSubjectId")
+	@GET
+	@Path("/GetExamByExamTypeAndSubjectId/{exmaTypeId}/{subjectId}")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public List<Exam> getExamByExamTypeAndSubjectId(@FormParam("examTypeId") int examTypeId,@FormParam("subjectId") int subjectId) {
-		System.out.println("hreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-		Object[] ob= new Object[11];
-		ob[1]=examTypeId;
-		ob[2]=subjectId;
-		System.out.println("examTypeId="+examTypeId+" "+"subjectId="+subjectId);
-		System.out.println(examService.searchByField(ob));
-		return examService.searchByField(ob);
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public List<Exam> getExamByExamTypeAndSubjectId(@PathParam("exmaTypeId") int exmaTypeId,@PathParam("subjectId") int subjectId) {
+		
+		return examService.searchByField(exmaTypeId,subjectId);
 	}
 	
 }

@@ -378,6 +378,7 @@ var studentid2=0;
                     }
                 });
                 
+                
                 //loading student program to find which student belong to which program and to select that program in 
                 //update automatically
                 loadStudentProgram();
@@ -392,7 +393,7 @@ var studentid2=0;
             			  dataType : 'json',
             			
             			success : function(data) {
-            			alert("from stud ="+JSON.stringify(data));
+            			//alert("from stud ="+JSON.stringify(data));
             			programId2=data[0].program.program_id;
             			studentProgramId2=data[0].student_program_id;
             			//alert(programId2);
@@ -409,6 +410,7 @@ var studentid2=0;
             		});
             	}
               
+                //auto selecting program 
                 $('#all-program-box option').each(function() {
                     if($(this).val() == programId2) {
                     	$(this).prop("selected", true);

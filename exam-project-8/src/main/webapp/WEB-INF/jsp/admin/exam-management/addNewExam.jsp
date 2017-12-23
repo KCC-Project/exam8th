@@ -118,8 +118,8 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label">Available</label>
 			<div class="col-md-9">
-				<label> Yes <input type="radio" value="0" name="status" checked required>
-				</label> <label> No <input type="radio" value="1" name="status">
+				<label> Yes <input type="radio" value="1" name="status" checked required>
+				</label> <label> No <input type="radio" value="0" name="status">
 				</label>
 			</div>
 		</div>
@@ -136,6 +136,8 @@
 	var a_program_id;
 	var semester_no;
 	var examTypeId;
+	//examid after save exam 
+	var latestExamId=0;
         $(document).ready(function () {
 
             $.when($.ajax(load_all_program("all-program-box"))).done(function () {
@@ -154,14 +156,13 @@
             $("#s-semester-no").change(function (event) {
                  a_program_id = $('#add-exam-form').find('[name="program_id"]').val();
                  semester_no = $('#add-exam-form').find('[name="s_semester_no"]').val();
-
-                if (a_program_id != "") {
-                    var data = {
-                        "programId" : a_program_id,
-                        "semester_no" : semester_no
-                    };
-                    search_subject(data, "subject-box");
-                }
+				alert("a_program_id= "+a_program_id+" semester_no= "+semester_no);
+               
+				 var url = window.context + "/ApiSubject/GetSubjectByParameters/"+a_program_id+"/"+semester_no;
+		            var method = "GET";
+		            var data="";
+                    search_subject(data, "subject-box", url, method);
+                
 
             });
 
@@ -315,7 +316,8 @@
                 cache : true,
                 async: false,
                 success : function (data) {
-
+latestExamId=data;
+//alert("latestExamId = "+latestExamId);
                     alert("Thanks for the submission!");
                     $("#add-exam-form")[0].reset();
                     $('#add-exam-form').DataTable().ajax.reload();
@@ -325,11 +327,14 @@
                     alert("Error...!!!");
                 }
             });
+            
+            //this fun will auto save student info when exam created
             saveInfo();
+            
             function formToJSON() {
                 var data = JSON.stringify({
-                    "exam_type_id" : $('#add-exam-form').find('[name="exam_type_id"]').val(),
-                    "subject_id" : $('#add-exam-form').find('[name="subject_id"]').val(),
+                   "examtype":{ "exam_type_id" : $('#add-exam-form').find('[name="exam_type_id"]').val(),},
+                   "subject":{ "subject_id" : $('#add-exam-form').find('[name="subject_id"]').val(),},
                     "exam_date" : $('#add-exam-form').find('[name="exam_date"]').val(),
                     "full_marks" : $('#add-exam-form').find('[name="full_marks"]').val(),
                     "pass_marks" : $('#add-exam-form').find('[name="pass_marks"]').val(),
@@ -341,22 +346,17 @@
                 return data;
             }
             function saveInfo() {
-            	//alert(a_program_id);
-            	//alert(semester_no);
-            	//alert(examTypeId);
+            	alert(a_program_id);
+            	alert(semester_no);
+            	alert(latestExamId);
         		$.ajax({
-        			url : window.context + "/ApiStudentsExams/GetRequiredInfoTOSave",
-        			method : "POST",
+        			url : window.context + "/ApiStudentsExams/GetRequiredInfoTOSave/"+a_program_id+"/"+semester_no+"/"+latestExamId,
+        			method : "GET",
         			cache : true,
         			 async: false,
-        			data : {
-        				a_program_id : a_program_id,
-        				semester_no : semester_no,
-        				examTypeId	: examTypeId
-
-        			},
+        			
         			success : function(data) {
-        				alert("sucess");
+        				alert("sucess in saving student exam");
         			
         			},
         			error : function() {
