@@ -101,54 +101,59 @@ public class StudentsExamDAOImpl implements StudentsExamDAO {
 	}
 
 	@Override
+	@Transactional
 	public List updatestudentExamModel(int semesterNo, String programeName, int programId, int batchyear,
 			String examTypeName, int subjectId, int examtypeId, String subjectName) {
-		System.out.println("inside sql");
 		List list = new ArrayList<>();
-		try {
-			conn = DatabaseConnection.connectToDatabase();
-			System.out.println("inside sql");
-			sql = "SELECT s.first_name,s.middle_name,s.last_name,se.attendance_status, se.obtained_marks,se.exam_id,se.students_exams_id,se.grade,se.status, sub.subject_name, et.type_name,e.full_marks,e.pass_marks, e.exam_date,se.s_id,s.current_semester, pr.program_name, sub.semester_no FROM students_exams as se INNER JOIN students as s ON se.s_id = s.s_id INNER JOIN students_program as sp ON s.s_id = sp.s_id INNER JOIN exams as e ON e.exam_id = se.exam_id INNER JOIN exam_types as et ON et.exam_type_id = e.exam_type_id INNER JOIN subjects as sub ON e.subject_id = sub.subject_id INNER JOIN programs as pr ON pr.program_id = sub.program_id where sp.program_id=? and sp.batch_year=? and s.current_semester=? and et.exam_type_id=? and sub.subject_id=?";
-			System.out.println("inside sql");
-			pst = conn.prepareStatement(sql);
-			System.out.println("inside sql");
-			pst.setInt(1, programId);
-			System.out.println("inside sql");
-			pst.setInt(2, batchyear);
-			pst.setInt(3, semesterNo);
-			System.out.println("inside sql");
-			pst.setInt(4, examtypeId);
-			pst.setInt(5, subjectId);
-			System.out.println("inside sql");
-			rs = pst.executeQuery();
-			System.out.println("inside sql");
-			while (rs.next()) {
-				System.out.println(rs.getString("first_name"));
-				Map<String, Object> map = new HashMap<>();
-				map.put("first_name", rs.getString("first_name"));
-				map.put("middle_name", rs.getString("middle_name"));
-				map.put("last_name", rs.getString("last_name"));
-				map.put("grade", rs.getInt("grade"));
-				map.put("attendance_status", rs.getInt("attendance_status"));
-				map.put("obtained_marks", rs.getInt("obtained_marks"));
-				map.put("subject_name", rs.getString("subject_name"));
-				map.put("type_name", rs.getString("type_name"));
-				map.put("status", rs.getInt("status"));
-				map.put("current_semester", rs.getInt("current_semester"));
-				map.put("exam_date", rs.getString("exam_date"));
-				map.put("s_id", rs.getInt("s_id"));
-				map.put("full_marks", rs.getInt("full_marks"));
-				map.put("pass_marks", rs.getInt("pass_marks"));
-				map.put("students_exams_id", rs.getString("students_exams_id"));
-				map.put("exam_id", rs.getInt("exam_id"));
-				
-				list.add(map);
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return list;
+		
+		session = sessionFactory.getCurrentSession();
+		Query query = session.createSQLQuery("SELECT e.exam_id ,sub.subject_name, et.type_name,e.exam_date,e.full_marks,e.pass_marks FROM exam e INNER JOIN subjects sub ON sub.subject_id=e.subject_id "
+				+ "INNER JOIN exam_type et ON et.exam_type_id=e.exam_type_id WHERE et.exam_type_id="+examtypeId+" AND sub.subject_id="+subjectId+" "
+				+ "AND e.status=0;");
+		List<Object[]> result = query.getResultList();
+	for (Object[] objects : result) {
+		System.out.println("exam_id = "+objects[0]);
+		System.out.println("subject name = "+objects[1]);
+		System.out.println("exam type name = "+objects[2]);
+		Query query1 = session.createSQLQuery("SELECT CONCAT(s.first_name ,' ',s.middle_name,' ' ,s.last_name) AS fullname ,"
+				+ " s.s_id,s.current_semester,se.students_exams_id,se.attendance_status,se.grade,"
+				+ "se.obtained_marks,se.status FROM student s INNER JOIN student_exam se "
+				+ "ON se.student_id=s.s_id INNER JOIN exam e ON e.exam_id=se.exam_id "
+				+ "WHERE e.exam_id="+objects[0]+" AND s.status=1");
+		List<Object[]> result1 = query1.getResultList();
+		for (Object[] objects2 : result1) {
+			System.out.println("fullname = "+objects2[0]);
+			System.out.println("student id = "+objects2[1]);
+			System.out.println("current semester = "+objects2[2]);
+			System.out.println("student exam id = "+objects2[3]);
+			System.out.println("attandance = "+objects2[4]);
+			System.out.println("grade = "+objects2[5]);
+			System.out.println("obtain marks = "+objects2[6]);
+			System.out.println("status = "+objects2[7]);
+			
+			
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("exam_id", objects[0]);
+			map.put("subject_name", objects[1]);
+			map.put("type_name", objects[2]);
+			map.put("exam_date", objects[3]);
+			map.put("full_marks", objects[4]);
+			map.put("pass_marks", objects[5]);
+			map.put("fullname",objects2[0]);
+			map.put("s_id", objects2[1]);
+			map.put("current_semester", objects2[2]);
+			map.put("students_exams_id", objects2[3]);
+			map.put("attendance_status", objects2[4]);
+			map.put("grade", objects2[5]);
+			map.put("obtained_marks", objects2[6]);
+			map.put("status", objects2[7]);
+			list.add(map);
 
+			
+		}
+	}
+		return list;
 	}
 
 	@Override

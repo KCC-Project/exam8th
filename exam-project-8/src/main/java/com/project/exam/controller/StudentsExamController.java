@@ -110,9 +110,6 @@ public class StudentsExamController {
 		System.out.println("examtypeId = " + examtypeId);
 		System.out.println("subjectName = " + subjectName);
 
-		System.out.println(studentsExamService.updatestudentExamModel(semesterNo, programeName, programId, batchyear,
-				examTypeName, subjectId, examtypeId, subjectName));
-
 		return studentsExamService.updatestudentExamModel(semesterNo, programeName, programId, batchyear, examTypeName,
 				subjectId, examtypeId, subjectName);
 	}
