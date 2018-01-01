@@ -17,8 +17,7 @@ public interface SubjectDAO {
 
 	public List searchSubject(String searchPara);
 
-	
-	public List getSubjectByProgram(Object[] obj);
+
 
 	List<Subjects> getSubjectByParameters(int programId, int semester);
 	

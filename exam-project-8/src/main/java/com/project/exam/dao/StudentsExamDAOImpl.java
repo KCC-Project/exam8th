@@ -1,8 +1,5 @@
 package com.project.exam.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,24 +7,19 @@ import java.util.Map;
 
 import javax.persistence.Query;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.exam.controller.StudentsExamController;
 import com.project.exam.model.Exam;
 import com.project.exam.model.Student;
 import com.project.exam.model.StudentsExam;
 
 @Repository("studentExamDao")
 public class StudentsExamDAOImpl implements StudentsExamDAO {
-	private Connection conn;
-	private String sql;
-	private PreparedStatement pst;
-	private ResultSet rs;
+
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -154,31 +146,6 @@ public class StudentsExamDAOImpl implements StudentsExamDAO {
 		}
 	}
 		return list;
-	}
-
-	@Override
-	public StudentsExam getstudentsExam(int s_Id, int examid) {
-		StudentsExam model = new StudentsExam();
-		try {
-			conn = DatabaseConnection.connectToDatabase();
-			sql = "Select * from students_exams where students_exams_id=? and s_id=?";
-			pst = conn.prepareStatement(sql);
-			pst.setInt(1, examid);
-			pst.setInt(2, s_Id);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				model.setStudents_exams_id(rs.getInt("students_exams_id"));
-				model.setAttendance_status(rs.getInt("attendance_status"));
-				model.setGrade(rs.getString("grade"));
-				model.setObtained_marks(rs.getInt("obtained_marks"));
-				model.setStatus(rs.getInt("status"));
-				//model.setExam_id(rs.getInt("exam_id"));
-				//model.setS_id(rs.getInt("s_id"));
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return model;
 	}
 
 }

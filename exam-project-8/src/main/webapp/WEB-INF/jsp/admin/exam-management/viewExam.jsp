@@ -332,8 +332,8 @@
 	                success : function (data) {
 	
 	                    alert("Thanks for the submission!");
-	                    $("#exam-edit-form")[0].reset();
-	                    $('#exam-edit-form').DataTable().ajax.reload();
+	                    //$("#exam-edit-form")[0].reset();
+	                    $('#view_exam').DataTable().ajax.reload();
 	                    
 	                },
 	                error : function () {

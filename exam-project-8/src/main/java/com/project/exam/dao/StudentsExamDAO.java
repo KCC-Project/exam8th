@@ -14,5 +14,5 @@ public interface StudentsExamDAO {
 
 	public List updatestudentExamModel(int semesterNo, String programeName, int programId, int batchyear,
 			String examTypeName, int subjectId, int examtypeId, String subjectName);
-	public StudentsExam getstudentsExam(int s_Id,int examid);
+
 }

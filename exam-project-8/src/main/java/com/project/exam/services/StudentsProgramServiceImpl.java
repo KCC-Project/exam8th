@@ -40,11 +40,6 @@ public class StudentsProgramServiceImpl implements StudentsProgramService {
 
 
 	@Override
-	public List<StudentsProgram> searchByField(Object[] obj) {
-		return studentsProgramDao.searchByField(obj);
-	}
-
-	@Override
 	public List<StudentsProgram> getStudentsProgramByStudentId(int s_Id) {
 		return studentsProgramDao.getStudentsProgramByStudentId(s_Id);
 	}

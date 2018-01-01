@@ -78,15 +78,7 @@ public class StudentsProgramController {
 		return studentsProgramService.getStudentsProgramByProgramId(id);
 	}
 	
-	@POST
-	@Path("/SearchStudentsProgram")
-	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public List<StudentsProgram> searchStudentsProgram(@FormParam("programId") int programId,@FormParam("batchyear") int batchyear) {
-		Object[] ob= new Object[7];
-		ob[2]=programId;
-		ob[3]=batchyear;
-		return studentsProgramService.searchByField(ob);
-	}
+	
 	/*@POST
 	@Path("/GetStudentProgramInfoTOSave")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
