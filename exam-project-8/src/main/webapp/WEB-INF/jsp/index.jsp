@@ -164,17 +164,19 @@
 			//document.getElementById("btnn").disabled = true;
 
 			var email = document.getElementById("forgotemailname").value;
-			var url = "forgotPassword";
-			var sendEmail = "email=" + email;
-			var aj = new XMLHttpRequest();
-			aj.open("POST", url, true);
-			aj.setRequestHeader("Content-type",
-					"application/x-www-form-urlencoded");
-			aj.onreadystatechange = function() {
-
-				if (aj.readyState == 4 && aj.status == 200) {
-					var return_data = aj.responseText;
-					var res = return_data.substring(3, 11);
+			alert(email);
+		var data="";
+			
+			$.ajax({
+				url : window.context + "forgotPassword",
+				method : "GET",
+				dataType : 'json',
+				//contentType : 'application/json',
+				data : data,
+				cache : true,
+				success : function(data) {
+					alert(data);
+					var res = data.substring(3, 11);
 					if (res.match("Success!")) {
 						document.getElementById("forgotemailname").disabled = true;
 						document.getElementById("btnn").innerHTML = "Sucessfull";
@@ -189,9 +191,13 @@
 					}
 					document.getElementById("errmsg").innerHTML = return_data;
 
+				},
+				error : function() {
+					alert("Error...from forget password");
 				}
-			}
-			aj.send(sendEmail);
+			});
+			
+			
 		}
 		function verificationTimeLimit(email) {
 			setTimeout(function() {

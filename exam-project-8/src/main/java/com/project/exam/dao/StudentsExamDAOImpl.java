@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,7 +92,16 @@ public class StudentsExamDAOImpl implements StudentsExamDAO {
 			
 		}
 	}
-
+	@Override
+	@Transactional
+	public List<StudentsExam> searchByField(int studentId) {
+		session = sessionFactory.getCurrentSession();
+		List<StudentsExam> listexam = session.createCriteria(StudentsExam.class).add(Restrictions.eq("student.s_id", studentId)).list();
+		
+		return listexam;
+		
+			}
+	
 	@Override
 	@Transactional
 	public List updatestudentExamModel(int semesterNo, String programeName, int programId, int batchyear,

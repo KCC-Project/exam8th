@@ -55,5 +55,10 @@ public class StudentsExamServiceImpl implements StudentsExamService {
 		
 	}
 
+	@Override
+	public List<StudentsExam> searchByField(int studentId) {
+	return studentExamDao.searchByField(studentId);
+	}
+
 	
 }

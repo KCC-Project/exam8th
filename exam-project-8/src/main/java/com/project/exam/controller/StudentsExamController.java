@@ -90,6 +90,16 @@ public class StudentsExamController {
 
 		studentsExamService.getRequiredInfoTOSave(programId, semester, examId);
 	}
+	
+	@GET
+	@Path("/GetStudentExamByStudentId/{studentId}")
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public List<StudentsExam> getStudentExamByStudentId(@PathParam("studentId") int studentId) {
+		System.out.println("student id = "+studentId);
+		return studentsExamService.searchByField(studentId);
+	}
+	
 
 	@POST
 	@Path("/GetRequiredInfoTOupdate")

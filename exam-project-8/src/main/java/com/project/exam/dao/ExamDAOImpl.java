@@ -1,14 +1,9 @@
 package com.project.exam.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -16,19 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.exam.model.Admin;
 import com.project.exam.model.Exam;
-import com.project.exam.model.Student;
-import com.project.exam.model.StudentsProgram;
-import com.project.exam.model.Subjects;
 
 @Repository("examDao")
 public class ExamDAOImpl implements ExamDAO {
-	private Connection conn;
-	private String sql;
-	private PreparedStatement pst;
-	private ResultSet rs;
-
+	
 
 	@Autowired
 	private SessionFactory sessionFactory;
