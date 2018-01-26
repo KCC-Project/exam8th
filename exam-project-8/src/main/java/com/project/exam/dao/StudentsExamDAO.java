@@ -8,6 +8,7 @@ public interface StudentsExamDAO {
 	public List<StudentsExam> getstudentsExamList();
 	public int addstudentsExam(StudentsExam studentsExam);
 	public List<StudentsExam> getstudentsExam(int s_Id);
+	public List<StudentsExam> getstudentsExam(int s_Id,int semesterNo);
 	public StudentsExam updatestudentsExam(StudentsExam studentsExam);
 	public int deletestudentsExam(int s_Id);
 	public void getRequiredInfoTOSave(int a_program_id, int examTypeId, int semester_no);

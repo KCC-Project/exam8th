@@ -24,18 +24,19 @@
 				<a><button type="button" class="btn btn-info pull-right"
 						data-toggle="modal" data-target="#searchStudentModal"
 						id="modal-box">Filter</button></a>
-						<div class="col-xs-3" style="margin-left: -34px; /* border: 2px solid black; */ height: 37px;">
+				<div class="col-xs-3"
+					style="margin-left: -34px; /* border: 2px solid black; */ height: 37px;">
 					<div class="form-group">
 						<div class="input-group">
-							<select class="form-control" id="sel1"></select> <span class="input-group-addon"> <i
-								class="fa fa-search"></i>
+							<select class="form-control" id="sel1"></select> <span
+								class="input-group-addon"> <i class="fa fa-search"></i>
 							</span>
 						</div>
-						
+
 					</div>
-					
+
 				</div>
-<div class="col-xs-7 " id="sembtn"></div>
+				<div class="col-xs-7 " id="sembtn"></div>
 			</div>
 		</div>
 	</div>
@@ -170,12 +171,11 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label">Attendance</label>
 			<div class="col-md-9">
-			</label> <label> Present <input type="radio" value=1
-						name="attendance">
-				<label> Absent <input type="radio" value=0
-						name="attendance">
-					
-					</label>
+				</label> <label> Present <input type="radio" value=1
+					name="attendance"> <label> Absent <input
+						type="radio" value=0 name="attendance">
+
+				</label>
 			</div>
 		</div>
 
@@ -220,486 +220,410 @@
 		var examtypeId;
 		var subjectId;
 		var subjectName;
+
+		var idOfSelectedIteam = 0;
+
+		var studentId=0;
+		var studentFullName;
+	
 		
-		var idOfSelectedIteam=0;
+		$(document).ready(function() {
 
-		$(document)
-				.ready(
-						function() {
+			//For select 2 initialization
+			var url1 = window.context + "/ApiStudent/SearchStudent";
+			var method1 = "POST";
+			var url2 = window.context + "/ApiStudent/GetStudent";
+			var method2 = "GET";
+			var placeholder = "Student";
+			select2Function(url1, url2, method1, method2, placeholder, loadStudentInfo);
+
+			$("#modal-box").click(function(event) {
+				load_faculty(event, "p-faculty-box");
+			});
+			$("#p-faculty-box").change(function(event) {
+				load_program(event, "p-program-box");
+			});
+			$("#p-semester-box").change(function(event) {
+				var getid = event.target.id;
+				semesterNo1 = $('#' + getid).find(":selected").text();
+				semesterNo = $('#' + getid).find(":selected").text();
+				var url = window.context + "/ApiSubject/GetSubjectByParameters/" + programId + "/" + semesterNo;
+				var method = "GET";
+				var data = "";
+				search_subject(data, "p-subject-box", url, method);
+			});
+			$("#p-program-box").change(function(event) {
+				var getid = event.target.id;
+				programeName = $('#' + getid).find(":selected").text();
+				programId = $('#' + getid).find(":selected").val();
+				load_batch_year(event, "p-batch-box");
+
+			});
+			$("#p-batch-box").change(function(event) {
+				var getid = event.target.id;
+				var id = $('#' + getid).find(":selected").val();
+				batchyear = $('#' + getid).find(":selected").text();
+			});
+			$("#p-subject-box").change(function(event) {
+				var getid = event.target.id;
+				subjectName = $('#' + getid).find(":selected").text();
+				subjectId = $('#' + getid).find(":selected").val();
+
+				load_exam_type(event, "p-Exam-Type-box");
+			});
+
+			$("#p-Exam-Type-box").change(function(event) {
+				var getid = event.target.id;
+				examtypeId = $('#' + getid).find(":selected").val();
+				examTypeName = $('#' + getid).find(":selected").text();
+			});
+			
+			
+			
+		
+
+			function loadStudentInfo(url, method, data) {
+				var count;
+				var current_sem;
+				var student_id;
+				
+				$.ajax({
+					url : url,
+					method : method,
+					dataType : 'json',
+					contentType : 'application/json',
+					data : data,
+
+					cache : true,
+					success : function(data) {
+						$("#sembtn").empty();
+						var content = '';
+						for (var i = 1; i <= data[0].current_semester; i++) {
+
+							content += '<input style="margin-right:10px;" id='+data[0].s_id+'  name="semesterno" type="button"  class="btn btn-default btnSelected" values='
+																							+ data[0].s_id
+																							+ ' value='
+																							+i
+																							+ '>';
+																							count=i;
+								
+						}
+						current_sem=data[0].current_semester;
+						student_id=data[0].s_id;
+						
+						studentFullName=data[0].first_name +" "+data[0].middle_name +" "+data[0].last_name ;
+						
+						$("#sembtn").append(content);
+						
+						//this if is to show defult current semester result
+						if (count==current_sem) {
+							var url=window.context + "/ApiStudentsExams/GetStudentExamByStudentIdAndSemesterNo/"+student_id+"/"+current_sem;
+							var method="GET";
+							var data="";
+							loadsExamInformation(url,method,data);
+						}
+						
+						//this is run when we click specific semester
+						$("input").click(function(event) {
+							 studentId = event.target.id;
+							var semesterNo=event.target.value;
+							var url=window.context + "/ApiStudentsExams/GetStudentExamByStudentIdAndSemesterNo/"+studentId+"/"+semesterNo;
+							var method="GET";
+							var data="";
+							loadsExamInformation(url,method,data);
+							//alert("studentId = "+ studentId +"  "+ " semesterNo = "+semesterNo);
+						});
+					},
+					error : function() {
+						alert("Error...!!!");
+					}
+				});
+			}
+			// Datatable for viewing student exam
+			function loadsExamInformation(url, method, data) {
+
+				$('#view-student-exam').DataTable({
+					destroy : true,
+					paging : true,
+					searching : true,
+					"processing" : true,
+					"serverSide" : false,
+					"order" : [ [ 0, "desc" ] ],
+					"ajax" : {
+						"url" : url,
+						"type" : method,
+						"data" : data,
+						"dataSrc" : "",
+						"dataType" : "json",
+						"async" : false
+					},
+					"columns" : [ {
+						data : null,
+						render : function(data, type, row) {
+							console.log("res = "+JSON.stringify(data));
+							//alert(data.students_exams_id);
+							return data.students_exams_id;
+						},
+					}, {
+						data : null,
+						render : function(data, type, row) {
 							
-							//For select 2 initialization
-					        var url1 = window.context + "/ApiStudent/SearchStudent";
-					        var method1 = "POST";
-					        var url2 = window.context + "/ApiStudentsExams/GetStudentExamByStudentId";
-					        var method2 = "GET";
-					        var placeholder = "Student";
-					        select2Function(url1, url2, method1, method2, placeholder, loadsExamInformation);
-					        
+							return studentFullName;
+						},
+					}, {
+						data : null,
+						render : function(data, type, row) {
+							//alert("examtype name = "+data.exam.examtype.type_name)
+							return data.type_name;
+						},
+					}, {
+						data : null,
+						render : function(data, type, row) {
+							//alert("examtype name = "+data.exam.examtype.type_name)
+							return data.subject_name;
+						},
+					}, {
+						data : null,
+						render : function(data, type, row) {
+						
+							return data.semester_no;
+						},
+					}, {
+						data : null,
+						render : function(data, type, row) {
+							return data.exam_date;
+						},
+					}, {
+						data : null,
+						render : function(data, type, row) {
+							return 'Full: ' + data.full_marks + '\n Pass: ' + data.pass_marks + '';
+						},
+					}, {
+						data : null,
+						render : function(data, type, row) {
+							var statusStatus = "";
 
-							$("#modal-box").click(function(event) {
-								load_faculty(event, "p-faculty-box");
-							});
-							$("#p-faculty-box").change(function(event) {
-								load_program(event, "p-program-box");
-							});
-							$("#p-semester-box")
-									.change(
-											function(event) {
-												var getid = event.target.id;
-												semesterNo1 = $('#' + getid)
-														.find(":selected")
-														.text();
-												semesterNo = $('#' + getid)
-														.find(":selected")
-														.text();
-												var url = window.context
-														+ "/ApiSubject/GetSubjectByParameters/"
-														+ programId + "/"
-														+ semesterNo;
-												var method = "GET";
-												var data = "";
-												search_subject(data,
-														"p-subject-box", url,
-														method);
-											});
-							$("#p-program-box").change(
-									function(event) {
-										var getid = event.target.id;
-										programeName = $('#' + getid).find(
-												":selected").text();
-										programId = $('#' + getid).find(
-												":selected").val();
-										load_batch_year(event, "p-batch-box");
-
-									});
-							$("#p-batch-box").change(
-									function(event) {
-										var getid = event.target.id;
-										var id = $('#' + getid).find(
-												":selected").val();
-										batchyear = $('#' + getid).find(
-												":selected").text();
-									});
-							$("#p-subject-box")
-									.change(
-											function(event) {
-												var getid = event.target.id;
-												subjectName = $('#' + getid)
-														.find(":selected")
-														.text();
-												subjectId = $('#' + getid)
-														.find(":selected")
-														.val();
-
-												load_exam_type(event,
-														"p-Exam-Type-box");
-											});
-
-							$("#p-Exam-Type-box").change(
-									function(event) {
-										var getid = event.target.id;
-										examtypeId = $('#' + getid).find(
-												":selected").val();
-										examTypeName = $('#' + getid).find(
-												":selected").text();
-									});
-
-							// Datatable for viewing student exam
-							function loadsExamInformation(url, method, data) {
-
-								$('#view-student-exam')
-										.DataTable(
-												{
-													destroy : true,
-													paging : true,
-													searching : true,
-													"processing" : true,
-													"serverSide" : false,
-													"order" : [ [ 0, "desc" ] ],
-													"ajax" : {
-														"url" : url,
-														"type" : method,
-														"data" : data,
-														"dataSrc" : "",
-														"dataType" : "json",
-														"async" : false
-													},
-													"columns" : [ {
-									                    data : null,
-									                    render : function (data, type, row) {
-									                       return data.student.s_id;
-									                    },
-									                },{
-									                    data : null,
-									                    render : function (data, type, row) {
-									                        console.log("data = "+JSON.stringify(data));
-									                        var full_name = "";
-									                        full_name += data.student.first_name + " ";
-									                        if (data.student.middle_name == undefined) {
-
-									                        } else {
-									                            full_name += data.student.middle_name + " ";
-									                        }
-									                        full_name += data.student.last_name;
-									                        // Combine the two data
-									                        return '' + full_name + '';
-									                    },
-									                },  {
-									                    data : null,
-									                    render : function (data, type, row) {
-									                    	//alert("examtype name = "+data.exam.examtype.type_name)
-									                       return data.exam.examtype.type_name;
-									                    },
-									                },
-									                {
-									                    data : null,
-									                    render : function (data, type, row) {
-									                    	//alert("examtype name = "+data.exam.examtype.type_name)
-									                       return data.exam.subject.subject_name;
-									                    },
-									                },  {
-									                    data : null,
-									                    render : function (data, type, row) {
-									                    	$("#sembtn").empty();
-									                    	var content = '';
-									                    	for (var i = 1; i <= data.student.current_semester; i++) {
-
-															    content += '<input style="margin-right:10px; " type="button" id="'+data.student.s_id+'" class="btn btn-default btnSelected" values='
-																								+ data.student.s_id
-																								+ ' value='
-																								+i
-																								+ '>';
-															}
-
-															$("#sembtn").append(content);
-									                       return data.student.current_semester;
-									                    },
-									                }, {
-									                    data : null,
-									                    render : function (data, type, row) {
-									                       return  data.exam.exam_date;
-									                    },
-									                },{
-									                    data : null,
-									                    render : function (data, type, row) {
-									                    	return 'Full: '
-															+ data.exam.full_marks
-															+ '\n Pass: '
-															+ data.exam.pass_marks
-															+ '';
-									                    },
-									                },{
-														data : null,
-														render : function(
-																data,
-																type,
-																row) {
-															var statusStatus = "";
-
-															if (data.attendance_status == 0) {
-																statusStatus = "Absent";
-															} else if (data.attendance_status == 1) {
-																statusStatus = "Present";
-															}
-
-															return ''
-																	+ statusStatus
-																	+ '';
-														},
-													}, {
-									                    "data" : "obtained_marks"
-									                }, {
-														data : null,
-														render : function(
-																data,
-																type,
-																row) {
-															if (data.grade == "A") {
-																return '  <button type="button" class="btn btn-primary">'+ data.grade+'</button>';
-																		
-															} else if (data.grade == "B") {
-																return '  <button type="button" class="btn btn-success">'+ data.grade+'</button>';
-															}else if (data.grade == "C") {
-																return '  <button type="button" class="btn btn-info">'+ data.grade+'</button>';
-															} else if (data.grade == "D") {
-																return '  <button type="button" class="btn btn-warning">'+ data.grade+'</button>';
-															} 
-															else if (data.grade == "F") {
-																return '  <button type="button" class="btn btn-danger">'+ data.grade+'</button>';
-															} else {
-																return '<input type="button" class="btn-defult" value='+ data.grade+'>';
-															}
-														},
-													},{
-									                    data : null,
-									                    render : function (data, type, row) {
-									                        return '<button value='+data.student.s_id+' class="btn btn-success editStud">Edit</button>';
-									                    },
-									                } ]
-												});
-
-								// edit buttons on students row
-								$(".editStude")
-										.click(
-												
-												function(event) {
-													var table = $(
-															"#view-student-exam")
-															.DataTable();
-													var data = table.row(
-															$(this).parents(
-																	'tr'))
-															.data();
-													console.log(data);
-
-													// Populate the form fields
-													$('#studentedit')
-															.find(
-																	'[name="s_id"]')
-															.val(data.student.s_id)
-															.end()
-															.find(
-																	'[name="student_exam_id"]')
-															.val(
-																	data['students_exams_id'])
-															.end()
-															.find(
-																	'[name="exam_id"]')
-															.val(
-																	data.exam.exam_id)
-															.end()
-															.find(
-																	'[name="obtained_marks"]')
-															.val(
-																	data['obtained_marks'])
-															.end()
-															.find(
-																	'[name="grade"]')
-															.val(data['grade'])
-															.end()
-
-													$("input[name=attendance][value="
-																	+ data['attendance_status']
-																	+ "]")
-															.prop('checked',
-																	true);
-													$(
-															"input[name=status][value="
-																	+ data['status']
-																	+ "]")
-															.prop('checked',
-																	true);
-
-													bootbox
-															.dialog(
-																	{
-																		title : 'Edit the Student',
-																		message : $('#studentedit'),
-																		show : false
-																	// We will show it manually later
-																	})
-															.on(
-																	'shown.bs.modal',
-																	function() {
-																		$(
-																				'#studentedit')
-																				.show() // Show the modal form
-																	})
-															.on(
-																	'hide.bs.modal',
-																	function(e) {
-																		// Bootbox will remove the modal (including the body which contains the login form)
-																		// after hiding the modal
-																		// Therefor, we need to backup the form
-																		$(
-																				'#studentedit')
-																				.hide()
-																				.appendTo(
-																						'body');
-																	}).modal(
-																	'show');
-
-												});
+							if (data.attendance_status == 0) {
+								statusStatus = "Absent";
+							} else if (data.attendance_status == 1) {
+								statusStatus = "Present";
 							}
 
-							$("#searchbtnClicked")
-									.click(
-											function(event) {
+							return '' + statusStatus + '';
+						},
+					}, {
+						"data" : "obtained_marks"
+					}, {
+						data : null,
+						render : function(data, type, row) {
+							if (data.grade == "A") {
+								return '  <button type="button" class="btn btn-primary">' + data.grade + '</button>';
 
-												var url = window.context
-														+ "/ApiStudentsExams/GetRequiredInfoTOupdate";
-												var method = "POST";
+							} else if (data.grade == "B") {
+								return '  <button type="button" class="btn btn-success">' + data.grade + '</button>';
+							} else if (data.grade == "C") {
+								return '  <button type="button" class="btn btn-info">' + data.grade + '</button>';
+							} else if (data.grade == "D") {
+								return '  <button type="button" class="btn btn-warning">' + data.grade + '</button>';
+							} else if (data.grade == "F") {
+								return '  <button type="button" class="btn btn-danger">' + data.grade + '</button>';
+							} else {
+								return '<input type="button" class="btn-defult" value='+ data.grade+'>';
+							}
+						},
+					}, {
+						data : null,
+						render : function(data, type, row) {
+							return '<button value='+data.students_exams_id+' class="btn btn-success editStud">Edit</button>';
+						},
+					} ]
+				});
 
-												var data = {
-													semesterNo : semesterNo1,
-													programeName : programeName,
-													programId : programId,
-													batchyear : batchyear,
-													examTypeName : examTypeName,
-													examtypeId : examtypeId,
-													subjectId : subjectId,
-													subjectName : subjectName,
-												};
-												alert(JSON.stringify(data));
-												loadsExamInformation(url,
-														method, data);
+				// edit buttons on students row
+				$(".editStude").click(
 
-											});
+				function(event) {
+					var table = $("#view-student-exam").DataTable();
+					var data = table.row($(this).parents('tr')).data();
+					console.log(data);
 
-						});
+					// Populate the form fields
+					$('#studentedit').find('[name="s_id"]').val(data.student.s_id).end().find('[name="student_exam_id"]').val(data['students_exams_id']).end().find('[name="exam_id"]').val(data.exam.exam_id).end().find('[name="obtained_marks"]').val(data['obtained_marks']).end().find('[name="grade"]').val(data['grade']).end()
+
+					$("input[name=attendance][value=" + data['attendance_status'] + "]").prop('checked', true);
+					$("input[name=status][value=" + data['status'] + "]").prop('checked', true);
+
+					bootbox.dialog({
+						title : 'Edit the Student',
+						message : $('#studentedit'),
+						show : false
+					// We will show it manually later
+					}).on('shown.bs.modal', function() {
+						$('#studentedit').show() // Show the modal form
+					}).on('hide.bs.modal', function(e) {
+						// Bootbox will remove the modal (including the body which contains the login form)
+						// after hiding the modal
+						// Therefor, we need to backup the form
+						$('#studentedit').hide().appendTo('body');
+					}).modal('show');
+
+				});
+			}
+
+			$("#searchbtnClicked").click(function(event) {
+
+				var url = window.context + "/ApiStudentsExams/GetRequiredInfoTOupdate";
+				var method = "POST";
+
+				var data = {
+					semesterNo : semesterNo1,
+					programeName : programeName,
+					programId : programId,
+					batchyear : batchyear,
+					examTypeName : examTypeName,
+					examtypeId : examtypeId,
+					subjectId : subjectId,
+					subjectName : subjectName,
+				};
+				alert(JSON.stringify(data));
+				loadsExamInformation(url, method, data);
+
+			});
+
+		});
 
 		// form validator for student edit form
-		$("#studentedit")
-				.bootstrapValidator({
-					// To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-					feedbackIcons : {
-						valid : "glyphicon glyphicon-ok",
-						invalid : "glyphicon glyphicon-remove",
-						validating : "glyphicon glyphicon-refresh"
-					},
-					attendance_status : {
-						first_name : {
-							validators : {
-								notEmpty : {
-									message : "Please Select Attendance Status"
-								}
-							}
-						},
-						obtained_marks : {
-							validators : {
-								notEmpty : {
-									message : "Please Enter Obtained Marks"
-								},
-								Integer : {
-									message : "Please Enter Valid Number"
-								}
-							}
-						},
-						status : {
-							validators : {
-								notEmpty : {
-									message : "Please Select Status"
-								}
-							}
+		$("#studentedit").bootstrapValidator({
+			// To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+			feedbackIcons : {
+				valid : "glyphicon glyphicon-ok",
+				invalid : "glyphicon glyphicon-remove",
+				validating : "glyphicon glyphicon-refresh"
+			},
+			attendance_status : {
+				first_name : {
+					validators : {
+						notEmpty : {
+							message : "Please Select Attendance Status"
 						}
 					}
-				})
+				},
+				obtained_marks : {
+					validators : {
+						notEmpty : {
+							message : "Please Enter Obtained Marks"
+						},
+						Integer : {
+							message : "Please Enter Valid Number"
+						}
+					}
+				},
+				status : {
+					validators : {
+						notEmpty : {
+							message : "Please Select Status"
+						}
+					}
+				}
+			}
+		})
 
-				.on(
-						"success.form.bv",
-						function(e) {
+		.on("success.form.bv", function(e) {
 
-							// Prevent form submission
-							e.preventDefault();
+			// Prevent form submission
+			e.preventDefault();
 
-							var data = $('#studentedit').serializeArray();
-							console.log(data);
+			var data = $('#studentedit').serializeArray();
+			console.log(data);
 
-							$('input[type=number]').each(function() {
-								var t = $(this);
-								if (t.val() != 0) {
-									//alert(t.val());
-								} else {
-									t.val('0');
-								}
-							});
+			$('input[type=number]').each(function() {
+				var t = $(this);
+				if (t.val() != 0) {
+					//alert(t.val());
+				} else {
+					t.val('0');
+				}
+			});
 
-							$
-									.ajax({
-										url : window.context
-												+ "/ApiStudentsExams/UpdateStudentsExam",
-										method : "PUT",
-										dataType : 'json',
-										contentType : 'application/json',
-										data : formToJSON(),
+			$.ajax({
+				url : window.context + "/ApiStudentsExams/UpdateStudentsExam",
+				method : "PUT",
+				dataType : 'json',
+				contentType : 'application/json',
+				data : formToJSON(),
 
-										cache : true,
-										success : function(data) {
-											var message = "Student has been added Successfully";
-											alert("Thanks for the submission!");
-											$("#studentedit")[0].reset();
-											$('#view-student-exam').DataTable().ajax.reload();
-										},
-										error : function() {
-											alert("Error...!!!");
-										}
-									});
+				cache : true,
+				success : function(data) {
+					var message = "Student has been added Successfully";
+					alert("Thanks for the submission!");
+					$("#studentedit")[0].reset();
+					$('#view-student-exam').DataTable().ajax.reload();
+				},
+				error : function() {
+					alert("Error...!!!");
+				}
+			});
 
-							function formToJSON() {
-								var data = JSON
-										.stringify({
-											"students_exams_id" : $(
-													'#studentedit').find(
-													'[name="student_exam_id"]')
-													.val(),
-											"student":{"s_id" : $('#studentedit').find('[name="s_id"]').val(),},
-											"exam":{"exam_id" : $('#studentedit').find('[name="exam_id"]').val(),},
-											"attendance_status" : $(
-													'#studentedit')
-													.find(
-															'[name="attendance"]:checked')
-													.val(),
-											"obtained_marks" : $('#studentedit')
-													.find(
-															'[name="obtained_marks"]')
-													.val(),
-											"grade" : $('#studentedit').find(
-													'[name="grade"]').val(),
-											"status" : $('#studentedit').find(
-													'[name="status"]:checked')
-													.val(),
+			function formToJSON() {
+				var data = JSON.stringify({
+					"students_exams_id" : $('#studentedit').find('[name="student_exam_id"]').val(),
+					"student" : {
+						"s_id" : $('#studentedit').find('[name="s_id"]').val(),
+					},
+					"exam" : {
+						"exam_id" : $('#studentedit').find('[name="exam_id"]').val(),
+					},
+					"attendance_status" : $('#studentedit').find('[name="attendance"]:checked').val(),
+					"obtained_marks" : $('#studentedit').find('[name="obtained_marks"]').val(),
+					"grade" : $('#studentedit').find('[name="grade"]').val(),
+					"status" : $('#studentedit').find('[name="status"]:checked').val(),
 
-										});
-								alert(data);
-								return data;
-							}
-						});
+				});
+				alert(data);
+				return data;
+			}
+		});
 
 		function load_batch_year(e, target) {
 			var getid = e.target.id;
 			var id = $('#' + getid).find(":selected").val();
 			programId = id;
-			$
-					.ajax({
-						url : window.context
-								+ "/ApiStudentsProgram/GetStudentsProgramByProgramId/"
-								+ id,
-						method : "GET",
-						dataType : 'json',
-						cache : true,
-						success : function(data) {
-							//console.log("simple data=" + data);
-							//console.log("batch size=" + JSON.stringify(data));
-							var lengt = data.length;
-							var duplicateYear = [];
-							var content = '';
-							content += "<option selected='true' > Select Batch </option>"
-							for (var i = 0; i < data.length; i++) {
+			$.ajax({
+				url : window.context + "/ApiStudentsProgram/GetStudentsProgramByProgramId/" + id,
+				method : "GET",
+				dataType : 'json',
+				cache : true,
+				success : function(data) {
+					//console.log("simple data=" + data);
+					//console.log("batch size=" + JSON.stringify(data));
+					var lengt = data.length;
+					var duplicateYear = [];
+					var content = '';
+					content += "<option selected='true' > Select Batch </option>"
+					for (var i = 0; i < data.length; i++) {
 
-								duplicateYear[i] = data[i].batch_year;
-								var batch_yearDate = data[i].batch_year;
-								var batch_yearId = data[i].student_program_id;
-								//console.log("batch_yearDate name ="	+ batch_yearDate);
+						duplicateYear[i] = data[i].batch_year;
+						var batch_yearDate = data[i].batch_year;
+						var batch_yearId = data[i].student_program_id;
+						//console.log("batch_yearDate name ="	+ batch_yearDate);
 
-							}
+					}
 
-							var uniqueYear = duplicateYear.filter(function(x,
-									i, a) {
-								return a.indexOf(x) == i;
-							});
-
-							for (var i = 0; i < uniqueYear.length; i++) {
-								//batchyear = uniqueYear[i];
-								content += '<option value='+uniqueYear[i] +'>'
-										+ uniqueYear[i] + '</option>';
-							}
-
-							$('#' + target).html(content);
-						},
-						error : function() {
-							alert("Error...!!!");
-						}
+					var uniqueYear = duplicateYear.filter(function(x, i, a) {
+						return a.indexOf(x) == i;
 					});
+
+					for (var i = 0; i < uniqueYear.length; i++) {
+						//batchyear = uniqueYear[i];
+						content += '<option value='+uniqueYear[i] +'>' + uniqueYear[i] + '</option>';
+					}
+
+					$('#' + target).html(content);
+				},
+				error : function() {
+					alert("Error...!!!");
+				}
+			});
 		}
 
 		function load_exam_type(event, target) {
@@ -707,31 +631,29 @@
 			subjectId = $('#' + getid).find(":selected").val();
 			subjectname = $('#' + getid).find(":selected").text();
 			semesterNo = $('#' + getid).find(":selected").attr('data-sem');
-			$
-					.ajax({
-						url : window.context + "/ApiExam_type/GetAllExam_type",
-						method : "GET",
-						dataType : 'json',
-						cache : true,
-						success : function(data) {
-							var json = data;
-							//console.log("json size=" + data.length);
-							var content = '';
-							content += "<option selected='true' > Select Exam Type </option>"
-							for (var i = 0; i < data.length; i++) {
-								var examTypeName = data[i].type_name;
-								var examTypeNameId = data[i].exam_type_id;
-								//console.log("faculty name =" + facultyName);
+			$.ajax({
+				url : window.context + "/ApiExam_type/GetAllExam_type",
+				method : "GET",
+				dataType : 'json',
+				cache : true,
+				success : function(data) {
+					var json = data;
+					//console.log("json size=" + data.length);
+					var content = '';
+					content += "<option selected='true' > Select Exam Type </option>"
+					for (var i = 0; i < data.length; i++) {
+						var examTypeName = data[i].type_name;
+						var examTypeNameId = data[i].exam_type_id;
+						//console.log("faculty name =" + facultyName);
 
-								content += '<option value='+examTypeNameId+'>'
-										+ examTypeName + '</option>';
-							}
-							$('#' + target).html(content);
-						},
-						error : function() {
-							alert("Error...!!!");
-						}
-					});
+						content += '<option value='+examTypeNameId+'>' + examTypeName + '</option>';
+					}
+					$('#' + target).html(content);
+				},
+				error : function() {
+					alert("Error...!!!");
+				}
+			});
 		}
 	</script>
 

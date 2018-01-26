@@ -60,5 +60,10 @@ public class StudentsExamServiceImpl implements StudentsExamService {
 	return studentExamDao.searchByField(studentId);
 	}
 
+	@Override
+	public List<StudentsExam> getstudentsExam(int s_Id, int semesterNo) {
+		return studentExamDao.getstudentsExam(s_Id, semesterNo);
+	}
+
 	
 }
