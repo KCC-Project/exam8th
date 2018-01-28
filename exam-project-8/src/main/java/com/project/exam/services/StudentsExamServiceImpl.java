@@ -65,5 +65,11 @@ public class StudentsExamServiceImpl implements StudentsExamService {
 		return studentExamDao.getstudentsExam(s_Id, semesterNo);
 	}
 
+	@Override
+	public List getstudentsExam(int semesterNo, String programeName, int programId, int batchyear, String examTypeName,
+			int subjectId, int examtypeId, String subjectName) {
+		return studentExamDao.getstudentsExam(semesterNo, programeName, programId, batchyear, examTypeName, subjectId, examtypeId, subjectName);
+	}
+
 	
 }

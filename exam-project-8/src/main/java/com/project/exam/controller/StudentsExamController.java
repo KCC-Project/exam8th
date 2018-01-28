@@ -134,6 +134,31 @@ public class StudentsExamController {
 				subjectId, examtypeId, subjectName);
 	}
 
+	
+	@POST
+	@Path("/GetResultSearch")
+	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+	public List getResultSearch(@FormParam("semesterNo") int semesterNo,
+			@FormParam("programeName") String programeName, @FormParam("programId") int programId,
+			@FormParam("batchyear") int batchyear, @FormParam("examTypeName") String examTypeName,
+			@FormParam("examtypeId") int examtypeId, @FormParam("subjectId") int subjectId,
+			@FormParam("subjectName") String subjectName
+
+	) {
+		System.out.println("semesterNo = " + semesterNo);
+		System.out.println("programeName = " + programeName);
+		System.out.println("programId = " + programId);
+		System.out.println("batchyear = " + batchyear);
+		System.out.println("examTypeName = " + examTypeName);
+		System.out.println("subjectId = " + subjectId);
+		System.out.println("examtypeId = " + examtypeId);
+		System.out.println("subjectName = " + subjectName);
+
+		return studentsExamService.getstudentsExam(semesterNo, programeName, programId, batchyear, examTypeName, subjectId, examtypeId, subjectName);
+	}
+	
+	
+	
 	@POST
 	@Path("/loadResultExams")
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })

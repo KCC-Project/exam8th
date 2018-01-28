@@ -237,6 +237,7 @@
 			select2Function(url1, url2, method1, method2, placeholder, loadStudentInfo);
 
 			$("#modal-box").click(function(event) {
+				$("#sembtn").empty();
 				load_faculty(event, "p-faculty-box");
 			});
 			$("#p-faculty-box").change(function(event) {
@@ -375,8 +376,16 @@
 					}, {
 						data : null,
 						render : function(data, type, row) {
-
-							return studentFullName;
+									//alert(data.name);
+							
+							if(data.name !=null){
+								//this is from seach filter
+								return data.name;
+							}else{
+								//this is from searchbox
+								return studentFullName;
+							}
+							
 						},
 					}, {
 						data : null,
@@ -480,7 +489,7 @@
 
 			$("#searchbtnClicked").click(function(event) {
 
-				var url = window.context + "/ApiStudentsExams/GetRequiredInfoTOupdate";
+				var url = window.context + "/ApiStudentsExams/GetResultSearch";
 				var method = "POST";
 
 				var data = {

@@ -13,8 +13,13 @@ public interface StudentsExamService {
 	public int deletestudentsExam(int s_Id);
 	public void getRequiredInfoTOSave(int a_program_id, int examTypeId, int semester_no);
 	
+	//this method must be changed
 	public List updatestudentExamModel(int semesterNo, String programeName, int programId, int batchyear,
 			String examTypeName, int subjectId, int examtypeId, String subjectName);
+	
+	public List getstudentsExam(int semesterNo, String programeName, int programId, int batchyear,
+			String examTypeName, int subjectId, int examtypeId, String subjectName);
+	
 	List<StudentsExam> searchByField(int studentId);
 	
 }

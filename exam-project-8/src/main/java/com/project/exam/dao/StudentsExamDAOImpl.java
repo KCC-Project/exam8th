@@ -194,4 +194,39 @@ public class StudentsExamDAOImpl implements StudentsExamDAO {
 		return list;
 	}
 
+	@Override
+	@Transactional
+	public List getstudentsExam(int semesterNo, String programeName, int programId, int batchyear, String examTypeName,
+			int subjectId, int examtypeId, String subjectName) {
+		session = sessionFactory.getCurrentSession();
+		Query query = session.createSQLQuery("SELECT stex.students_exams_id,stex.obtained_marks,stex.grade,stex.status,stex.attendance_status"
+				+ ",sub.subject_name,sub.semester_no,ex.exam_id,ex.exam_date,ex.full_marks,ex.pass_marks,exty.type_name, stu.first_name"
+				+ ",stu.middle_name,stu.last_name FROM exam ex INNER JOIN exam_type exty ON exty.exam_type_id=ex.exam_type_id "
+				+ "INNER JOIN subjects sub ON sub.subject_id=ex.subject_id INNER JOIN student_exam stex ON stex.exam_id=ex.exam_id "
+				+ "INNER JOIN student stu ON stu.s_id= stex.student_id INNER JOIN studentprogram stupro ON stupro.student_id=stu.s_id "
+				+ "INNER JOIN program p ON p.program_id=stupro.program_id WHERE exty.exam_type_id="+examtypeId+" AND sub.semester_no="+semesterNo+" AND "
+				+ "stupro.batch_year="+batchyear+" AND p.program_id="+programId+"");
+		List<Object[]>  result = query.getResultList();
+		System.out.println("Result size = "+result.size());
+		List list = new ArrayList<>();
+		for (Object[] object : result) {
+			Map<String, Object> map= new HashMap<>();
+			map.put("students_exams_id", object[0]);
+			map.put("obtained_marks", object[1]);
+			map.put("grade", object[2]);
+			map.put("status", object[3]);
+			map.put("attendance_status", object[4]);
+			map.put("subject_name", object[5]);
+			map.put("semester_no", object[6]);
+			map.put("exam_id", object[7]);
+			map.put("exam_date", object[8]);
+			map.put("full_marks", object[9]);
+			map.put("pass_marks", object[10]);
+			map.put("type_name", object[11]);
+			map.put("name", object[12]+ " "+object[13]+ " "+object[14]);
+			list.add(map);
+		}
+		return list;
+	}
+
 }
