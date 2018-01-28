@@ -21,7 +21,7 @@ xmlns:context="http://www.springframework.org/schema/context"
    
    <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 <property name="driverClass" value="com.mysql.jdbc.Driver" />
-	<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/tempo" />
+	<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/8thsem" />
 	<property name="user" value="root" />
 	<property name="password" value="" />
 		
