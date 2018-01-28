@@ -231,7 +231,7 @@
 				programeName = $('#' + getid).find(":selected").text();
 				programId = $('#' + getid).find(":selected").val();
 				load_batch_year(event, "p-batch-box");
-				load_exam_type(event, "p-Exam-Type-box");
+			
 
 			});
 			$("#p-batch-box").change(function(event) {
@@ -243,7 +243,7 @@
 				var getid = event.target.id;
 				subjectName = $('#' + getid).find(":selected").text();
 				subjectId = $('#' + getid).find(":selected").val();
-
+				load_exam_type(event, "p-Exam-Type-box");
 			
 			});
 

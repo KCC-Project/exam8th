@@ -160,7 +160,7 @@ function load_faculty(e, target) {
             success : function(data) {
 
                 var content = '';
-                content += "<option selected='true' > Select Exam Type </option>"
+                content += '<option disabled selected="true" > Select Exam Type </option>';
                 for (var i = 0; i < data.length; i++) {
                     var exam_type_id = data[i].exam_type_id;
                     var type_name = data[i].type_name;
@@ -185,7 +185,7 @@ function load_faculty(e, target) {
             cache : true,
             success : function(data) {
                 var content = '';
-                content += '<option disabled> Select Subject </option>';
+                content += '<option disabled selected="true"> Select Subject </option>';
                 for (var i = 0; i < data.length; i++) {
                     var subject_id = data[i].subject_id;
                     var subject_name = data[i].subject_name;

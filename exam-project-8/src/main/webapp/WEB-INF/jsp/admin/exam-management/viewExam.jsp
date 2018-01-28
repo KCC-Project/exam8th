@@ -243,6 +243,7 @@
 	            var method = "GET";
 	            var data="";
 			search_subject(data, "p-subject-box",url,method);
+			
 		});
 
 		$("#p-subject-box").change(function(event) {
@@ -258,7 +259,7 @@
 		});
 
 		$("#searchbtnClicked").click(function(event) {
-			alert("examTypeId = " + examTypeId + " " + examTypeName + " " + subjectId);
+			alert("mm examTypeId = " + examTypeId + " " + examTypeName + " " + subjectId);
 			var url = window.context + "/ApiExam/GetExamByExamTypeAndSubjectId/"+examTypeId+"/"+subjectId;
 			var method = "GET";
 			var data="";
