@@ -223,10 +223,9 @@
 
 		var idOfSelectedIteam = 0;
 
-		var studentId=0;
+		var studentId = 0;
 		var studentFullName;
-	
-		
+
 		$(document).ready(function() {
 
 			//For select 2 initialization
@@ -263,13 +262,14 @@
 				var getid = event.target.id;
 				var id = $('#' + getid).find(":selected").val();
 				batchyear = $('#' + getid).find(":selected").text();
+				load_exam_type(event, "p-Exam-Type-box");
 			});
 			$("#p-subject-box").change(function(event) {
 				var getid = event.target.id;
 				subjectName = $('#' + getid).find(":selected").text();
 				subjectId = $('#' + getid).find(":selected").val();
 
-				load_exam_type(event, "p-Exam-Type-box");
+				
 			});
 
 			$("#p-Exam-Type-box").change(function(event) {
@@ -277,16 +277,12 @@
 				examtypeId = $('#' + getid).find(":selected").val();
 				examTypeName = $('#' + getid).find(":selected").text();
 			});
-			
-			
-			
-		
 
 			function loadStudentInfo(url, method, data) {
 				var count;
 				var current_sem;
 				var student_id;
-				
+
 				$.ajax({
 					url : url,
 					method : method,
@@ -300,37 +296,49 @@
 						var content = '';
 						for (var i = 1; i <= data[0].current_semester; i++) {
 
-							content += '<input style="margin-right:10px;" id='+data[0].s_id+'  name="semesterno" type="button"  class="btn btn-default btnSelected" values='
+							content += '<input style="margin-right:10px;" id='+i+'  ids='+data[0].s_id+' type="button"  class="btn btn-default btnSelected" values='
 																							+ data[0].s_id
 																							+ ' value='
 																							+i
 																							+ '>';
-																							count=i;
-								
+							count = i;
+
 						}
-						current_sem=data[0].current_semester;
-						student_id=data[0].s_id;
-						
-						studentFullName=data[0].first_name +" "+data[0].middle_name +" "+data[0].last_name ;
-						
+						current_sem = data[0].current_semester;
+						student_id = data[0].s_id;
+
+						studentFullName = data[0].first_name + " " + data[0].middle_name + " " + data[0].last_name;
+
 						$("#sembtn").append(content);
-						
+						var color = current_sem;
 						//this if is to show defult current semester result
-						if (count==current_sem) {
-							var url=window.context + "/ApiStudentsExams/GetStudentExamByStudentIdAndSemesterNo/"+student_id+"/"+current_sem;
-							var method="GET";
-							var data="";
-							loadsExamInformation(url,method,data);
+						if (count == current_sem) {
+							$('#' + current_sem + '').addClass('btn btn-primary');
+							var url = window.context + "/ApiStudentsExams/GetStudentExamByStudentIdAndSemesterNo/" + student_id + "/" + current_sem;
+							var method = "GET";
+							var data = "";
+							loadsExamInformation(url, method, data);
 						}
-						
-						//this is run when we click specific semester
+
+						//this is run when we click specific semester and change color of button also
 						$("input").click(function(event) {
-							 studentId = event.target.id;
-							var semesterNo=event.target.value;
-							var url=window.context + "/ApiStudentsExams/GetStudentExamByStudentIdAndSemesterNo/"+studentId+"/"+semesterNo;
-							var method="GET";
-							var data="";
-							loadsExamInformation(url,method,data);
+							studentId = $(this).attr('ids');
+							var idForSelectionColor = event.target.id;
+							$('#' + idForSelectionColor + '').addClass('btn btn-primary');
+							var temp = color;
+							if (temp != 0) {
+								$('#' + temp + '').removeClass('btn btn-primary');
+								$('#' + temp + '').addClass('btn btn-default');
+							}
+							color = idForSelectionColor;
+							//alert("idForSelectionColor = "+idForSelectionColor);
+							//alert(" temp= "+temp);
+							var semesterNo = event.target.value;
+							var url = window.context + "/ApiStudentsExams/GetStudentExamByStudentIdAndSemesterNo/" + studentId + "/" + semesterNo;
+							var method = "GET";
+							var data = "";
+							loadsExamInformation(url, method, data);
+
 							//alert("studentId = "+ studentId +"  "+ " semesterNo = "+semesterNo);
 						});
 					},
@@ -360,14 +368,14 @@
 					"columns" : [ {
 						data : null,
 						render : function(data, type, row) {
-							console.log("res = "+JSON.stringify(data));
+							console.log("res = " + JSON.stringify(data));
 							//alert(data.students_exams_id);
 							return data.students_exams_id;
 						},
 					}, {
 						data : null,
 						render : function(data, type, row) {
-							
+
 							return studentFullName;
 						},
 					}, {
@@ -385,7 +393,7 @@
 					}, {
 						data : null,
 						render : function(data, type, row) {
-						
+
 							return data.semester_no;
 						},
 					}, {
