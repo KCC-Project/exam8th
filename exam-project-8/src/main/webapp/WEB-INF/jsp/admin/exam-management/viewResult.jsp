@@ -501,7 +501,7 @@
 					subjectId : subjectId,
 					subjectName : subjectName,
 				};
-				alert(JSON.stringify(data));
+				//alert(JSON.stringify(data));
 				loadsExamInformation(url, method, data);
 
 			});
@@ -595,7 +595,7 @@
 					"status" : $('#studentedit').find('[name="status"]:checked').val(),
 
 				});
-				alert(data);
+				//alert(data);
 				return data;
 			}
 		});

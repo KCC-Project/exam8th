@@ -133,7 +133,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Exam Search</h4>
+					<h4 class="modal-title">Routine Search</h4>
 				</div>
 				<div class="modal-body">
 					<div class="row">
@@ -262,9 +262,9 @@
 		});
 
 		$("#searchbtnClicked").click(function(event) {
-			alert("mm examTypeId = " + examTypeId + " " + examTypeName + " " + batchyear);
+			//alert("mm examTypeId = " + examTypeId + " " + examTypeName + " " + batchyear);
 			var url = window.context + "/ApiExam/GetExamByExamByParameters/" + examTypeId + "/" + programId + "/" + batchyear + "/" + semesterNo;
-			alert(url);
+			//alert(url);
 			var method = "GET";
 			var data = "";
 			loadExamInformation(url, method, data);
@@ -358,7 +358,7 @@
 					"time_to" : $('#exam-edit-form').find('[name="time_to"]').val(),
 					"status" : $('#exam-edit-form').find('[name="status"]:checked').val(),
 				});
-				alert(data);
+				//alert(data);
 				return data;
 			}
 
@@ -535,7 +535,7 @@
 				}
 			});
 			bootbox.dialog({
-				title : 'Edit the Exam',
+				title : 'Edit the Routine',
 				message : $('#exam-edit-form'),
 				show : false
 			// We will show it manually later

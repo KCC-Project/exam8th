@@ -259,7 +259,7 @@
 		});
 
 		$("#searchbtnClicked").click(function(event) {
-			alert("mm examTypeId = " + examTypeId + " " + examTypeName + " " + subjectId);
+			//alert("mm examTypeId = " + examTypeId + " " + examTypeName + " " + subjectId);
 			var url = window.context + "/ApiExam/GetExamByExamTypeAndSubjectId/" + examTypeId + "/" + subjectId;
 			var method = "GET";
 			var data = "";
@@ -355,7 +355,7 @@
 					"time_to" : $('#exam-edit-form').find('[name="time_to"]').val(),
 					"status" : $('#exam-edit-form').find('[name="status"]:checked').val(),
 				});
-				alert(data);
+				//alert(data);
 				return data;
 			}
 
