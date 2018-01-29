@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -16,7 +15,6 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.project.exam.model.Exam;
-import com.project.exam.model.StudentsProgram;
 import com.project.exam.services.ExamService;
 
 @Path("ApiExam")
@@ -69,8 +67,16 @@ public class ExamController {
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public List<Exam> getExamByExamTypeAndSubjectId(@PathParam("exmaTypeId") int exmaTypeId,@PathParam("subjectId") int subjectId) {
-		
 		return examService.searchByField(exmaTypeId,subjectId);
+	}
+	
+	@GET
+	@Path("/GetExamByExamByParameters/{exmaTypeId}/{programId}/{batchYear}/{semesterNo}")
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public List<Exam> getExamByExamByParameters(@PathParam("exmaTypeId") int exmaTypeId,@PathParam("programId") int programId,
+			@PathParam("batchYear") int batchYear,@PathParam("semesterNo") int semesterNo) {
+		return examService.searchByField(exmaTypeId, programId, batchYear, semesterNo);
 	}
 	
 }

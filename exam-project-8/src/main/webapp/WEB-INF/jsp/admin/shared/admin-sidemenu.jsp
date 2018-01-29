@@ -56,6 +56,7 @@
             <li><a href="${cp }/viewexam" id="manageexam">View Exam</a></li>
              <li><a href="${cp }/exam-type" id="exam-type">Exam-type</a></li>
              <li><a href="${cp }/student-exam" id="student-exam">Student-exam</a></li>
+              <li><a href="${cp }/exam-routine" id="exam-routine">Routine</a></li>
               <li><a href="${cp }/viewResult" id="viewResult">View Result</a></li>
              
           </ul>

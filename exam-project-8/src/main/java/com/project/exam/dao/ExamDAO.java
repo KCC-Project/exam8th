@@ -12,4 +12,5 @@ public interface ExamDAO {
 	public Exam updateExam(Exam exam);
 	public int deleteExam(int s_Id);
 	public List<Exam> searchByField(int examTypeId,int subjectId);
+	public List<Exam> searchByField(int examTypeId,int programId,int batchYear,int semesterNo);
 }

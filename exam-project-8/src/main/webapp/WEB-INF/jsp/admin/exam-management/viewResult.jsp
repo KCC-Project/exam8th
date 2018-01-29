@@ -270,7 +270,6 @@
 				subjectName = $('#' + getid).find(":selected").text();
 				subjectId = $('#' + getid).find(":selected").val();
 
-				
 			});
 
 			$("#p-Exam-Type-box").change(function(event) {
@@ -376,16 +375,16 @@
 					}, {
 						data : null,
 						render : function(data, type, row) {
-									//alert(data.name);
-							
-							if(data.name !=null){
+							//alert(data.name);
+
+							if (data.name != null) {
 								//this is from seach filter
 								return data.name;
-							}else{
+							} else {
 								//this is from searchbox
 								return studentFullName;
 							}
-							
+
 						},
 					}, {
 						data : null,

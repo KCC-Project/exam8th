@@ -13,6 +13,8 @@
 				class="glyphicon glyphicon-home"> Home</span></a></li>
 		<li><a><span class="glyphicon glyphicon-education black">
 					view</span></a></li>
+		<li><a><span class="glyphicon glyphicon-education black">
+					Routine</span></a></li>
 
 	</ol>
 	<!--=============================================Main Containt===============================  -->
@@ -174,9 +176,9 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="form-group col-sm-6" style="margin-bottom: 0px;">
-								<select required class="form-control" name="subject_id"
-									id="p-subject-box">
-									<option value="" disabled selected>Select Subject</option>
+								<select required class="form-control" name="batch_id"
+									id="p-batch-box">
+									<option value="" disabled selected>Select Batch</option>
 								</select>
 							</div>
 							<div class="form-group col-sm-6" style="margin-bottom: 0px;">
@@ -212,7 +214,7 @@
 	var programeName;
 	var programId;
 	var semesterNo;
-
+	var batchyear;
 	$(document).ready(function() {
 
 		load_all_examType("exam_type_box1");
@@ -226,32 +228,33 @@
 
 		});
 		$("#p-program-box").change(function(event) {
+			load_batch_year(event, "p-batch-box");
+			load_exam_type(event, "p-Exam-Type-box");
+
 			var getid = event.target.id;
 			programeName = $('#' + getid).find(":selected").text();
 			programId = $('#' + getid).find(":selected").val();
+
 			var url = window.context + "/ApiSubject/GetSubjectByProgram/" + programId;
 			var method = "GET";
 			var data = "";
 			search_subject(data, "subject_box1", url, method);
-			//load_subject(event, "p-subject-box");
+
+		});
+
+		$("#p-batch-box").change(function(event) {
+			var getid = event.target.id;
+			var id = $('#' + getid).find(":selected").val();
+			batchyear = $('#' + getid).find(":selected").text();
+
 		});
 
 		$("#p-semester-box").change(function(event) {
 			var getid = event.target.id;
 			semesterNo = $('#' + getid).find(":selected").text();
-			var url = window.context + "/ApiSubject/GetSubjectByParameters/" + programId + "/" + semesterNo;
-			var method = "GET";
-			var data = "";
-			search_subject(data, "p-subject-box", url, method);
-
-		});
-
-		$("#p-subject-box").change(function(event) {
-			load_exam_type(event, "p-Exam-Type-box");
 		});
 
 		$("#p-Exam-Type-box").change(function(event) {
-
 			var getid = event.target.id;
 			examTypeId = $('#' + getid).find(":selected").val();
 			examTypeName = $('#' + getid).find(":selected").text();
@@ -259,11 +262,11 @@
 		});
 
 		$("#searchbtnClicked").click(function(event) {
-			alert("mm examTypeId = " + examTypeId + " " + examTypeName + " " + subjectId);
-			var url = window.context + "/ApiExam/GetExamByExamTypeAndSubjectId/" + examTypeId + "/" + subjectId;
+			alert("mm examTypeId = " + examTypeId + " " + examTypeName + " " + batchyear);
+			var url = window.context + "/ApiExam/GetExamByExamByParameters/" + examTypeId + "/" + programId + "/" + batchyear + "/" + semesterNo;
+			alert(url);
 			var method = "GET";
 			var data = "";
-
 			loadExamInformation(url, method, data);
 		});
 
@@ -363,6 +366,48 @@
 
 	});
 
+	function load_batch_year(e, target) {
+		var getid = e.target.id;
+		var id = $('#' + getid).find(":selected").val();
+		programId = id;
+		$.ajax({
+			url : window.context + "/ApiStudentsProgram/GetStudentsProgramByProgramId/" + id,
+			method : "GET",
+			dataType : 'json',
+			cache : true,
+			success : function(data) {
+				//console.log("simple data=" + data);
+				//console.log("batch size=" + JSON.stringify(data));
+				var lengt = data.length;
+				var duplicateYear = [];
+				var content = '';
+				content += "<option selected='true' > Select Batch </option>"
+				for (var i = 0; i < data.length; i++) {
+
+					duplicateYear[i] = data[i].batch_year;
+					var batch_yearDate = data[i].batch_year;
+					var batch_yearId = data[i].student_program_id;
+					//console.log("batch_yearDate name ="	+ batch_yearDate);
+
+				}
+
+				var uniqueYear = duplicateYear.filter(function(x, i, a) {
+					return a.indexOf(x) == i;
+				});
+
+				for (var i = 0; i < uniqueYear.length; i++) {
+					//batchyear = uniqueYear[i];
+					content += '<option value='+uniqueYear[i] +'>' + uniqueYear[i] + '</option>';
+				}
+
+				$('#' + target).html(content);
+			},
+			error : function() {
+				alert("Error...!!!");
+			}
+		});
+	}
+
 	function load_exam_type(event, target) {
 		var getid = event.target.id;
 		subjectId = $('#' + getid).find(":selected").val();
@@ -415,23 +460,27 @@
 				"async" : false
 			},
 			"columns" : [ {
-				"data" : "exam_id"
-			}, {
 				data : null,
 				render : function(data, type, row) {
-					return subjectname;
+
+					return data.exam_id;
 				},
 			}, {
 				data : null,
 				render : function(data, type, row) {
-					return examTypeName;
+
+					return data.subject_name;
+				},
+			}, {
+				data : null,
+				render : function(data, type, row) {
+					return data.type_name;
 				},
 			}, {
 				data : null,
 				render : function(data, type, row) {
 					console.log("view exam = " + JSON.stringify(data));
-
-					return programeName + ' / ' + data.subject.semester_no;
+					return data.program_name + ' / ' + data.semester_no;
 				},
 			}, {
 				"data" : "exam_date"
@@ -476,12 +525,12 @@
 			$("input[name=status][value=" + data['status'] + "]").prop('checked', true);
 
 			$('#exam_type_box1 option').each(function() {
-				if ($(this).val() == data.examtype.exam_type_id) {
+				if ($(this).val() == data.exam_type_id) {
 					$(this).prop("selected", true);
 				}
 			});
 			$('#subject_box1 option').each(function() {
-				if ($(this).val() == data.subject.subject_id) {
+				if ($(this).val() == data.subject_id) {
 					$(this).prop("selected", true);
 				}
 			});

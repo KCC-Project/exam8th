@@ -116,6 +116,16 @@ public class MainController {
 		model.put("manage-exam_clicked", true);
 		return new Viewable("/admin/exam-management/viewExam", model);
 	}
+	
+	@GET
+	@Path("/exam-routine")
+	public Viewable examRoutine() {
+		System.out.println("Insdie examRoutine");
+		Map<String, Boolean> model = new HashMap<>();
+		model.put("manage-exam_clicked", true);
+		return new Viewable("/admin/exam-management/exam-routine", model);
+	}
+	
 /*	@GET
 	@Path("/result")
 	public Viewable resultExam() {

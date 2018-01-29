@@ -45,4 +45,9 @@ public class ExamServiceImpl implements ExamService {
 		return examDao.searchByField(examTypeId,subjectId);
 	}
 
+	@Override
+	public List<Exam> searchByField(int examTypeId, int programId, int batchYear, int semesterNo) {
+		return examDao.searchByField(examTypeId, programId, batchYear, semesterNo);
+	}
+
 }
