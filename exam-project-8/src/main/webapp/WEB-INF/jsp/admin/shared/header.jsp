@@ -20,6 +20,12 @@
 <spring:url value="/assets/css/" var="css" />
 <spring:url value="/assets/font-awesome/css/font-awesome.min.css"
 	var="fontAwasome" />
+	<spring:url value="/assets/ionicons/css/ionicons.min.css"
+	var="ionicons" />
+	<spring:url value="/assets/css/admin-dashboard.css"
+	var="admindashboard" />
+		<spring:url value="/assets/css/w3school.css"
+	var="w3school" />
 
 <!-- JS Directory -->
 <spring:url value="/assets/js/extraJs/" var="extraJs" />
@@ -35,11 +41,14 @@
 <title>MIS</title>
 
 <!-- Linked CSS -->
+<link href="${admindashboard}" rel="stylesheet">
 <link href="${css }bootstrap.min.css" rel="stylesheet">
 <link href="${css}select2.min.css" rel="stylesheet">
 <link href="${css}select2-bootstrap.min.css" rel="stylesheet">
 <link href="${css}bootstrap-editable.css" rel="stylesheet">
 <link href="${fontAwasome}" rel="stylesheet">
+<link href="${ionicons}" rel="stylesheet">
+<link href="${w3school}" rel="stylesheet">
 <link href="${css}bootstrap-switch.min.css" rel="stylesheet">
 <link href="${css}datatables.min.css" rel="stylesheet">
 <!-- Written CSS -->

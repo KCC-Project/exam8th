@@ -1,0 +1,402 @@
+.div{
+	border: 2px solid black;
+	
+}
+.four-section {
+	background-color: #eeeeee !important;
+}
+
+.dash-box {
+	background-color: #00c0ef !important;
+	margin: 0px;
+	padding: 10px;
+	position: relative;
+	display: block;
+}
+
+.border {
+	border-radius: 2px solid black;
+	border: 2px solid black;
+}
+
+.col-lg-7 {
+	padding-left:0px !important;
+	padding-right: 0px !important;
+}
+
+.small-box h3 {
+	font-size: 38px;
+	font-weight: bold;
+	margin: 0 0 10px 0;
+	white-space: nowrap;
+	padding: 0;
+	font-family: 'Source Sans Pro', sans-serif;
+	color: white;
+}
+
+.small-box p {
+	color: white;
+	font-size: 15px;
+}
+
+.dash-box a {
+	text-align: center;
+}
+
+.dash-box .icon {
+	position: absolute;
+	top: auto;
+	bottom: 5px;
+	right: 5px;
+	z-index: 0;
+	font-size: 90px;
+	color: rgba(0, 0, 0, 0.15);
+}
+
+.dash-box:hover {
+	text-decoration: none;
+	color: #f9f9f9;
+}
+
+.dash-box:hover .icon {
+	animation-name: tansformAnimation;
+	animation-duration: .5s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+	animation-fill-mode: forwards;
+	-webkit-animation-name: tansformAnimation;
+	-webkit-animation-duration: .5s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-timing-function: ease;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-name: tansformAnimation;
+	-moz-animation-duration: .5s;
+	-moz-animation-iteration-count: 1;
+	-moz-animation-timing-function: ease;
+	-moz-animation-fill-mode: forwards;
+}
+
+@keyframes tansformAnimation {from { font-size:90px;
+	
+}
+
+to {
+	font-size: 100px;
+}
+
+}
+@-webkit-keyframes tansformAnimation {from { font-size:90px;
+	
+}
+
+to {
+	font-size: 100px;
+}
+
+}
+@media screen and (max-width: 480px) {
+	.small-box {
+		text-align: center;
+	}
+	.small-box .icon {
+		display: none;
+	}
+	.small-box p {
+		font-size: 12px;
+	}
+}
+/* for  more info*/
+
+/*
+    Component: Small boxes
+*/
+.small-box {
+	position: relative;
+	display: block;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	margin-bottom: 15px;
+}
+
+.small-box>.inner {
+	padding: 10px;
+}
+
+.small-box>.small-box-footer {
+	position: relative;
+	text-align: center;
+	padding: 3px 0;
+	color: #fff;
+	color: rgba(255, 255, 255, 0.8);
+	display: block;
+	z-index: 10;
+	background: rgba(0, 0, 0, 0.1);
+	text-decoration: none;
+}
+
+.small-box>.small-box-footer:hover {
+	color: #fff;
+	background: rgba(0, 0, 0, 0.15);
+}
+
+.small-box h3 {
+	font-size: 38px;
+	font-weight: bold;
+	margin: 0 0 10px 0;
+	white-space: nowrap;
+	padding: 0;
+}
+
+.small-box p {
+	font-size: 15px;
+}
+
+.small-box p>small {
+	display: block;
+	color: #f9f9f9;
+	font-size: 13px;
+	margin-top: 5px;
+}
+
+.small-box h3, .small-box p {
+	z-index: 5px;
+}
+
+.small-box .icon {
+	position: absolute;
+	top: auto;
+	bottom: 5px;
+	right: 5px;
+	z-index: 0;
+	font-size: 90px;
+	color: rgba(0, 0, 0, 0.15);
+}
+
+.small-box:hover {
+	text-decoration: none;
+	color: #f9f9f9;
+}
+
+.small-box:hover .icon {
+	animation-name: tansformAnimation;
+	animation-duration: .5s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+	animation-fill-mode: forwards;
+	-webkit-animation-name: tansformAnimation;
+	-webkit-animation-duration: .5s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-timing-function: ease;
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-name: tansformAnimation;
+	-moz-animation-duration: .5s;
+	-moz-animation-iteration-count: 1;
+	-moz-animation-timing-function: ease;
+	-moz-animation-fill-mode: forwards;
+}
+
+@keyframes tansformAnimation {
+  from {
+    font-size: 90px;
+  }
+  to {
+    font-size: 100px;
+  }
+}
+@-webkit-keyframes tansformAnimation {
+  from {
+    font-size: 90px;
+  }
+  to {
+    font-size: 100px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .small-box {
+    text-align: center;
+  }
+  .small-box .icon {
+    display: none;
+  }
+  .small-box p {
+    font-size: 12px;
+  }
+}
+
+.bg-red {
+	background-color: #f56954 !important;
+}
+
+.bg-yellow {
+	background-color: #f39c12 !important;
+}
+
+.bg-aqua {
+	background-color: #00c0ef !important;
+}
+
+.bg-green {
+	background-color: #00a65a !important;
+}
+
+/*css of message or notice*/
+.callout.callout-info {
+	background-color: #f0f7fd;
+	border-color: #d0e3f0;
+}
+
+.msg-of-day {
+	float: left;
+	width: 100%;
+}
+
+.callout {
+	margin: 0 0 20px 0;
+	padding: 15px 30px 15px 15px;
+	border-left: 5px solid #eee;
+}
+
+.content {
+	padding:0px !important;
+	/* padding: 20px 15px; */
+	background: #f9f9f9;
+	position: relative;
+	
+}
+
+.callout.callout-info h4 {
+	color: #3A87AD;
+}
+
+.callout h4 {
+	margin-top: 0;
+}
+
+marquee {
+	display: inline-block;
+	width: -webkit-fill-available;
+}
+
+.callout p:last-child {
+	margin-bottom: 0;
+}
+
+/* ------------------- */
+
+.notice-panel {
+	background-color: #ffffff;
+	text-align: justify;
+	height: 340px;
+	
+	 border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1);
+    background-color: #FFFFFF;
+    margin-bottom: 30px;
+}
+.notice-info {
+	background-color:#d9edf7;
+	border-radius:4px;
+}
+.notice-info p {
+	padding: 5px;
+	letter-spacing:0.4px;
+	font-size: 13px;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+.notice-info .title-message {
+	font-size:1.1em;
+	letter-spacing:1px;
+	font-weight:bold;
+}
+.notice-board-name {
+	font-size:1.3em;
+}
+
+.notice-info  ul{
+	margin-left: -40px !important;
+	
+}
+
+.tab-content{
+ border-color: 2px solid black;
+ }
+
+/* .panel-body{
+	padding-left: 10px;
+	padding-right: 10px;
+} */
+
+/*=================================news =================================*/
+.news_pannel_body{
+	background-color: white;
+	min-height: 132px;
+	padding: 10px;
+	height: 295px;
+}
+
+
+.danger {
+    background-color: #ffdddd;
+    border-left: 6px solid #f44336;
+     word-wrap: break-word;
+    padding: 4px 12px;
+    margin-bottom: 5px;
+}
+
+.success {
+    background-color: #ddffdd;
+    border-left: 6px solid #4CAF50;
+    word-wrap: break-word;
+   padding: 4px 12px;
+    margin-bottom: 5px;
+}
+
+.info {
+    background-color: #e7f3fe;
+    border-left: 6px solid #2196F3;
+    word-wrap: break-word;
+    padding: 4px 12px;
+    margin-bottom: 5px;
+}
+
+
+.warning {
+    background-color: #ffffcc;
+    border-left: 6px solid #ffeb3b;
+    word-wrap: break-word;
+     padding: 4px 12px;
+    margin-bottom: 5px;
+  
+}
+/*=========================================================================================*/
+
+
+.card {
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1);
+    background-color: #FFFFFF;
+    margin-bottom: 30px;
+}
+.card .header {
+    padding: 15px 15px 0;
+}
+
+.card .title {
+    margin: 0;
+    color: #333333;
+    font-weight: 300;
+}
+
+.card .content {
+    padding: 15px 15px 10px 15px;
+    
+}
+
+.card .footerPannel {
+    padding: 0;
+    background-color: #FFFFFF;
+    line-height: 30px;
+}
+
+
