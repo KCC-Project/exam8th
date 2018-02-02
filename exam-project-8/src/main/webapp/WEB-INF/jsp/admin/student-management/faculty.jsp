@@ -175,110 +175,84 @@
 <jsp:include page="../shared/footer.jsp" />
 <script>
 	var table;
-	$(document)
-			.ready(
-					function() {
+	$(document).ready(function() {
 
-						var url = window.context + "/ApiFaculty/GetAllFaculty";
-						var method = "GET";
-						var data = "";
-						loadFacultyInformation(url, method, data);
+		var url = window.context + "/ApiFaculty/GetAllFaculty";
+		var method = "GET";
+		var data = "";
+		loadFacultyInformation(url, method, data);
 
-						// loading data into datatable
-						function loadFacultyInformation(url, method, data) {
-							table = $('#view_faculty')
-									.DataTable(
-											{
-												destroy : true,
-												paging : true,
-												searching : true,
-												"processing" : true,
-												"serverSide" : false,
-												"ajax" : {
-													"url" : url,
-													"type" : method,
-													"data" : data,
-													"dataSrc" : "",
-													"dataType" : "json",
-													"async" : false
-												},
-												"columns" : [
-														{
-															"data" : "faculty_id"
-														},
-														{
-															"data" : "faculty_name"
-														},
-														{
-															data : null,
-															render : function(
-																	data, type,
-																	row) {
-																if (data.status == 0) {
-																	return "Not Running";
-																} else if (data.status == 1) {
-																	return "Running";
-																}
-															},
-														},
-														{
-															data : null,
-															render : function(
-																	data, type,
-																	row) {
-																//console.log(data);
-																return '<button class="btn btn-success editFac">Edit</button>';
-															},
-														} ]
-											});
-
-							// edit buttons on subjects row
-							$(".editFac").click(
-									function(event) {
-										var table = $("#view_faculty")
-												.DataTable();
-										var data = table.row(
-												$(this).parents('tr')).data();
-										console.log(data);
-
-										// Populate the form fields
-										$('#faculty-edit-form').find(
-												'[name="faculty_id"]').val(
-												data['faculty_id']).end().find(
-												'[name="faculty_name"]').val(
-												data['faculty_name']).end()
-										$(
-												"input[name=status][value="
-														+ data['status'] + "]")
-												.prop('checked', true);
-
-										//$("input[name=program_id][value=" + data['program_id'] + "]").attr('selected', 'selected');
-
-										bootbox.dialog({
-											title : 'Edit the Faculty',
-											message : $('#faculty-edit-form'),
-											show : false
-										// We will show it manually later
-										}).on('shown.bs.modal', function() {
-											$('#faculty-edit-form').show() // Show the modal form
-										}).on(
-												'hide.bs.modal',
-												function(e) {
-													// Bootbox will remove the modal (including the body which contains the login form)
-													// after hiding the modal
-													// Therefor, we need to backup the form
-													$('#faculty-edit-form')
-															.hide().appendTo(
-																	'body');
-												}).modal('show');
-
-									});
-							// ---------------------------------------- edit btn function end --------------------
-
+		// loading data into datatable
+		function loadFacultyInformation(url, method, data) {
+			table = $('#view_faculty').DataTable({
+				destroy : true,
+				paging : true,
+				searching : true,
+				"processing" : true,
+				"serverSide" : false,
+				"ajax" : {
+					"url" : url,
+					"type" : method,
+					"data" : data,
+					"dataSrc" : "",
+					"dataType" : "json",
+					"async" : false
+				},
+				"columns" : [ {
+					"data" : "faculty_id"
+				}, {
+					"data" : "faculty_name"
+				}, {
+					data : null,
+					render : function(data, type, row) {
+						if (data.status == 0) {
+							return "Not Running";
+						} else if (data.status == 1) {
+							return "Running";
 						}
-						// ----------------------- datatable function edn --------------
+					},
+				}, {
+					data : null,
+					render : function(data, type, row) {
+						//console.log(data);
+						return '<button class="btn btn-success editFac">Edit</button>';
+					},
+				} ]
+			});
 
-					});
+			// edit buttons on subjects row
+			$(".editFac").click(function(event) {
+				var table = $("#view_faculty").DataTable();
+				var data = table.row($(this).parents('tr')).data();
+				console.log(data);
+
+				// Populate the form fields
+				$('#faculty-edit-form').find('[name="faculty_id"]').val(data['faculty_id']).end().find('[name="faculty_name"]').val(data['faculty_name']).end()
+				$("input[name=status][value=" + data['status'] + "]").prop('checked', true);
+
+				//$("input[name=program_id][value=" + data['program_id'] + "]").attr('selected', 'selected');
+
+				bootbox.dialog({
+					title : 'Edit the Faculty',
+					message : $('#faculty-edit-form'),
+					show : false
+				// We will show it manually later
+				}).on('shown.bs.modal', function() {
+					$('#faculty-edit-form').show() // Show the modal form
+				}).on('hide.bs.modal', function(e) {
+					// Bootbox will remove the modal (including the body which contains the login form)
+					// after hiding the modal
+					// Therefor, we need to backup the form
+					$('#faculty-edit-form').hide().appendTo('body');
+				}).modal('show');
+
+			});
+			// ---------------------------------------- edit btn function end --------------------
+
+		}
+		// ----------------------- datatable function edn --------------
+
+	});
 	// ------------------------------- document.ready end --------------------------------
 
 	// modal popup for adding new faculty data
@@ -328,54 +302,49 @@
 
 	})
 	// on add new faculty submit form
-	.on(
-			"success.form.bv",
-			function(e) {
+	.on("success.form.bv", function(e) {
 
-				// Prevent form submission
-				e.preventDefault();
+		// Prevent form submission
+		e.preventDefault();
 
-				var data = $('#faculty-add-form').serializeArray();
-				console.log(data);
-				$('input[type=number]').each(function() {
-					var t = $(this);
-					if (t.val() != 0) {
-						//alert(t.val());
-					} else {
-						t.val('0');
-					}
-				});
-				$.ajax({
-					url : window.context + "/ApiFaculty/SaveFaculty",
-					method : "POST",
-					dataType : 'json',
-					contentType : 'application/json',
-					data : formToJSON(),
-					cache : true,
-					success : function(data) {
-						alert("Thanks for the submission!");
-						$("#faculty-add-form")[0].reset();
-						$('#view_faculty').DataTable().ajax.reload();
+		var data = $('#faculty-add-form').serializeArray();
+		console.log(data);
+		$('input[type=number]').each(function() {
+			var t = $(this);
+			if (t.val() != 0) {
+				//alert(t.val());
+			} else {
+				t.val('0');
+			}
+		});
+		$.ajax({
+			url : window.context + "/ApiFaculty/SaveFaculty",
+			method : "POST",
+			dataType : 'json',
+			contentType : 'application/json',
+			data : formToJSON(),
+			cache : true,
+			success : function(data) {
+				alert("Thanks for the submission!");
+				$("#faculty-add-form")[0].reset();
+				$('#view_faculty').DataTable().ajax.reload();
 
-					},
-					error : function() {
-						alert("Error...!!!");
-					}
-				});
-				function formToJSON() {
-					var data = JSON.stringify({
-						"faculty_id" : $('#faculty-add-form').find(
-								'[name="faculty_id"]').val(),
-						"faculty_name" : $('#faculty-add-form').find(
-								'[name="faculty_name"]').val(),
-						"status" : $('#faculty-add-form').find(
-								'[name="status"]:checked').val(),
+			},
+			error : function() {
+				alert("Error...!!!");
+			}
+		});
+		function formToJSON() {
+			var data = JSON.stringify({
+				"faculty_id" : $('#faculty-add-form').find('[name="faculty_id"]').val(),
+				"faculty_name" : $('#faculty-add-form').find('[name="faculty_name"]').val(),
+				"status" : $('#faculty-add-form').find('[name="status"]:checked').val(),
 
-					});
-					//alert(data);
-					return data;
-				}
 			});
+			//alert(data);
+			return data;
+		}
+	});
 
 	// form validator for edit-faculty form
 	$("#faculty-edit-form").bootstrapValidator({
@@ -406,46 +375,41 @@
 
 	})
 	// on clicking update for faculty edit form
-	.on(
-			"success.form.bv",
-			function(e) {
+	.on("success.form.bv", function(e) {
 
-				// Prevent form submission
-				e.preventDefault();
+		// Prevent form submission
+		e.preventDefault();
 
-				var data = $('#faculty-edit-form').serializeArray();
-				console.log(data);
+		var data = $('#faculty-edit-form').serializeArray();
+		console.log(data);
 
-				$.ajax({
-					url : window.context + "/ApiFaculty/UpdateFaculty",
-					method : "PUT",
-					dataType : 'json',
-					contentType : 'application/json',
-					data : formToJSON(),
-					cache : true,
-					success : function(data) {
+		$.ajax({
+			url : window.context + "/ApiFaculty/UpdateFaculty",
+			method : "PUT",
+			dataType : 'json',
+			contentType : 'application/json',
+			data : formToJSON(),
+			cache : true,
+			success : function(data) {
 
-						alert("Thanks for the submission!");
-						$("#faculty-edit-form")[0].reset();
-						$('#view_faculty').DataTable().ajax.reload();
+				alert("Thanks for the submission!");
+				$("#faculty-edit-form")[0].reset();
+				$('#view_faculty').DataTable().ajax.reload();
 
-					},
-					error : function() {
-						alert("Error...!!!");
-					}
-				});
-				function formToJSON() {
-					var data = JSON.stringify({
-						"faculty_id" : $('#faculty-edit-form').find(
-								'[name="faculty_id"]').val(),
-						"faculty_name" : $('#faculty-edit-form').find(
-								'[name="faculty_name"]').val(),
-						"status" : $('#faculty-edit-form').find(
-								'[name="status"]:checked').val(),
+			},
+			error : function() {
+				alert("Error...!!!");
+			}
+		});
+		function formToJSON() {
+			var data = JSON.stringify({
+				"faculty_id" : $('#faculty-edit-form').find('[name="faculty_id"]').val(),
+				"faculty_name" : $('#faculty-edit-form').find('[name="faculty_name"]').val(),
+				"status" : $('#faculty-edit-form').find('[name="status"]:checked').val(),
 
-					});
-					//alert(data);
-					return data;
-				}
 			});
+			//alert(data);
+			return data;
+		}
+	});
 </script>

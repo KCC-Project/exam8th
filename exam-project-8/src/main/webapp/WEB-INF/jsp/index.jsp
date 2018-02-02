@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
- <%
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
 	if (session.getAttribute("adminUserName") != null) {
 		response.sendRedirect("home");
-	}else if(session.getAttribute("studentUserName") != null){
+	} else if (session.getAttribute("studentUserName") != null) {
 		response.sendRedirect("user");
 	}
-%> 
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +21,8 @@
 
 
 <spring:url value="/assets/css" var="css" />
-<spring:url value="/assets/font-awesome/css/font-awesome.min.css" var="fontAwasome" />
+<spring:url value="/assets/font-awesome/css/font-awesome.min.css"
+	var="fontAwasome" />
 
 
 
@@ -30,15 +31,15 @@
 <link href="${css }/bootstrap.min.css" rel="stylesheet">
 <link href="${css}/loginAndResetPassword.css" rel="stylesheet">
 
-	<spring:url value="/assets/js/extraJs" var="extraJs" />
-		<script src="${extraJs}/jquery-3.2.1.min.js"></script>
-		<script src="${extraJs}/bootstrap.min.js"></script>
+<spring:url value="/assets/js/extraJs" var="extraJs" />
+<script src="${extraJs}/jquery-3.2.1.min.js"></script>
+<script src="${extraJs}/bootstrap.min.js"></script>
 </head>
 <body>
 	<div id="google_translate_element"></div>
 	<div class="container">
-
-		<form method="post" action="ApiLoginOut">
+		<!--action="ApiLoginOut"  -->
+		<form method="post" action="#" enctype='application/json' id="myForm">
 			<div
 				class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-sm-offset-3 col-md-offset-3 col-lg-offset-4  form_margin">
 				<div class="form-content ">
@@ -65,7 +66,7 @@
 									<label for="category"> <span
 										class="glyphicon glyphicon-user"></span> Login as
 									</label> <select required class="form-control form-element"
-										name='category'>
+										name='category' id="category">
 										<option class='drop-down' value="" disabled selected>
 											Select One</option>
 										<option class='drop-down' value='admin'>Admin</option>
@@ -77,23 +78,25 @@
 								<label for="exampleInputEmail1"><span
 									class="glyphicon glyphicon-user"> </span> Username / Email </label> <input
 									type="text" class="form-control" required
-									name="InputEmail1User" placeholder="Username/Email">
+									name="InputEmail1User" id="InputEmail1User"
+									placeholder="Username/Email">
 							</div>
 							<div class="form-group">
 								<label for="exampleInputPassword1"><span
 									class="glyphicon glyphicon-eye-open"></span> Password</label> <input
 									type="password" class="form-control" required
-									name="InputPassword1" placeholder="Password">
+									name="InputPassword1" id="InputPassword1"
+									placeholder="Password">
 							</div>
 
 							<div class="checkbox">
 								<label class="pull-left"> <input type="checkbox"
-									name="rememberMe" id="rememberMe" > Remember Me
+									name="rememberMe" id="rememberMe"> Remember Me
 								</label>
 
 							</div>
 
-							<Button type="submit" class="btn btn-success btn-block login-btn" onclick="hello();" >
+							<Button type="submit" class="btn btn-success btn-block login-btn">
 								<span class="glyphicon glyphicon-lock"></span>&nbsp;Login
 
 							</Button>
@@ -151,87 +154,47 @@
 	</div>
 
 	<script>
-	//$("#rememberMe").click(function(e){alert("s");});
-	
-	function hello() {
-		var checked=document.getElementById("rememberMe").checked;
-		document.getElementById("rememberMe").value=checked;
- 		// alert(checked);
-}
-		function send() {
-			document.getElementById("rotationIcon").style.display = "block";
-			document.getElementById("btnn").style.display = "none";
-			//document.getElementById("btnn").disabled = true;
+		$(document).ready(function() {
+			$("#myForm").submit(function(event) {
 
-			var email = document.getElementById("forgotemailname").value;
-			alert(email);
-		var data="";
-			
-			$.ajax({
-				url : window.context + "forgotPassword",
-				method : "GET",
-				dataType : 'json',
-				//contentType : 'application/json',
-				data : data,
-				cache : true,
-				success : function(data) {
-					alert(data);
-					var res = data.substring(3, 11);
-					if (res.match("Success!")) {
-						document.getElementById("forgotemailname").disabled = true;
-						document.getElementById("btnn").innerHTML = "Sucessfull";
-						document.getElementById("rotationIcon").style.display = "none";
-						verificationTimeLimit(email);
-					} else {
-						document.getElementById("rotationIcon").style.display = "none";
-						document.getElementById("btnn").style.display = "block";
-						document.getElementById("btnn").innerHTML = "Failed";
-						var div = document.getElementById('btnn');
-						div.className = 'btn btn-danger btn-block';
+				$.ajax({
+					type : "POST",
+					url : "/exam-project-8/ApiLoginOut",
+					contentType : "application/json",
+					data : formToJSON(),
+
+					success : function(data) {
+						if (data=="success") {
+							//alert("inside");
+							  window.location.href = "/exam-project-8/home";
+						}else{
+							alert("something wrong!!");
+						}
+					},
+					error : function() {
+						alert("Error...!!!");
 					}
-					document.getElementById("errmsg").innerHTML = return_data;
 
-				},
-				error : function() {
-					alert("Error...from forget password");
-				}
+				});
+
+				event.preventDefault();
 			});
-			
-			
-		}
-		function verificationTimeLimit(email) {
-			setTimeout(function() {
-				var url = "forgotPassword_verificationTimeLimit";
-				var sendEmail = "email=" + email;
-				var aj = new XMLHttpRequest();
-				aj.open("POST", url, true);
-				aj.setRequestHeader("Content-type",
-						"application/x-www-form-urlencoded");
-				aj.onreadystatechange = function() {
 
-					if (aj.readyState == 4 && aj.status == 200) {
-						var return_data = aj.responseText;
-						alert(return_data);
-					}
-				}
-				aj.send(sendEmail);
-			}, 600000);//10 minutes600000
-		}
-		
-		function showSubmit() {
-			document.getElementById("rotationIcon").style.display = "none";
-			document.getElementById("btnn").disabled = false;
-			var div = document.getElementById('btnn');
-			div.className = 'btn btn-primary active btn-block';
-			document.getElementById("btnn").innerHTML = "<span class='glyphicon glyphicon-lock'></span>&nbsp;Send verification link";
-			document.getElementById("errmsg").innerHTML = "";
-		}
-		
+		});
 
-	
+		function formToJSON() {
+			var data = JSON.stringify({
 
+				"category" : $('#myForm').find('[name="category"]').val(),
+				"adminUserName" : $('#myForm').find('[name="InputEmail1User"]').val(),
+				"InputPassword1" : $('#myForm').find('[name="InputPassword1"]').val(),
+
+			});
+			//alert(data);
+			return data;
+		}
 	</script>
 
-	
+
 </body>
 </html>

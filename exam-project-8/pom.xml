@@ -126,6 +126,16 @@
 		</dependency>
 
 
+<!-- after android -->
+
+<!-- https://mvnrepository.com/artifact/org.json/json -->
+<dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20160810</version>
+</dependency>
+
+
 	</dependencies>
 	<properties>
 		<jersey.version>2.26</jersey.version>

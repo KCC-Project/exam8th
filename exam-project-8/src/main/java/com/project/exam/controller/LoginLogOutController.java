@@ -5,15 +5,18 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.FormParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -32,9 +35,40 @@ public class LoginLogOutController {
 
 	@POST
 	@Path("/ApiLoginOut")
-	public Response login(@FormParam("category") String category, @FormParam("InputEmail1User") String InputEmail1User,
-			@FormParam("InputPassword1") String InputPassword1, @FormParam("rememberMe") String rememberMe
-			,@Context HttpServletRequest req) throws URISyntaxException  {
+	public String login(String json,@Context HttpServletRequest req) throws URISyntaxException  {
+		
+		String category=null;
+		String InputEmail1User =null;
+		String InputPassword1= null;
+		String s=null;
+		
+		if (json.charAt(0)=='{') {
+			s="["+json+"]";
+		}else {
+			s=json;
+		}
+		
+		//System.out.println(json);
+		
+		//System.out.println("s = "+s);
+		
+		JSONArray jsonArray = new JSONArray(s); 
+		
+		System.out.println("jsonArray = "+jsonArray);
+		
+		
+		
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			category=jsonObject.getString("category");
+			InputEmail1User=jsonObject.getString("adminUserName");
+			InputPassword1=jsonObject.getString("InputPassword1");
+		}
+		
+		
+		
+		
+
 		
 		int categoryIndex = 0;
 		
@@ -52,14 +86,14 @@ public class LoginLogOutController {
 					//for session only if remember btn is checked
 					HttpSession session= req.getSession(true);
 					session.setAttribute("adminUserName", InputEmail1User);
-					if (rememberMe != null) {
+					
 						session.setAttribute("adminPassword", InputPassword1);
 				
-					}
+					
 		
 					System.out.println("Admin login sucess");
-					URI targetURIForRedirection = new URI("home");
-					return Response.seeOther(targetURIForRedirection).build();
+				
+					return "success";
 				}
 			}
 		}
@@ -87,18 +121,17 @@ public class LoginLogOutController {
 					session.setAttribute("phone", student1.getPhone());
 					session.setAttribute("password", student1.getPassword());
 					//for session only if remember btn is checked
-					if (rememberMe != null) {
 					
 						session.setAttribute("studentPassword", InputPassword1);
-					}
+				
 			
 					System.out.println("Student login sucess");
-					URI targetURIForRedirection = new URI("user");
-					return Response.seeOther(targetURIForRedirection).build();
+					return "success";
 				}
 			}
 		}
-		return null;
+		return "failed";
+	
 	}
 
 	@GET
