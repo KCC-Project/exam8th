@@ -51,5 +51,10 @@ public class StudentServiceImpl implements StudentService {
 		return studentDao.search(id,year);
 	}
 
+	@Override
+	public List<Student> getStudent(String email) {
+		return studentDao.getStudent(email);
+	}
+
 	
 }

@@ -127,21 +127,22 @@
 					<h4 class="modal-title">Forgot Password</h4>
 				</div>
 				<div class="modal-body">
-
+					<form action="#" id="forgetPasswordForm">
 					<div class="form-group">
 						<label for="input for forgot email"><span
 							class="glyphicon glyphicon-user"> </span> Email </label> <input
 							onkeyup="showSubmit();" type="text" class="form-control" required
-							id="forgotemailname" placeholder="Email">
+							id="forgotemailname" name="forgotemailname" placeholder="Email">
 					</div>
 					<div class="rotationIcon text-center" hidden id="rotationIcon">
 						<i class='fa fa-refresh w3-spin' style="font-size: 50px;"></i>
 					</div>
-					<Button onclick="send();" type="submit" id="btnn"
+					<Button type="submit" id="btnn"
 						class="btn btn-primary active btn-block submit-btn login-btnReset">
 						<span class="glyphicon glyphicon-lock"></span>&nbsp;Send
 						verification link
 					</Button>
+					</form>
 					<div id="errmsg"></div>
 
 				</div>
@@ -155,6 +156,66 @@
 
 	<script>
 		$(document).ready(function() {
+			
+			
+			
+			//this is for forgot password
+			
+			$("#forgetPasswordForm").submit(function(event) {
+				
+				document.getElementById("rotationIcon").style.display = "block";
+				
+				document.getElementById("btnn").style.display = "none";
+				
+				var emailAddress = $('#forgetPasswordForm').find('[name="forgotemailname"]').val();
+				
+			
+
+				 $.ajax({
+					type : "GET",
+					url : "/exam-project-8/ApiForgetPassword/"+emailAddress,
+					data : "",
+					success : function(data) {
+						
+				if (data.match("failed")) {
+					
+					document.getElementById("rotationIcon").style.display = "none";
+					
+					document.getElementById("btnn").style.display = "block";
+					
+					document.getElementById("btnn").innerHTML = "Failed";
+					
+					var div = document.getElementById('btnn');
+					
+					div.className = 'btn btn-danger btn-block'
+
+
+				}else{
+				
+					
+					document.getElementById("forgotemailname").disabled = true;
+					
+					document.getElementById("btnn").innerHTML = "Sucessfull";
+					
+					document.getElementById("rotationIcon").style.display = "none";
+					
+					document.getElementById("errmsg").innerHTML = data;
+				}
+			
+					
+					},
+					error : function() {
+						alert("Error...!!!");
+					}
+
+				});
+
+				event.preventDefault();
+			});
+
+			
+			// this is for login
+			
 			$("#myForm").submit(function(event) {
 
 				$.ajax({
@@ -164,8 +225,8 @@
 					data : formToJSON(),
 
 					success : function(data) {
-						if (data=="success") {
-							//alert("inside");
+						if (data>0) {
+							alert(data);
 							  window.location.href = "/exam-project-8/home";
 						}else{
 							alert("something wrong!!");
@@ -182,6 +243,15 @@
 
 		});
 
+		function showSubmit() {
+			document.getElementById("rotationIcon").style.display = "none";
+			document.getElementById("btnn").disabled = false;
+			var div = document.getElementById('btnn');
+			div.className = 'btn btn-primary active btn-block';
+			document.getElementById("btnn").innerHTML = "<span class='glyphicon glyphicon-lock'></span>&nbsp;Send verification link";
+			document.getElementById("errmsg").innerHTML = "";
+		}
+		
 		function formToJSON() {
 			var data = JSON.stringify({
 

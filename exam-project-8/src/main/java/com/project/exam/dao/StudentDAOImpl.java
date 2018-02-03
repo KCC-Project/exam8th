@@ -109,4 +109,14 @@ public class StudentDAOImpl implements StudentDAO {
 		}	
 		return studentList;
 	}
+
+	@Override
+	@Transactional
+	public List<Student> getStudent(String email) {
+		session = sessionFactory.getCurrentSession();
+		String hql = "FROM Student where email = '" + email + "'";
+		Query query = session.createQuery(hql);
+		List<Student> studentList = query.getResultList();
+		return studentList;
+	}
 }
