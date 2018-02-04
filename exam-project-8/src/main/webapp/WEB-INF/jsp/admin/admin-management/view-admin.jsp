@@ -54,6 +54,7 @@
 				<th>Name</th>
 				<th>Password</th>
 				<th>Status</th>
+				<th>Email</th>
 				<th>Option</th>
 			</tr>
 		</thead>
@@ -71,7 +72,13 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label">Password</label>
 			<div class="col-md-9">
-				<input type="text" class="form-control" name="admin_password" required />
+				<input type="text" class="form-control" name="password" required />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-3 control-label">Email</label>
+			<div class="col-md-9">
+				<input type="email" class="form-control" name="email" required />
 			</div>
 		</div>
 		<div class="form-group">
@@ -107,7 +114,13 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label">Password</label>
 			<div class="col-md-9">
-				<input type="text" class="form-control" name="admin_password" required />
+				<input type="text" class="form-control" name="password" required />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-3 control-label">Email</label>
+			<div class="col-md-9">
+				<input type="text" class="form-control" name="email" required />
 			</div>
 		</div>
 		
@@ -171,7 +184,7 @@
 			}, {
 				"data" : "admin_username"
 			},  {
-				"data" : "admin_password"
+				"data" : "password"
 			},{
 				data : null,
 				render : function(data, type, row) {
@@ -186,7 +199,10 @@
 
 					return '' + statusStatus + '';
 				},
-			}, {
+			},{
+				"data" : "email"
+			},
+			{
 				data : null,
 				render : function(data, type, row) {
 					return '<button class="btn btn-success editAdmin">Edit</button>';
@@ -203,7 +219,8 @@
             $('#admin-edit-form')
             .find('[name="admin_id"]').val(data['admin_id']).end()
             .find('[name="admin_username"]').val(data['admin_username']).end()
-             .find('[name="admin_password"]').val(data['admin_password']).end();
+             .find('[name="email"]').val(data['email']).end()
+             .find('[name="password"]').val(data['password']).end();
             
             $("input[name=status][value=" + data['status'] + "]").prop('checked', true);
 
@@ -261,7 +278,7 @@
                     }
                 }
             },
-            admin_password : {
+            password : {
                 validators : {
                     stringLength : {
                         min : 8
@@ -303,7 +320,8 @@
         function formToJSON() {
 			var data = JSON.stringify({				
 				"admin_username" : $('#admin-add-form').find('[name="admin_username"]').val(),
-				"admin_password" : $('#admin-add-form').find('[name="admin_password"]').val(),
+				"password" : $('#admin-add-form').find('[name="password"]').val(),
+				"email" : $('#admin-add-form').find('[name="email"]').val(),
 				"status" : $('#admin-add-form').find('[name="status"]:checked').val(),
 			});
 			//alert(data);
@@ -329,7 +347,7 @@
                     }
                 }
             },
-            admin_password : {
+            password : {
                 validators : {
                     stringLength : {
                         min : 8
@@ -373,7 +391,8 @@
 			var data = JSON.stringify({
 				"admin_id" : $('#admin-edit-form').find('[name="admin_id"]').val(),
 				"admin_username" : $('#admin-edit-form').find('[name="admin_username"]').val(),
-				"admin_password" : $('#admin-edit-form').find('[name="admin_password"]').val(),
+				"password" : $('#admin-edit-form').find('[name="password"]').val(),
+				"email" : $('#admin-edit-form').find('[name="email"]').val(),
 				"status" : $('#admin-edit-form').find('[name="status"]:checked').val(),
 				
 

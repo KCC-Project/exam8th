@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 
 public class MailUtil {
 
-	public static void sendEmailPasswordForgot(String email, String password,String studentName) 
+	public static void sendEmailPasswordForgot(String email, String authienciationCode,int userId, String typeOfUser) 
 			throws AddressException, MessagingException {
 		
 		Properties props = new Properties();
@@ -38,8 +38,10 @@ public class MailUtil {
         Session session = Session.getInstance(props,auth);
         
         
-        String message_to_user = "<h3>Your password reset request was successful.</h3><br><h3> "+studentName+" </h3>  your password was <h1>"+password+"</h1>";
-        
+        String message_to_user = "The verification link is given below: <br> 1. For Desktop = "
+        		+ "http://localhost:8080/exam-project-8/ResetPassword?email="+email+""
+        				+ "&code="+authienciationCode+"&tablename="+typeOfUser+"&id="+userId +"<br> If you are using Andoird use the following code <br><br><br>2. For Andoird = <strong>"+authienciationCode+"</strong>";
+       
         String message_subject_to_user = "Forgot Password verify link from EIS";
         
         MimeMessage msg = new MimeMessage(session);

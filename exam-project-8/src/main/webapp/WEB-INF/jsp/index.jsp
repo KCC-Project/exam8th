@@ -155,6 +155,9 @@
 	</div>
 
 	<script>
+	
+	
+	
 		$(document).ready(function() {
 			
 			
@@ -200,6 +203,9 @@
 					document.getElementById("rotationIcon").style.display = "none";
 					
 					document.getElementById("errmsg").innerHTML = data;
+					
+					verificationTimeLimit(emailAddress);
+					
 				}
 			
 					
@@ -263,6 +269,28 @@
 			//alert(data);
 			return data;
 		}
+		
+		
+		// this works but not full functional
+		
+		/*
+		function verificationTimeLimit(email) {
+			setTimeout(function() {
+				$.ajax({
+					type : "GET",
+					url : "/exam-project-8/ApiForgetPasswordTimeLimiter/"+email,
+					data : "",
+					success : function(data) {
+					alert("success");
+					},
+					error : function() {
+						alert("failed");
+					}
+
+				});
+			}, 20000);//10 minutes600000
+		}
+		*/
 	</script>
 
 

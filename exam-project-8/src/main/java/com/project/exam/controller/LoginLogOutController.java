@@ -7,11 +7,11 @@ import java.util.List;
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -19,62 +19,143 @@ import javax.ws.rs.core.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.project.exam.model.Admin;
+import com.project.exam.model.ForgetPasswordModel;
 import com.project.exam.model.Student;
 import com.project.exam.services.AdminService;
+import com.project.exam.services.ForgetPasswordService;
 import com.project.exam.services.StudentService;
 import com.project.exam.util.MailUtil;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 
 @Path("/")
 @SessionAttributes("userName")
 public class LoginLogOutController {
-	
+
 	@Autowired
 	private AdminService adminService;
-	
+
 	@Autowired
 	private StudentService studentService;
 
-	// forget password only works for students only for now......
-	
+	@Autowired
+	ForgetPasswordService forgetPassword;
+
+	// this method validated if the url of gmail is valid or not
+
+	@GET
+	@Path("/ApiResetPassword/{vCode}/{tablename}/{id}")
+	public boolean resetPassword(@PathParam("vCode") String vCode, @PathParam("tablename") String tablename,
+			@PathParam("id") int id) {
+
+		boolean isAuthenticated = forgetPassword.isAuthenticated(tablename, id, vCode);
+
+		return isAuthenticated;
+
+	}
+
+	// this method reset the password
+
+	@POST
+	@Path("/ApiResetPasswordNext")
+	public int resetPassword(String json) {
+
+		boolean status = false;
+
+		int responseCode = -400;
+
+		String vCode = null;
+
+		String tablename = null;
+
+		String password = null;
+
+		String s = null;
+
+		int id = 0;
+
+		if (json.charAt(0) == '{') {
+
+			s = "[" + json + "]";
+
+		} else {
+
+			s = json;
+
+		}
+
+		JSONArray jsonArray = new JSONArray(s);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			vCode = jsonObject.getString("vCode");
+
+			tablename = jsonObject.getString("tablename");
+
+			password = jsonObject.getString("password");
+
+			id = jsonObject.getInt("ID");
+		}
+
+		boolean isAuthenticated = forgetPassword.isAuthenticated(tablename, id, vCode);
+
+		if (isAuthenticated) {
+
+			status = forgetPassword.resetPassword(tablename, id, vCode, password);
+
+		}
+
+		if (status) {
+
+			responseCode = 200;
+		}
+
+		return responseCode;
+
+	}
+
+	@GET
+	@Path("/ApiForgetPasswordTimeLimiter/{email}")
+	public void forgetPasswordTimeLimiter(@PathParam("email") String email)
+			throws AddressException, javax.mail.MessagingException {
+
+		ForgetPasswordModel emailModel = forgetPassword.forgetPasswordCheckEmail(email);
+
+	}
+
 	@GET
 	@Path("/ApiForgetPassword/{email}")
-	public String forgetPassword(@PathParam("email") String email) throws AddressException, javax.mail.MessagingException {
-		
-		String message = "failed";
-		
-		List<Student> listStudent = studentService.getStudent(email);
-		
-		if (listStudent.size()<0) {
-			
-			message = "Invalid Email! please use your valid email address to restore password";
-			
-			return message;
-			
-		}
-		
-		for (Student student : listStudent) {
-		
-			System.out.println("email list = "+student.getEmail());
-			
-			if (student.getEmail().equalsIgnoreCase(email)) {
-				
-				
-				MailUtil.sendEmailPasswordForgot(email, student.getPassword(), student.getFirst_name());
+	public String forgetPassword(@PathParam("email") String email)
+			throws AddressException, javax.mail.MessagingException {
 
-				message = "Success! Please check you email for the verification Link. <a href='https://www.google.com/gmail/' target='_blank'>click here</a>";
-				
-				return message;
-				
-			}
+		String message = "failed";
+
+		ForgetPasswordModel emailModel = forgetPassword.forgetPasswordCheckEmail(email);
+
+		if (!emailModel.getEmailOfUser().equalsIgnoreCase(email)) {
+
+			message = "Invalid Email! please use your valid email address to restore password";
+
+			return message;
+
+		} else if (emailModel.getEmailOfUser().equalsIgnoreCase(email)) {
+
+			MailUtil.sendEmailPasswordForgot(emailModel.getEmailOfUser(), emailModel.getAuthienciationCodeOfUser(),
+					emailModel.getIdOfUser(), emailModel.getTypeOfUser());
+
+			message = "Success! Please check you email for the verification Link. <a href='https://www.google.com/gmail/' target='_blank'>click here</a>";
+
+			return message;
+
 		}
-		
+
 		return message;
 	}
-	
+
 	@POST
 	@Path("/ApiLoginOut")
 	public int login(String json, @Context HttpServletRequest req) throws URISyntaxException {
@@ -116,22 +197,23 @@ public class LoginLogOutController {
 		}
 		if (categoryIndex == 1) {
 			List<Admin> admin = adminService.getAdminList();
-			
+
 			for (Admin admin2 : admin) {
-				
-				if (admin2.getAdmin_username().equalsIgnoreCase(InputEmail1User) && admin2.getAdmin_password().equals(InputPassword1)) {
-					
+
+				if (admin2.getAdmin_username().equalsIgnoreCase(InputEmail1User)
+						&& admin2.getPassword().equals(InputPassword1)) {
+
 					id = admin2.getAdmin_id();
-					
+
 					// for session only if remember btn is checked
-					
+
 					HttpSession session = req.getSession(true);
-					
+
 					session.setAttribute("adminUserName", InputEmail1User);
 
 					session.setAttribute("adminPassword", InputPassword1);
 
-					System.out.println("Admin login sucess  & id =" +id);
+					System.out.println("Admin login sucess  & id =" + id);
 
 					return id;
 				}
@@ -143,9 +225,9 @@ public class LoginLogOutController {
 			for (Student student1 : student) {
 				if (student1.getUsername().equalsIgnoreCase(InputEmail1User)
 						&& student1.getPassword().equals(InputPassword1)) {
-					
-					id=student1.getS_id();
-					
+
+					id = student1.getS_id();
+
 					HttpSession session = req.getSession(true);
 					session.setAttribute("studentUserName", InputEmail1User);
 					session.setAttribute("studentID", student1.getS_id());
@@ -167,7 +249,7 @@ public class LoginLogOutController {
 
 					session.setAttribute("studentPassword", InputPassword1);
 
-					System.out.println("Student login sucess & id = "+id);
+					System.out.println("Student login sucess & id = " + id);
 					return id;
 				}
 			}
@@ -208,4 +290,5 @@ public class LoginLogOutController {
 		return Response.seeOther(targetURIForRedirection).build();
 
 	}
+
 }

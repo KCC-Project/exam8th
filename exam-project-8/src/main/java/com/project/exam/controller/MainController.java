@@ -34,6 +34,12 @@ public class MainController {
 		return new Viewable("/index");
 	}
 	
+	@GET
+	@Path("/ResetPassword")
+	public Viewable resetPassword() {
+		return new Viewable("/ResetPassword");
+	}
+	
 	// --------- student main controller Starts here -----------
 	@GET
 	@Path("/user")
