@@ -40,7 +40,7 @@ public class MailUtil {
         
         String message_to_user = "The verification link is given below: <br> 1. For Desktop = "
         		+ "http://localhost:8080/exam-project-8/ResetPassword?email="+email+""
-        				+ "&code="+authienciationCode+"&tablename="+typeOfUser+"&id="+userId +"<br> If you are using Andoird use the following code <br><br><br>2. For Andoird = <strong>"+authienciationCode+"</strong>";
+        				+ "&code="+authienciationCode+"&tablename="+typeOfUser+"&id="+userId +"<br> If you are using Andoird use the following code <br><br><br>2. For Andoird = <strong>"+authienciationCode+"/"+userId+"</strong>";
        
         String message_subject_to_user = "Forgot Password verify link from EIS";
         

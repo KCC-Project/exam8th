@@ -136,6 +136,10 @@ public class LoginLogOutController {
 
 		ForgetPasswordModel emailModel = forgetPassword.forgetPasswordCheckEmail(email);
 
+		//try catch is neede if email is not returned in emailModel  and checking to null model
+		
+		try {
+		
 		if (!emailModel.getEmailOfUser().equalsIgnoreCase(email)) {
 
 			message = "Invalid Email! please use your valid email address to restore password";
@@ -151,6 +155,11 @@ public class LoginLogOutController {
 
 			return message;
 
+		}
+		}catch(Exception e) {
+			
+			System.out.println("******************  Email  does not match with our database   **************************");
+			
 		}
 
 		return message;

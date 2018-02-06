@@ -1,6 +1,7 @@
 package com.project.exam.dao;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.persistence.Query;
@@ -114,8 +115,12 @@ public class ForgetPasswordImpl implements ForgetPassword {
 
 		boolean updatedHash = false;
 
-		hashCode = UUID.randomUUID().toString();
+		//hashCode = UUID.randomUUID().toString();
 
+		Random rand = new Random();
+		
+		hashCode = Integer.toString(rand.nextInt(20));
+		
 		String q = "update " + tableName + " set password = '" + hashCode + "' where " + idName + " = '" + idOfUser
 				+ "'";
 

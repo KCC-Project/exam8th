@@ -232,7 +232,7 @@
 
 					success : function(data) {
 						if (data>0) {
-							alert(data);
+							//alert(data);
 							  window.location.href = "/exam-project-8/home";
 						}else{
 							alert("something wrong!!");
