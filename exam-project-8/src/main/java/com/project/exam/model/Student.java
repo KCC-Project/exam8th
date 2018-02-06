@@ -1,5 +1,7 @@
 package com.project.exam.model;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,8 +44,10 @@ public class Student {
 
 	private int status;
 
+	private String verificationCode;
+	
 	public Student() {
-		
+		this.verificationCode = UUID.randomUUID().toString();
 	}
 
 
@@ -160,12 +164,18 @@ public class Student {
 		this.status = status;
 	}
 
-	@Override
-	public String toString() {
-		return "Student [s_id=" + s_id + ", first_name=" + first_name + ", middle_name=" + middle_name + ", last_name="
-				+ last_name + ", username=" + username + ", password=" + password + ", email=" + email + ", gender="
-				+ gender + ", date_of_birth=" + date_of_birth + ", phone=" + phone + ", address=" + address + ", image="
-				+ image + ", current_semester=" + current_semester + ", status=" + status + "]";
+
+
+	public String getVerificationCode() {
+		return verificationCode;
 	}
+
+
+
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
+
+	
 
 }

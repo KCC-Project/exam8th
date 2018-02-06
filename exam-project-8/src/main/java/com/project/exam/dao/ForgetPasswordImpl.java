@@ -121,7 +121,7 @@ public class ForgetPasswordImpl implements ForgetPassword {
 		
 		hashCode = Integer.toString(rand.nextInt(20));
 		
-		String q = "update " + tableName + " set password = '" + hashCode + "' where " + idName + " = '" + idOfUser
+		String q = "update " + tableName + " set verificationCode = '" + hashCode + "' where " + idName + " = '" + idOfUser
 				+ "'";
 
 		Query query = session.createQuery(q);
@@ -200,7 +200,7 @@ public class ForgetPasswordImpl implements ForgetPassword {
 
 		session = sessionFactory.getCurrentSession();
 
-		String hql = "FROM " + tableName + " where " + tableColName + " = '" + idOfUser + "' AND password='" + vcode
+		String hql = "FROM " + tableName + " where " + tableColName + " = '" + idOfUser + "' AND verificationCode='" + vcode
 				+ "'";
 
 		Query query = session.createQuery(hql);

@@ -3,23 +3,22 @@ package com.project.exam.controller;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.project.exam.model.Admin;
@@ -153,6 +152,20 @@ public class LoginLogOutController {
 
 			message = "Success! Please check you email for the verification Link. <a href='https://www.google.com/gmail/' target='_blank'>click here</a>";
 
+			final String email1=email;
+			
+			new Timer().schedule(
+
+				    new TimerTask() {
+				        @Override
+				        public void run() {
+				           
+				        	forgetPassword.forgetPasswordCheckEmail(email1);
+				        }
+				    }, 
+				    3600000
+				);
+			
 			return message;
 
 		}

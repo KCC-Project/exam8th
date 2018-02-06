@@ -1,8 +1,9 @@
 package com.project.exam.model;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -19,9 +20,13 @@ public class Admin {
 	private String admin_username;
 	private String password;
 	private String email;
+	private String verificationCode;
 	private int status;
 	
 	public Admin() {
+	
+		this.verificationCode = UUID.randomUUID().toString();
+		
 	}
 
 	public int getAdmin_id() {
@@ -62,6 +67,14 @@ public class Admin {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
 	}
 	
 
