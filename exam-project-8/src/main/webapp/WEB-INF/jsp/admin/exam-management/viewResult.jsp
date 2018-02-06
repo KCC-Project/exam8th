@@ -456,9 +456,7 @@
 				});
 
 				// edit buttons on students row
-				$(".editStude").click(
-
-				function(event) {
+				$("#view-student-exam").on('click','.editStud',function(event) {
 					var table = $("#view-student-exam").DataTable();
 					var data = table.row($(this).parents('tr')).data();
 					console.log(data);

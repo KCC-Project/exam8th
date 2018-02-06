@@ -221,7 +221,7 @@
 			});
 
 			// edit buttons on subjects row
-			$(".editFac").click(function(event) {
+			$("#view_faculty").on('click','.editFac',function(event) {
 				var table = $("#view_faculty").DataTable();
 				var data = table.row($(this).parents('tr')).data();
 				console.log(data);

@@ -343,7 +343,7 @@ var studentid2=0;
             });
 
             // edit buttons on students row
-            $(".editStud").click(function (event) {
+            $("#view_student").on('click','.editStud',function(event) {
                 var table = $("#view_student").DataTable();
                 var data = table.row($(this).parents('tr')).data();
                 console.log("data of row = "+JSON.stringify(data));

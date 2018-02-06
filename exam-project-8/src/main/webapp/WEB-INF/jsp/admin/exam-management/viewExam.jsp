@@ -466,7 +466,7 @@
 		});
 
 		// edit buttons on row
-		$(".deletebtn").click(function(event) {
+		$("#view_exam").on('click','.deletebtn',function(event) {
 			var table = $("#view_exam").DataTable();
 			var data = table.row($(this).parents('tr')).data();
 			console.log(data);

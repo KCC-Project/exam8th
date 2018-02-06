@@ -206,7 +206,7 @@
         });
 
         // edit buttons on program row
-        $(".editProg").click(function (event) {
+        $("#view_program").on('click','.editProg',function(event) {
             var table = $("#view_program").DataTable();
             var data = table.row($(this).parents('tr')).data();
             console.log(data);

@@ -326,7 +326,7 @@
 		});
 
 		// edit buttons on subjects row
-		$(".editBtns").click(function(event) {
+		$("#view_exam_Type").on('click','.editBtns',function(event) {
 			var table = $("#view_exam_Type").DataTable();
 			var data = table.row($(this).parents('tr')).data();
 			console.log(data);

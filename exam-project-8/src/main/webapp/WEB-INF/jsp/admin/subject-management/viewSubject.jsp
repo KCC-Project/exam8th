@@ -307,7 +307,7 @@
             });
 
             // edit buttons on subjects row
-            $(".editSub").click(function (event) {
+            $("#view_subject").on('click','.editSub',function(event) {
                 var table = $("#view_subject").DataTable();
                 var data = table.row($(this).parents('tr')).data();
                 console.log("data when clicked = "+JSON.stringify(data));
