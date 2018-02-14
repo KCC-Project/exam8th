@@ -12,6 +12,7 @@ import com.project.exam.controller.LoginLogOutController;
 import com.project.exam.controller.MainController;
 import com.project.exam.controller.ProgramController;
 import com.project.exam.controller.StudentController;
+import com.project.exam.controller.StudentParentInfoController;
 import com.project.exam.controller.StudentsExamController;
 import com.project.exam.controller.StudentsProgramController;
 import com.project.exam.controller.SubjectController;
@@ -40,7 +41,7 @@ public class MyApplication extends ResourceConfig {
 		register(ExamController.class);
 		register(StudentsProgramController.class);
 		register(LoginLogOutController.class);
-		
+		register(StudentParentInfoController.class);
 		
 	}
 }

@@ -356,7 +356,7 @@
 					"time_to" : $('#add-exam-form').find('[name="time_to"]').val(),
 					"status" : $('#add-exam-form').find('[name="status"]:checked').val(),
 				});
-				//alert(data);
+				alert(data);
 				return data;
 			}
 			function saveInfo() {
