@@ -185,4 +185,13 @@ public class MainController {
 		model.put("admin-type_clicked", true);
 		return new Viewable("/admin/admin-management/view-admin", model);
 	}
+	
+	@GET
+	@Path("/parentsMode")
+	public Viewable parentsMode() {
+		System.out.println("Insdie parentsMode");
+		Map<String, Boolean> model = new HashMap<>();
+		model.put("parentsMode_clicked", true);
+		return new Viewable("/admin/admin-management/parentsMode", model);
+	}
 }

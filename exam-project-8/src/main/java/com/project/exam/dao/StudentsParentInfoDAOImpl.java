@@ -99,4 +99,24 @@ public class StudentsParentInfoDAOImpl implements StudentsParentInfoDAO {
 		return 1;
 	}
 
+	@Override
+	@Transactional
+	public List getStudentsParentByStatus(int status) {
+		session = sessionFactory.getCurrentSession();
+		String hql = "FROM StudentsParentInfo where status = '" + status + "'";
+		Query query = session.createQuery(hql);
+		List<StudentsParentInfo> List = query.getResultList();
+		return List;
+	}
+
+	@Override
+	@Transactional
+	public int updateStudentsParentInfoById(int id) {
+		session = sessionFactory.getCurrentSession();
+		StudentsParentInfo studentsParentInfo = session.get(StudentsParentInfo.class, id);
+		studentsParentInfo.setStatus(1);
+		session.update(studentsParentInfo);
+		return 1;
+	}
+
 }

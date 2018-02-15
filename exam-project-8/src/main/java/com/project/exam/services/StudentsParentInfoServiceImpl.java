@@ -49,4 +49,14 @@ public class StudentsParentInfoServiceImpl implements StudentsParentInfoService 
 		return studentParents.deleteStudentsParentInfo(idd);
 	}
 
+	@Override
+	public List getStudentsParentByStatus(int status) {
+		return studentParents.getStudentsParentByStatus(status);
+	}
+
+	@Override
+	public int updateStudentsParentInfoById(int id) {
+		return studentParents.updateStudentsParentInfoById(id);
+	}
+
 }

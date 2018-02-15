@@ -20,4 +20,7 @@ public interface StudentsParentInfoDAO {
 
 	public int deleteStudentsParentInfo(int idd);
 
+	public List getStudentsParentByStatus(int status);
+	
+	public int updateStudentsParentInfoById(int id);
 }

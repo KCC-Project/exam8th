@@ -44,6 +44,14 @@ public class StudentParentInfoController {
 		return studparent.updateStudentsParentInfo(studentsParentInfo);
 	}
 	
+
+	@PUT
+	@Path("/UpdateStudentParentById/{id}")
+	public int updateStudentParentById(@PathParam("id") int id) {
+		System.out.println("id = = = "+id);
+		return studparent.updateStudentsParentInfoById(id);
+	}
+	
 	@DELETE
 	@Path("/DeleteStudentParent/{id}")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
@@ -69,6 +77,16 @@ public class StudentParentInfoController {
 		
 		return status;
 		
+	}
+	
+	@GET
+	@Path("/GetStudentParentByStatus/{status}")
+	public List getStudentParentByStatus(@PathParam("status") int status)	 {
+
+	System.out.println("status = "+status);
+	
+	return studparent.getStudentsParentByStatus(status);
+	
 	}
 	
 }

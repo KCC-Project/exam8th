@@ -70,6 +70,7 @@
           </a>
           <ul class="collapse collapseable" id="collapse-admin">
             <li><a href="${cp }/view-admin" id="view-admin">View-Admin</a></li>
+             <li><a href="${cp }/parentsMode" id="view-admin">Parents Mode</a></li>
             
           </ul>
         </li>
