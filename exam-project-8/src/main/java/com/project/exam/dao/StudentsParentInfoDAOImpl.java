@@ -30,8 +30,25 @@ public class StudentsParentInfoDAOImpl implements StudentsParentInfoDAO {
 	@Override
 	@Transactional
 	public StudentsParentInfo addStudentsParentInfo(StudentsParentInfo tudentsParentInfo) {
+	
 		session = sessionFactory.getCurrentSession();
-		session.save(tudentsParentInfo);
+		
+		String hql = "FROM StudentsParentInfo where student_id.s_id = '" + tudentsParentInfo.getStudent_id().getS_id() + "' And primary_contact='"+tudentsParentInfo.getPrimary_contact()+"'";
+		
+		Query query = session.createQuery(hql);
+		
+		List<StudentsParentInfo> list = query.getResultList();
+		
+		if (list.size()>0) {
+			
+			System.out.println("*********  This request already exit  *********");
+		
+		}else {
+		
+			session.save(tudentsParentInfo);
+		
+		}
+	
 		return tudentsParentInfo;
 	}
 
@@ -49,7 +66,7 @@ public class StudentsParentInfoDAOImpl implements StudentsParentInfoDAO {
 	@Transactional
 	public List<StudentsParentInfo> getStudentsParentInfo(int studentId, String contact) {
 		session = sessionFactory.getCurrentSession();
-		String hql = "FROM StudentsParentInfo where StudentsParentInfo.Student.s_id = '" + studentId + "' And primary_contact='"+contact+"'";
+		String hql = "FROM StudentsParentInfo where status=1 AND student_id.s_id = '" + studentId + "' And primary_contact='"+contact+"'";
 		Query query = session.createQuery(hql);
 		List<StudentsParentInfo> List = query.getResultList();
 		return List;
