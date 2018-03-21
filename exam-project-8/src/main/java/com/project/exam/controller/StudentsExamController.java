@@ -104,10 +104,12 @@ public class StudentsExamController {
 	@Path("/GetStudentExamByStudentIdAndSemesterNo/{studentId}/{semesterNo}")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
-	public List<StudentsExam> GetStudentExamByStudentIdAndSemesterNo(@PathParam("studentId") int studentId,@PathParam("semesterNo") int semesterNo) {
+	public List GetStudentExamByStudentIdAndSemesterNo(@PathParam("studentId") int studentId,@PathParam("semesterNo") int semesterNo) {
 		System.out.println("student is = "+studentId);
 		System.out.println("semesterNo is = "+semesterNo);
 		return studentsExamService.getstudentsExam(studentId, semesterNo);
+		
+		
 	}
 	
 
