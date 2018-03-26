@@ -8,8 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.transaction.annotation.Transactional;import com.project.exam.model.Student;
 import com.project.exam.model.StudentsParentInfo;
 
 @Repository
@@ -66,8 +65,9 @@ public class StudentsParentInfoDAOImpl implements StudentsParentInfoDAO {
 	@Transactional
 	public List<StudentsParentInfo> getStudentsParentInfo(int studentId, String contact) {
 		session = sessionFactory.getCurrentSession();
-		String hql = "FROM StudentsParentInfo where status=1 AND student_id.s_id = '" + studentId + "' And primary_contact='"+contact+"'";
+		String hql = "FROM StudentsParentInfo p  where p.primary_contact="+contact+" and p.student_id.s_id = '" + studentId + "' ";
 		Query query = session.createQuery(hql);
+		
 		List<StudentsParentInfo> List = query.getResultList();
 		return List;
 	}
@@ -76,10 +76,13 @@ public class StudentsParentInfoDAOImpl implements StudentsParentInfoDAO {
 	@Transactional
 	public List<StudentsParentInfo> getStudentsParentInfoByStudent(int studentId) {
 		session = sessionFactory.getCurrentSession();
-		String hql = "FROM StudentsParentInfo where StudentsParentInfo.Student.s_id = '" + studentId + "' ";
+		String hql = "FROM StudentsParentInfo p  where p.student_id.s_id = '" + studentId + "' ";
 		Query query = session.createQuery(hql);
+		
 		List<StudentsParentInfo> List = query.getResultList();
 		return List;
+		
+		//List<StudentsParentInfo> studentsParentInfo = session.createCriteria(StudentsParentInfo.class).add(Restrictions.eq("student_id.s_id", studentId)).list();
 	}
 
 	@Override

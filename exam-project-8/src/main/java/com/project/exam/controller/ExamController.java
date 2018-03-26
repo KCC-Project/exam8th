@@ -79,4 +79,11 @@ public class ExamController {
 		return examService.searchByField(exmaTypeId, programId, batchYear, semesterNo);
 	}
 	
+	@GET
+	@Path("/getRoutineForParentsMode/{studentId}")
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public List getRoutineForParentsMode(@PathParam("studentId") int studentId) {
+		return examService.getExamRoutine(studentId);
+	}
 }

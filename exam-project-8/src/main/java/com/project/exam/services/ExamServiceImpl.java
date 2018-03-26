@@ -50,4 +50,9 @@ public class ExamServiceImpl implements ExamService {
 		return examDao.searchByField(examTypeId, programId, batchYear, semesterNo);
 	}
 
+	@Override
+	public List getExamRoutine(int s_Id) {
+		return examDao.getExamRoutine(s_Id);
+	}
+
 }

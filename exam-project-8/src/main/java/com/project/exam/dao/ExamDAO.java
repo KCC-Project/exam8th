@@ -13,4 +13,7 @@ public interface ExamDAO {
 	public int deleteExam(int s_Id);
 	public List<Exam> searchByField(int examTypeId,int subjectId);
 	public List<Exam> searchByField(int examTypeId,int programId,int batchYear,int semesterNo);
+	
+	//this method is only used by parents mode only
+	public List getExamRoutine(int s_Id);
 }

@@ -80,6 +80,28 @@ public class StudentParentInfoController {
 	}
 	
 	@GET
+	@Path("/GetStudentParentByStudentId/{studentId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<StudentsParentInfo> getStudentParentByStudentId(@PathParam("studentId") int studentId)	 {
+
+		System.out.println("studen id from app = "+studentId);
+		
+		return studparent.getStudentsParentInfoByStudent(studentId);
+	
+	}
+	
+	@GET
+	@Path("/GetStudentParentByStudentIdAndContact/{studentId}/{contact}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<StudentsParentInfo> getStudentParentByStudentId(@PathParam("studentId") int studentId,@PathParam("contact") String contact)	 {
+
+		System.out.println("studen id from app = "+studentId);
+		
+		return studparent.getStudentsParentInfo(studentId, contact);
+	
+	}
+	
+	@GET
 	@Path("/GetStudentParentByStatus/{status}")
 	public List getStudentParentByStatus(@PathParam("status") int status)	 {
 

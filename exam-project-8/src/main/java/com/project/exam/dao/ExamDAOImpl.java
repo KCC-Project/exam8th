@@ -114,4 +114,28 @@ public class ExamDAOImpl implements ExamDAO {
 		}
 		return list;
 	}
+
+	@Override
+	@Transactional
+	public List getExamRoutine(int s_Id) {
+		session = sessionFactory.getCurrentSession();
+		Query query = session.createSQLQuery("SELECT sub.subject_name,e.exam_date,e.full_marks,e.pass_marks,et.type_name from student s INNER JOIN student_exam ste ON ste.student_id=s.s_id INNER JOIN exam e ON e.exam_id=ste.exam_id INNER JOIN exam_type et ON et.exam_type_id=e.exam_type_id INNER JOIN subjects sub ON sub.subject_id=e.subject_id WHERE s.s_id="+s_Id+" and e.status=1 order by type_name");
+		List<Object[]>  result = query.getResultList();
+		System.out.println("Result size = "+result.size());
+		List list = new ArrayList<>();
+		for (Object[] object : result) {
+			Map<String, Object> map= new HashMap<>();
+			
+		map.put("subject_name", object[0]);
+		map.put("exam_date", object[1]);
+		map.put("full_marks", object[2]);
+		map.put("pass_marks", object[3]);
+		map.put("type_name", object[4]);
+		/*map.put("time_from", object[11]);
+		map.put("time_to", object[12]);*/
+	
+			list.add(map);
+		}
+		return list;
+	}
 }
