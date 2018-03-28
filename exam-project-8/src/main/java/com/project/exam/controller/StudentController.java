@@ -59,6 +59,7 @@ public class StudentController {
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public Student updateStudent(Student studentModel) {
+		System.out.println("==========  "+studentModel.toString());
 		return studentService.updateStudent(studentModel);
 	}
 	

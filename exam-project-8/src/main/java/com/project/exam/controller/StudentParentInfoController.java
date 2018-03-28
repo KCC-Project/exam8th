@@ -61,7 +61,7 @@ public class StudentParentInfoController {
 	
 	@GET
 	@Path("/GetStudentParentBy/{id}/{contact}")
-	public int GetStudentParentBy(@PathParam("id") int id,@PathParam("contact") String contact)	 {
+	public int getStudentParentBy(@PathParam("id") int id,@PathParam("contact") String contact)	 {
 
 		System.out.println("studentid = "+id +"     "+"contact = "+contact);
 		

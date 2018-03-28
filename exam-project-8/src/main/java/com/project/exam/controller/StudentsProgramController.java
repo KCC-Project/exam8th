@@ -65,7 +65,7 @@ public class StudentsProgramController {
 	}
 	@GET
 	@Path("/GetStudentsProgramByStudentId/{id}")
-	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 	public List<StudentsProgram> GetStudentsProgramByStudentId(@PathParam("id") int id) {
 		System.out.println("id of student = "+id);
 		return studentsProgramService.getStudentsProgramByStudentId(id);

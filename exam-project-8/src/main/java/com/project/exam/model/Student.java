@@ -176,6 +176,17 @@ public class Student {
 		this.verificationCode = verificationCode;
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "Student [s_id=" + s_id + ", first_name=" + first_name + ", middle_name=" + middle_name + ", last_name="
+				+ last_name + ", username=" + username + ", password=" + password + ", email=" + email + ", gender="
+				+ gender + ", date_of_birth=" + date_of_birth + ", phone=" + phone + ", address=" + address + ", image="
+				+ image + ", current_semester=" + current_semester + ", status=" + status + ", verificationCode="
+				+ verificationCode + "]";
+	}
+
 	
 
 }

@@ -65,7 +65,7 @@ public class StudentsParentInfoDAOImpl implements StudentsParentInfoDAO {
 	@Transactional
 	public List<StudentsParentInfo> getStudentsParentInfo(int studentId, String contact) {
 		session = sessionFactory.getCurrentSession();
-		String hql = "FROM StudentsParentInfo p  where p.primary_contact="+contact+" and p.student_id.s_id = '" + studentId + "' ";
+		String hql = "FROM StudentsParentInfo p  where p.primary_contact="+contact+" and p.status=1 and p.student_id.s_id = '" + studentId + "' ";
 		Query query = session.createQuery(hql);
 		
 		List<StudentsParentInfo> List = query.getResultList();
