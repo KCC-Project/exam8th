@@ -22,7 +22,7 @@ public class CountController {
 	@Path("/Student")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public List<CountInfo> getAllCountInfo() {
-		System.out.println("from controller: "+countService.getAllCounts());
+		//System.out.println("from controller: "+countService.getAllCounts());
 		return countService.getAllCounts();
 	}
 	

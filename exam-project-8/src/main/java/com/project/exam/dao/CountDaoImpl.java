@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.exam.model.CountInfo;
-import com.project.exam.model.Faculty;
 
 @Repository("countDao")
 public class CountDaoImpl implements CountDao{
@@ -22,9 +21,9 @@ public class CountDaoImpl implements CountDao{
 	@Transactional
 	public List<CountInfo> getAllCounts() {
 		session = sessionFactory.getCurrentSession();
-		List<CountInfo> countInfo = session.createCriteria(CountInfo.class).list();
-		System.out.println("List of countInfo = "+countInfo.toString());
-		return countInfo;
+		List<CountInfo> countInfoList = session.createCriteria(CountInfo.class).list();
+		//System.out.println("List of countInfo = "+countInfo.toString());
+		return countInfoList;
 	}
 
 
