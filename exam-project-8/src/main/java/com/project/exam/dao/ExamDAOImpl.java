@@ -119,7 +119,7 @@ public class ExamDAOImpl implements ExamDAO {
 	@Transactional
 	public List getExamRoutine(int s_Id) {
 		session = sessionFactory.getCurrentSession();
-		Query query = session.createSQLQuery("SELECT sub.subject_name,e.exam_date,e.full_marks,e.pass_marks,et.type_name from student s INNER JOIN student_exam ste ON ste.student_id=s.s_id INNER JOIN exam e ON e.exam_id=ste.exam_id INNER JOIN exam_type et ON et.exam_type_id=e.exam_type_id INNER JOIN subjects sub ON sub.subject_id=e.subject_id WHERE s.s_id="+s_Id+" and e.status=1 order by type_name");
+		Query query = session.createSQLQuery("SELECT sub.subject_name,e.exam_date,e.full_marks,e.pass_marks,et.type_name ,e.time_from,e.time_to ,sub.semester_no from student s INNER JOIN student_exam ste ON ste.student_id=s.s_id INNER JOIN exam e ON e.exam_id=ste.exam_id INNER JOIN exam_type et ON et.exam_type_id=e.exam_type_id INNER JOIN subjects sub ON sub.subject_id=e.subject_id WHERE s.s_id="+s_Id+" and e.status=1 order by type_name");
 		List<Object[]>  result = query.getResultList();
 		System.out.println("Result size = "+result.size());
 		List list = new ArrayList<>();
@@ -131,8 +131,9 @@ public class ExamDAOImpl implements ExamDAO {
 		map.put("full_marks", object[2]);
 		map.put("pass_marks", object[3]);
 		map.put("type_name", object[4]);
-		/*map.put("time_from", object[11]);
-		map.put("time_to", object[12]);*/
+		map.put("time_from", object[5]);
+		map.put("time_to", object[6]);
+		map.put("semester_no", object[7]);
 	
 			list.add(map);
 		}

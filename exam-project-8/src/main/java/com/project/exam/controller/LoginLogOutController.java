@@ -270,6 +270,7 @@ public class LoginLogOutController {
 					// for session only if remember btn is checked
 
 					session.setAttribute("studentPassword", InputPassword1);
+					session.setAttribute("currentSemester", student1.getCurrent_semester());
 
 					System.out.println("Student login sucess & id = " + id);
 					return id;
