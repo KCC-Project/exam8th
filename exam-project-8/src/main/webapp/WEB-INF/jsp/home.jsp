@@ -57,7 +57,7 @@
 							<div class="icon">
 								<i class="ion ion-ios-people"></i>
 							</div>
-							<a class="small-box-footer" href="#" target="_blank">More
+							<a class="small-box-footer" href="${cp}/student/view?dash=1" >More
 								info <i class="fa fa-arrow-circle-right"></i>
 							</a>
 						</div>
@@ -68,12 +68,12 @@
 						<div class="small-box bg-green">
 							<div class="inner">
 								<h3>17</h3>
-								<p>Staff</p>
+								<p>Program</p>
 							</div>
 							<div class="icon">
 								<i class="ion ion-person"></i>
 							</div>
-							<a class="small-box-footer" href="#" target="_blank">More
+							<a class="small-box-footer" href="${cp}/program?dash=1">More
 								info <i class="fa fa-arrow-circle-right"></i>
 							</a>
 						</div>
@@ -84,12 +84,12 @@
 						<div class="small-box bg-yellow">
 							<div class="inner">
 								<h3>5</h3>
-								<p>Active Courses</p>
+								<p>Subject</p>
 							</div>
 							<div class="icon">
 								<i class="fa fa-graduation-cap"></i>
 							</div>
-							<a class="small-box-footer" href="#" target="_blank">More
+							<a class="small-box-footer" href="${cp}/subject/view?dash=1">More
 								info <i class="fa fa-arrow-circle-right"></i>
 							</a>
 						</div>
@@ -100,12 +100,12 @@
 						<div class="small-box bg-red">
 							<div class="inner">
 								<h3>5</h3>
-								<p>Active Batches</p>
+								<p>Active Exam</p>
 							</div>
 							<div class="icon">
 								<i class="fa fa-sitemap"></i>
 							</div>
-							<a class="small-box-footer" href="#" target="_blank">More
+							<a class="small-box-footer" href="${cp}/viewexam?dash=1">More
 								info <i class="fa fa-arrow-circle-right"></i>
 							</a>
 						</div>
