@@ -41,7 +41,7 @@
 <link href="${css }sidebar.css" rel="stylesheet">
 <link href="${css }/style-responsive.css" rel="stylesheet">
 <link href="${css}/profile.css" rel="stylesheet">
-
+<link href="${css}datatables.min.css" rel="stylesheet">
 
 <!-- Linked JS -->
 <script src="${extraJs}/jquery-3.2.1.min.js"></script>
