@@ -5,7 +5,6 @@ import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
 import org.glassfish.jersey.servlet.ServletProperties;
 
 import com.project.exam.controller.AdminController;
-import com.project.exam.controller.CountController;
 import com.project.exam.controller.ExamController;
 import com.project.exam.controller.Exam_typeController;
 import com.project.exam.controller.FacultyController;
@@ -43,7 +42,7 @@ public class MyApplication extends ResourceConfig {
 		register(StudentsProgramController.class);
 		register(LoginLogOutController.class);
 		register(StudentParentInfoController.class);
-		register(CountController.class);
+		
 		
 	}
 }
