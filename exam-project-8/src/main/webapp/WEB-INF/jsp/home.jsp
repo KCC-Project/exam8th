@@ -50,9 +50,8 @@
 					<div class="col-lg-3 col-xs-6 ">
 						<!-- small box -->
 						<div class="small-box bg-aqua">
-							<div class="inner">
-								<h3>15</h3>
-								<p>Students</p>
+							<div class="inner" id="student_count">
+								<!--(Number) Total Students -->
 							</div>
 							<div class="icon">
 								<i class="ion ion-ios-people"></i>
@@ -66,12 +65,11 @@
 					<div class="col-lg-3 col-xs-6">
 						<!-- small box -->
 						<div class="small-box bg-green">
-							<div class="inner">
-								<h3>17</h3>
-								<p>Program</p>
+							<div class="inner" id="program_count">
+								<!--(Number) Total Programs -->
 							</div>
 							<div class="icon">
-								<i class="ion ion-person"></i>
+								<i class="fa fa-graduation-cap"></i>
 							</div>
 							<a class="small-box-footer" href="${cp}/program?dash=1">More
 								info <i class="fa fa-arrow-circle-right"></i>
@@ -82,12 +80,11 @@
 					<div class="col-lg-3 col-xs-6">
 						<!-- small box -->
 						<div class="small-box bg-yellow">
-							<div class="inner">
-								<h3>5</h3>
-								<p>Subject</p>
+							<div class="inner" id="subject_count">
+								<!--(Number) Total Subjects -->
 							</div>
 							<div class="icon">
-								<i class="fa fa-graduation-cap"></i>
+								<i class="fa fa-book"></i>
 							</div>
 							<a class="small-box-footer" href="${cp}/subject/view?dash=1">More
 								info <i class="fa fa-arrow-circle-right"></i>
@@ -98,9 +95,8 @@
 					<div class="col-lg-3 col-xs-6">
 						<!-- small box -->
 						<div class="small-box bg-red">
-							<div class="inner">
-								<h3>5</h3>
-								<p>Active Exam</p>
+							<div class="inner" id="exam_count">
+								<!--(Number) Active Exam -->
 							</div>
 							<div class="icon">
 								<i class="fa fa-sitemap"></i>
@@ -327,5 +323,28 @@
          <!-- Content Area Added by mausam end here from above div-->
     </div>
     
+    <script>
+    var res;
+    	$(document).ready(function() {
+    		
+    		$.ajax({
+    			url: window.context + "/ApiCount/Student",
+    			method: "GET",
+    			dataType: "json",
+    			cache: true,
+    			success: function(data){
+    				console.log(data);
+    				$("#student_count").html('<h3>'+data[0].student_count+'</h3><p> Students</p>');
+    				$("#program_count").html('<h3>'+data[0].program_count+'</h3><p> Programs</p>');
+    				$("#subject_count").html('<h3>'+data[0].subject_count+'</h3><p> Subjects</p>');
+    				$("#exam_count").html('<h3>'+data[0].exam_count+'</h3><p>Active Exam</p>');
+    			},
+    			error: function(data){
+    				console.log("error!");
+    			}
+    			
+    		});
+    	});
+    </script>
 
 	<jsp:include page="../jsp/admin/shared/footer.jsp" />
