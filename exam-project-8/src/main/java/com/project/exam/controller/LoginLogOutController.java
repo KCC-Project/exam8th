@@ -256,7 +256,7 @@ public class LoginLogOutController {
 					session.setAttribute("first_name", student1.getFirst_name());
 					session.setAttribute("middle_name", student1.getMiddle_name());
 					session.setAttribute("last_name", student1.getLast_name());
-					if (student1.getGender() == 0) {
+					if (student1.getGender() == 1) {
 						session.setAttribute("gender", "Male");
 					} else {
 						session.setAttribute("gender", "Female");

@@ -38,7 +38,6 @@
 
 					<p>Student ID : ${ studentID}</p>
 					<p>Username : ${ studentUserName}</p>
-					<p>Password : ${ password}</p>
 
 				</div>
 
@@ -53,7 +52,7 @@
 						<i class="glyphicon glyphicon-home"></i> Daily Activity
 				</a></li>
 				<li><a data-toggle="tab" href="#profile"> <i
-						class="glyphicon glyphicon-user"></i> Profile
+						class="glyphicon glyphicon-user"></i> Notice
 				</a></li>
 				<li class=""><a data-toggle="tab" href="#edit-profile"> <i
 						class="icon-envelope"></i> Edit Profile
@@ -79,7 +78,9 @@
 				<!-- edit-profile -->
 				<div id="edit-profile" class="tab-pane">
 					<div class="panel">
-						<div class="panel-body profile-panel"></div>
+						<div class="panel-body profile-panel">
+					
+						</div>
 					</div>
 				</div>
 
