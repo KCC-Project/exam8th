@@ -137,6 +137,20 @@
 <jsp:include page="../shared/footer.jsp" />
 <script>
     $(document).ready(function () {
+    	
+    	// check if the url comes from dashboard
+    	var url_string = window.location.href;
+    	var url = new URL(url_string);
+    	var dash = url.searchParams.get("dash");
+    	
+    	if(dash==1){
+    		//console.log(dash);
+    		var url = window.context + "/ApiProgram/GetAllProgram";
+            var method = "GET";
+            var data = "";
+            loadProgramInformation(url, method, data);
+    	}
+    	// -------------------------------
 
         // for selecting faculty in faculty add model box
         load_faculty(event, "f-faculty-box");

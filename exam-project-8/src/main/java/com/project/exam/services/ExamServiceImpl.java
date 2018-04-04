@@ -55,4 +55,9 @@ public class ExamServiceImpl implements ExamService {
 		return examDao.getExamRoutine(s_Id);
 	}
 
+	@Override
+	public List<Exam> getRunningExams() {
+		return examDao.getRunningExams();
+	}
+
 }

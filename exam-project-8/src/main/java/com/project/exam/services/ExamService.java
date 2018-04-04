@@ -15,4 +15,7 @@ public interface ExamService {
 	
 	//this method is only used by parents mode only
 		public List getExamRoutine(int s_Id);
+		
+	// this method returns exams -> WHERE DATE(exam_date) > DATE(NOW()) and status = 0
+	public List<Exam> getRunningExams();
 }

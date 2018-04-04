@@ -86,4 +86,13 @@ public class ExamController {
 	public List getRoutineForParentsMode(@PathParam("studentId") int studentId) {
 		return examService.getExamRoutine(studentId);
 	}
+	
+	
+	// this method returns exams -> WHERE DATE(exam_date) > DATE(NOW()) and status = 0
+	@GET
+	@Path("/GetRunningExam")
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public List<Exam> getAllRunningExams() {
+		return examService.getRunningExams();
+	}
 }

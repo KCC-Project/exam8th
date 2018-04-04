@@ -214,6 +214,82 @@
 	var semesterNo;
 
 	$(document).ready(function() {
+		
+		// check if the url comes from dashboard
+    	var url_string = window.location.href;
+    	var url = new URL(url_string);
+    	var dash = url.searchParams.get("dash");
+    	
+    	if(dash==1){
+    		//console.log(dash);
+    		var url = window.context + "/ApiExam/GetRunningExam";
+        	var method = "GET";
+        	var data = "";
+        	loadRunningExam(url, method, data);
+    	}
+    	function loadRunningExam(url, method, data) {
+    		
+    		$('#view_exam').DataTable({
+    			destroy : true,
+    			paging : true,
+    			searching : true,
+    			"processing" : true,
+    			"serverSide" : false,
+    			"order" : [ [ 0, "asc" ] ],
+    			"ajax" : {
+    				"url" : url,
+    				"type" : method,
+    				"data" : data,
+    				"dataSrc" : "",
+    				"dataType" : "json",
+    				"async" : false
+    			},
+    			"columns" : [ {
+    				data : null,
+    				render : function(data, type, row,i) {
+    					return (i.row)+1;
+    				},
+    			}, {
+    				data : null,
+    				render : function(data, type, row) {
+
+    					return data.subject_name;
+    				},
+    			}, {
+    				data : null,
+    				render : function(data, type, row) {
+    					return data.type_name;
+    				},
+    			}, {
+    				data : null,
+    				render : function(data, type, row) {
+    					return data.program_name + ' ' + '/ ' +data.semester_no;
+    				},
+    			}, {
+    				"data" : "exam_date"
+    			}, {
+    				"data" : "full_marks"
+    			}, {
+    				"data" : "pass_marks"
+    			}, {
+    				"data" : "time_from"
+    			}, {
+    				"data" : "time_to"
+    			},{
+    				data : null,
+    				render : function(data, type, row) {
+    					return 'Active';
+    				},
+    			},{
+    				data : null,
+    				render : function(data, type, row) {
+    					return '-----';
+    				},
+    			}]
+    		});
+
+    	}
+    	// -------------------------------
 
 		load_all_examType("exam_type_box1");
 

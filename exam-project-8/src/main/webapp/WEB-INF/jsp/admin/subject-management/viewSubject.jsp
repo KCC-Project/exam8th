@@ -200,6 +200,20 @@
         var programId = 0;
 
         $(document).ready(function () {
+        	
+        	// check if the url comes from dashboard
+        	var url_string = window.location.href;
+        	var url = new URL(url_string);
+        	var dash = url.searchParams.get("dash");
+        	
+        	if(dash==1){
+        		//console.log(dash);
+        		var url = window.context + "/ApiSubject/GetAllSubject";
+            	var method = "GET";
+            	var data = "";
+            	loadSubjectInformation(url, method, data);
+        	}
+        	// -------------------------------
             
             load_all_program("all-program-box");
 

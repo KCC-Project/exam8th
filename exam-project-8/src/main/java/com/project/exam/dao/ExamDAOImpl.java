@@ -139,4 +139,39 @@ public class ExamDAOImpl implements ExamDAO {
 		}
 		return list;
 	}
+	
+	@Override
+	@Transactional
+	public List getRunningExams() {
+		session = sessionFactory.getCurrentSession();
+		Query query = session.createSQLQuery("SELECT e.exam_id, s.subject_name, s.subject_code,et.type_name, p.program_name, s.semester_no, e.exam_date, e.full_marks, e.pass_marks, e.time_from, e.time_to, e.status "
+				+ "							FROM exam as e "
+				+ "							INNER JOIN subjects as s ON e.subject_id=s.subject_id "
+				+ "							INNER JOIN exam_type as et ON e.exam_type_id = et.exam_type_id "
+				+ "							INNER join program as p ON s.program_id = p.program_id "
+				+ "							WHERE DATE(e.exam_date) > DATE(NOW()) and e.status = 0");
+		List<Object[]>  result = query.getResultList();
+		System.out.println("Result size = "+result.size());
+		List list = new ArrayList<>();
+		for (Object[] object : result) {
+			Map<String, Object> map= new HashMap<>();
+			
+		map.put("exam_id", object[0]);
+		map.put("subject_name", object[1]);
+		map.put("subject_code", object[2]);
+		map.put("type_name", object[3]);
+		map.put("program_name", object[4]);
+		map.put("semester_no", object[5]);
+		map.put("exam_date", object[6]);
+		map.put("full_marks", object[7]);
+		map.put("pass_marks", object[8]);
+		map.put("time_from", object[9]);
+		map.put("time_to", object[10]);
+		map.put("status", object[11]);
+	
+			list.add(map);
+		}
+		return list;
+	}
+
 }
