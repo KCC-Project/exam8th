@@ -3,11 +3,12 @@
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <c:set var="cp" scope="application">${pageContext.request.contextPath}</c:set>
 
+<c:if test="${ empty sessionScope.studentUserName }">
+	<c:redirect url="/index " />
+</c:if>
 <!DOCTYPE html>
 <html lang="en">
 <head>

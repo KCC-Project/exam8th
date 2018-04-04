@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"
 	isELIgnored="false"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:if test="${ empty sessionScope.studentUserName }">
+	<c:redirect url="/index " />
+</c:if>
 
 <jsp:include page="../student/student-header.jsp" />
 
