@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.exam.model.Admin;
+import com.project.exam.util.MD5Hash;
 
 @Repository("adminDao")
 public class AdminDAOImpl implements AdminDAO {
@@ -34,6 +35,7 @@ public class AdminDAOImpl implements AdminDAO {
 	@Transactional
 	public Admin addAdmin(Admin admin) {
 		session = sessionFactory.getCurrentSession();
+		//admin.setPassword(MD5Hash.MD5(admin.getPassword()));
 		session.save(admin);
 		return admin;
 	}
