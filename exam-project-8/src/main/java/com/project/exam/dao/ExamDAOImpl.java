@@ -84,7 +84,7 @@ public class ExamDAOImpl implements ExamDAO {
 		session = sessionFactory.getCurrentSession();
 		Query query = session.createSQLQuery("SELECT Distinct(sub.subject_name),sub.subject_id,et.exam_type_id,"
 				+ "et.type_name,pro.program_id,pro.program_name,e.exam_id,e.exam_date,e.full_marks,e.pass_marks,"
-				+ "e.status,e.time_from,e.time_to,sub.semester_no FROM exam e INNER JOIN exam_type et "
+				+ "e.status,TIME_FORMAT(e.time_from,'%h:%i %p'),TIME_FORMAT(e.time_to,'%h:%i %p'),sub.semester_no FROM exam e INNER JOIN exam_type et "
 				+ "ON et.exam_type_id=e.exam_type_id INNER JOIN subjects sub "
 				+ "ON sub.subject_id=e.subject_id INNER JOIN program pro "
 				+ "ON pro.program_id=sub.program_id INNER JOIN studentprogram stupro "
@@ -119,7 +119,7 @@ public class ExamDAOImpl implements ExamDAO {
 	@Transactional
 	public List getExamRoutine(int s_Id) {
 		session = sessionFactory.getCurrentSession();
-		Query query = session.createSQLQuery("SELECT sub.subject_name,e.exam_date,e.full_marks,e.pass_marks,et.type_name ,e.time_from,e.time_to ,sub.semester_no from student s INNER JOIN student_exam ste ON ste.student_id=s.s_id INNER JOIN exam e ON e.exam_id=ste.exam_id INNER JOIN exam_type et ON et.exam_type_id=e.exam_type_id INNER JOIN subjects sub ON sub.subject_id=e.subject_id WHERE s.s_id="+s_Id+" and e.status=1 order by type_name");
+		Query query = session.createSQLQuery("SELECT sub.subject_name,e.exam_date,e.full_marks,e.pass_marks,et.type_name ,TIME_FORMAT(e.time_from,'%h:%i %p'),TIME_FORMAT(e.time_to,'%h:%i %p') ,sub.semester_no from student s INNER JOIN student_exam ste ON ste.student_id=s.s_id INNER JOIN exam e ON e.exam_id=ste.exam_id INNER JOIN exam_type et ON et.exam_type_id=e.exam_type_id INNER JOIN subjects sub ON sub.subject_id=e.subject_id WHERE s.s_id="+s_Id+" and e.status=1 order by type_name");
 		List<Object[]>  result = query.getResultList();
 		System.out.println("Result size = "+result.size());
 		List list = new ArrayList<>();
