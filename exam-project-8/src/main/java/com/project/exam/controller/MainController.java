@@ -194,4 +194,13 @@ public class MainController {
 		model.put("parentsMode_clicked", true);
 		return new Viewable("/admin/admin-management/parentsMode", model);
 	}
+	
+	@GET
+	@Path("/viewReportGraph")
+	public Viewable viewReportGraph() {
+		System.out.println("Insdie viewReportGraph");
+		Map<String, Boolean> model = new HashMap<>();
+		model.put("parentsMode_clicked", true);
+		return new Viewable("/admin/admin-management/viewReportGraph", model);
+	}
 }

@@ -38,12 +38,17 @@ $.ajax({
 		management_fail = data[0].management_fail_totalstudent;
 		arts_fail = data[0].arts_fail_totalstudent;
 		law_fail = data[0].law_fail_totalstudent;
+		
+		maxFailSubject();
 	
 	},
 error : function() {
 alert("Error...!!!");
 }
 });
+
+
+
 
 
 // Load google charts
@@ -76,6 +81,7 @@ function drawChartTotal() {
 }
 
 
+
 function drawChartFail() {
 	var data = google.visualization.arrayToDataTable([
 			[ 'Task', 'Hours per Day' ], [ 'Science and Tech', (science_fail/scienceTotal)*100 ], [ 'Management', (management_fail/managementTotal)*100 ],
@@ -85,7 +91,7 @@ function drawChartFail() {
 	
 	
 	var options = {
-		'width' : 400,
+		'width' : 480,
 		'height' : 300
 		
 	};
@@ -97,7 +103,75 @@ function drawChartFail() {
 	chart.draw(data, options);
 }
 
+function drawChartMaxFailSubject() {
+	var data = google.visualization.arrayToDataTable([
+		[ 'Task', 'Hours per Day' ], [ 'Science and Tech', (science_fail/scienceTotal)*100 ], [ 'Management', (management_fail/managementTotal)*100 ],
+		[ 'Arts', (arts_fail/artsTotal)*100 ], [ 'Law', (law_fail/lawTotal)*100 ] ]);
+
+	alert("data = "+ data);
+	// Optional; add a title and set the width and height of the chart
+	
+	
+	var options = {
+		'width' : 400,
+		'height' : 300
+		
+	};
+
+	// Display the chart inside the <div> element with id="piechart"
+	var chart = new google.visualization.PieChart(document
+			.getElementById('piechart3'));
+	
+	chart.draw(data, options);
+}
+
+function maxFailSubject(){
+	var url = window.context + "/ApiViewController/MaxFailFubjectView";
+	var method ="GET";
+	var data ="";
+	
+	$('#max_fail_subject').DataTable({
+		destroy : true,
+		paging : true,
+		searching : true,
+		"processing" : true,
+		"serverSide" : false,
+		"order" : [ [ 0, "asc" ] ],
+		"ajax" : {
+			"url" : url,
+			"type" : method,
+			"data" : data,
+			"dataSrc" : "",
+			"dataType" : "json",
+			"async" : true
+		},
+		"columns" : [ {
+			data : null,
+			render : function(data, type, row,i) {
+				return (i.row)+1;
+			},
+		}, {
+			data : null,
+			render : function(data, type, row) {
+
+				return data.subject_name;
+			},
+		}, {
+			data : null,
+			render : function(data, type, row) {
+				return data.total_failed;
+			},
+		}, {
+			data : null,
+			render : function(data, type, row) {
+				return data.program_name;
+			},
+		} ]
+	});
+	
+};
 });
+
 </script>
 <script type="text/javascript"
 	src="https://www.gstatic.com/charts/loader.js"></script>

@@ -62,6 +62,19 @@
           </ul>
         </li>
         <!--====================================================================================  -->
+           <!--====================================================================================  -->
+          <li class="link">
+          <a href="#collapse-report-graph" data-toggle="collapse"  aria-controls="collapse-exam">
+            <span class="glyphicon glyphicon-pencil"></span>
+            <span class="hidden-xs hidden-sm">Analysis</span>
+            <span class="caret pull-right"></span>
+          </a>
+          <ul class="collapse collapseable" id="collapse-report-graph">
+            <li><a href="${cp }/viewReportGraph" id="viewReportGraph">Graph</a></li>
+            
+          </ul>
+        </li>
+        <!--====================================================================================  -->
           <li class="link">
           <a href="#collapse-admin" data-toggle="collapse"  aria-controls="collapse-admin">
             <span class="glyphicon glyphicon-pencil"></span>

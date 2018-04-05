@@ -275,48 +275,7 @@
 					</div>
 
 				</div>
-				<!-- =================================1st graph========================================= -->
-				<br>
-				<div class="row hidden-xs">
-					<div class="col-lg-12 ">
-						<!-- 1st garph -->
-						<div class="col-lg-7 ">
-						<div class="row">
-						<div class="col-lg-12">
-							<div class="card">
-								<div class="header">
-									<h4 class="title">Graph Of Sotal Student</h4>
-									<p class="category">Per Faculty</p>
-								</div>
-								<div class="content " >
-									<div id="piechart1" style="background-color: white;"></div>
-								</div>
-							</div>
-							</div>
-							</div>
-						</div>
-						
-						<div class="col-lg-5  ">
-						<div class="row">
-						<div class="col-lg-12">
-							<div class="card">
-								<div class="header">
-									<h4 class="title">Graph Of Average Pass Ratio</h4>
-									<p class="category">Per Faculty</p>
-								</div>
-								<div class="content  " >
-									<div id="piechart2" style="background-color: white;"></div>
-								</div>
-							</div>
-							</div>
-						</div>
-						</div>
-					</div>
-
-				</div>
-
-
-				<!-- =================================================================================== -->
+			
 			</div>
 			<!--end row here  -->
 		</div>
