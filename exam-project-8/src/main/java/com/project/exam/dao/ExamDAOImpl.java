@@ -144,7 +144,7 @@ public class ExamDAOImpl implements ExamDAO {
 	@Transactional
 	public List getRunningExams() {
 		session = sessionFactory.getCurrentSession();
-		Query query = session.createSQLQuery("SELECT e.exam_id, s.subject_name, s.subject_code,et.type_name, p.program_name, s.semester_no, e.exam_date, e.full_marks, e.pass_marks, e.time_from, e.time_to, e.status "
+		Query query = session.createSQLQuery("SELECT e.exam_id, s.subject_name, s.subject_code,et.type_name, p.program_name, s.semester_no, e.exam_date, e.full_marks, e.pass_marks, TIME_FORMAT(e.time_from,'%h:%i %p'), TIME_FORMAT(e.time_to,'%h:%i %p'), e.status "
 				+ "							FROM exam as e "
 				+ "							INNER JOIN subjects as s ON e.subject_id=s.subject_id "
 				+ "							INNER JOIN exam_type as et ON e.exam_type_id = et.exam_type_id "
