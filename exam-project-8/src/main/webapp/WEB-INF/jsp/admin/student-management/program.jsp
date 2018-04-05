@@ -57,7 +57,7 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label">Program name</label>
 			<div class="col-md-9">
-				<input type="text" class="form-control" name="program_name" required />
+				<input type="text" class="form-control" name="program_name" required autofocus/>
 			</div>
 		</div>
 		<div class="form-group">
@@ -215,8 +215,38 @@
                 data : null,
                 render : function (data, type, row) {
                     return '<button class="btn btn-success editProg">Edit</button>';
+                    //<button style="margin-left:1rem;" class="btn btn-danger deleteProg">Delete</button>
+                    
                 },
             } ]
+        });
+        
+        // delete program is commented
+        $("#view_program").on('click','.deleteProg',function(event) {
+        	var program_name = prompt("Please Write a program name to confirm to Delete");
+        	 var table = $("#view_program").DataTable();
+             var data = table.row($(this).parents('tr')).data();
+             var program_id = data['program_id'];
+             if(program_name== data['program_name']){
+            	 $.ajax({
+                     url : window.context + "/ApiProgram/DeleteProgram/"+ program_id,
+                     method : "DELETE",
+                     dataType : 'json',
+                     data : "",
+         			contentType : 'application/json',
+                     cache : true,
+                     success : function (data) {
+                         alert("Program Sucessfully deleted!");
+                         $('#view_program').DataTable().ajax.reload();
+                     },
+                     error : function () {
+                         alert("Error...!!! Something went wrong in the server");
+                     }
+                 });
+             }
+             else {
+            	 alert("Oops! didn't match");
+             }
         });
 
         // edit buttons on program row
@@ -350,6 +380,7 @@
             success : function (data) {
                 alert("Thanks for the submission!");
                 $("#program-add-form")[0].reset();
+                $('#view_program').DataTable().ajax.reload();
             },
             error : function () {
                 alert("Error...!!!");
@@ -367,7 +398,7 @@
 
 			});
 			
-			alert(data);
+			//alert(data);
 			return data;
 		}
     });
@@ -435,6 +466,7 @@
             success : function (data) {
                 alert("Thanks for the submission!");
                 $("#program-edit-form")[0].reset();
+                $('#view_program').DataTable().ajax.reload();
             },
             error : function () {
                 alert("Error...!!!");

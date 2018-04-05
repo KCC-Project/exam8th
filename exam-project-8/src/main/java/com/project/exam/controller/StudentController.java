@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.exam.model.Student;
 import com.project.exam.model.StudentsProgram;
@@ -91,5 +92,18 @@ public class StudentController {
 	//System.out.println("from jsp batchyear = "+batchyear);
 		return studentService.search(programId,batchyear);
 	}
+	
+	
+	// this method updates student semester by incoming increment value
+		@POST
+		@Path("/UpdateSemester")
+		@ResponseBody
+		public String getRequiredUpdateSemester(@FormParam("program_id") int program_id,@FormParam("batch_year") int batch_year,@FormParam("increment_value") int increment_value) {
+			
+			System.out.println(program_id);
+			return studentService.UpdateStudentsSemester(program_id, batch_year, increment_value);
+		}
+	
+	
 	
 }

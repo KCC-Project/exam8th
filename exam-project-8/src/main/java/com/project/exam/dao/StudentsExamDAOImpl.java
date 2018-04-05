@@ -169,7 +169,7 @@ public class StudentsExamDAOImpl implements StudentsExamDAO {
 		Query query = session.createSQLQuery(
 				"SELECT stex.students_exams_id,stex.obtained_marks,stex.grade,stex.status,"
 				+ "stex.attendance_status,sub.subject_name,sub.semester_no,ex.exam_id,ex.exam_date,ex.full_marks,"
-				+ "ex.pass_marks,exty.type_name FROM student_exam stex INNER JOIN exam ex ON ex.exam_id=stex.exam_id "
+				+ "ex.pass_marks,exty.type_name,stex.student_id FROM student_exam stex INNER JOIN exam ex ON ex.exam_id=stex.exam_id "
 				+ "INNER JOIN subjects sub ON sub.subject_id=ex.subject_id INNER JOIN exam_type exty ON exty.exam_type_id=ex.exam_type_id WHERE stex.student_id="+s_Id+" AND sub.semester_no="+semesterNo+" order by type_name");
 		List<Object[]>  result = query.getResultList();
 		System.out.println("Result size = "+result.size());
@@ -188,6 +188,7 @@ public class StudentsExamDAOImpl implements StudentsExamDAO {
 			map.put("full_marks", object[9]);
 			map.put("pass_marks", object[10]);
 			map.put("type_name", object[11]);
+			map.put("s_id", object[12]);
 			list.add(map);
 		}
 		return list;

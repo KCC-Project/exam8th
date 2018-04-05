@@ -61,7 +61,7 @@
 			<div class="col-md-9">
 				<div class="col-md-6">
 					Program<select required class="form-control" id="all-program-box"
-						name="program_id">
+						name="program_id" autofocus>
 					</select>
 				</div>
 				<div class="col-md-6">
@@ -152,11 +152,11 @@
 		$(document).ready(function() {
 
 			$.when($.ajax(load_all_program("all-program-box"))).done(function() {
-				$("#all-program-box").append("<option value='' selected disabled>Select Program</option>");
+				//$("#all-program-box").append("<option value='' selected disabled>Select Program</option>");
 			});
 
 			$.when($.ajax(load_all_examType("exam-type-box"))).done(function() {
-				$("#exam-type-box").append("<option value='' selected disabled>Select Exam Type</option>");
+				//$("#exam-type-box").append("<option value='' selected disabled>Select Exam Type</option>");
 			});
 
 			$("#exam-type-box").change(function(event) {
@@ -356,7 +356,7 @@
 					"time_to" : $('#add-exam-form').find('[name="time_to"]').val(),
 					"status" : $('#add-exam-form').find('[name="status"]:checked').val(),
 				});
-				alert(data);
+				//alert(data);
 				return data;
 			}
 			function saveInfo() {

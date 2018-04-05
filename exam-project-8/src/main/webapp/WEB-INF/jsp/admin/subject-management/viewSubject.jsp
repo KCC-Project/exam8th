@@ -40,7 +40,7 @@
 
 	<!--=========================================================================================  -->
 	<div class="modal fade" id="searchSubjectModal" role="dialog">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-md">
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
@@ -49,19 +49,20 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<div class="col-sm-12">
+						<div class="col-sm-12 text-center">
+						<!-- 
 							<div class="col-sm-4">
 								<div class="form-group " style="margin-bottom: 0px;">
 									<select required class="form-control" id="p-faculty-box" name="faculty_id">
 									</select>
 								</div>
-							</div>
-							<div class="form-group col-sm-4" style="margin-bottom: 0px;">
+							</div>   -->
+							<div class="form-group col-sm-6" style="margin-bottom: 0px;">
 								<select required class="form-control" id="p-program-box" name="program_id">
 									<option value="" disabled selected>Select Program</option>
 								</select>
 							</div>
-							<div class="form-group col-sm-4" style="margin-bottom: 0px;">
+							<div class="form-group col-sm-6" style="margin-bottom: 0px;">
 								<select class="form-control" id="s-semester-no" name="s_semester_no">
 										<option value="" selected>Select Semester</option>
 										<option value="1">1</option>
@@ -219,14 +220,16 @@
 
             // hiding table view
             //$("#view_subject").hide();
+            /*
             $("#modal-box").click(function (event) {
                 load_faculty(event, "p-faculty-box");
             });
-
             $("#p-faculty-box").change(function (event) {
                 load_program(event, "p-program-box");
             });
-
+            */
+            load_all_program("p-program-box");
+            
             $("#searchbtnClicked").click(function (event) {
                 load_subject(event);
             });
@@ -302,13 +305,13 @@
                     "data" : "syllabus_file",
                     render : function (data, type, row) {
                         // Combine the two data
-                        return '<a href='+window.context +'file/'+data+'>view Syllabus</a>';
+                        return '<a href='+window.context +'/file/'+data+' target="_blank">view Syllabus</a>';
                     },
                 }, {
                     "data" : null,
                     render : function (data, type, row) {
                     	//alert(data.program.program_name);
-                        return '<a href='+ window.context +'/program/'+data+'>' + data.program.program_name + '</a>';
+                        return ''+data.program.program_name;
                     },
                 }, {
                     "data" : "semester_no"
@@ -475,6 +478,7 @@
 					$("#success_message").html(message);
 					alert("Thanks for the submission!");
 					$("#subject-edit-form")[0].reset();
+					$('#view_subject').DataTable().ajax.reload();
 				},
 				error : function() {
 					alert("Error...!!!");
@@ -498,7 +502,7 @@
 						} 
 
 				});
-				alert(data);
+				//alert(data);
 				return data;
 			}
 		});

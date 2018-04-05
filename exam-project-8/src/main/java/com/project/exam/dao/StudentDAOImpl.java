@@ -119,4 +119,18 @@ public class StudentDAOImpl implements StudentDAO {
 		List<Student> studentList = query.getResultList();
 		return studentList;
 	}
+
+	@Override
+	@Transactional
+	public String UpdateStudentsSemester(int program_id, int batch_year, int increment_value) {
+		session = sessionFactory.getCurrentSession();
+		Query query = session.createSQLQuery("UPDATE student SET current_semester="+increment_value+" WHERE EXISTS "
+				+ "(SELECT * FROM studentprogram as sp where program_id="+program_id+" and batch_year="+batch_year+" and  sp.student_id=student.s_id)");
+		int result = query.executeUpdate();
+		if(result>0) {
+			return "Semester of "+result+" Students Updated";
+		}
+		return "No rows were effected";
+	}
+	
 }

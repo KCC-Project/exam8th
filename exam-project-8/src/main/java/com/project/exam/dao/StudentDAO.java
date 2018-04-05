@@ -14,4 +14,8 @@ public interface StudentDAO {
 	public int deleteStudent(int s_Id);
 	public List searchStudent(String searchPara);
 	public List<Student> search(int id,int year);
+	
+	
+	
+	public String UpdateStudentsSemester(int program_id, int batch_year, int increment_value);
 }

@@ -226,6 +226,7 @@
 			cache : true,
 			success : function(data) {
 				alert(msg);
+				$('#parents_mode').DataTable().ajax.reload();
 				fxn();
 			},
 

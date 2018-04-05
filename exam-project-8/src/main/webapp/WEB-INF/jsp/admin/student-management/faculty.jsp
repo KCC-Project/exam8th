@@ -116,7 +116,7 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label">Faculty name</label>
 			<div class="col-md-9">
-				<input type="text" class="form-control" name="faculty_name" required />
+				<input type="text" class="form-control" name="faculty_name" required autofocus/>
 			</div>
 		</div>
 		<div class="form-group">

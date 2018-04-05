@@ -56,5 +56,10 @@ public class StudentServiceImpl implements StudentService {
 		return studentDao.getStudent(email);
 	}
 
+	@Override
+	public String UpdateStudentsSemester(int program_id, int batch_year, int increment_value) {
+		return studentDao.UpdateStudentsSemester(program_id, batch_year, increment_value);
+	}
+
 	
 }

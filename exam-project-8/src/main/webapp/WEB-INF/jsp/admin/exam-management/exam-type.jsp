@@ -65,7 +65,7 @@
 			<label class="col-md-4 control-label">Exam Type name</label>
 			<div class="col-md-8">
 				<input type="text" class="form-control" name="exam_type_name"
-					required />
+					required autofocus/>
 			</div>
 		</div>
 		<div class="form-group">

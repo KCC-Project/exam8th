@@ -12,16 +12,18 @@
 		<li><a><span class="glyphicon glyphicon-education black"> view</span></a></li>
 
 	</ol>
-	<!--=============================================Main Containt===============================  -->
+	<!--=============================================Main Content===============================  -->
 	<div class="box box-default with-border">
 		<div>
-			<div style="margin: 0px; padding-left: 20px; height: 35px;">
+			<div style="margin: 0px; padding-left: 10px; height: 35px;">
+				<button type="button" class="btn btn-warning" id="promote-btn">Update Semester 
+						<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> </button>
 				<a><button type="button" class="btn btn-info pull-right" data-toggle="modal"
 						data-target="#searchStudentModal" id="modal-box">Filter</button></a>
 				<div class="col-xs-3" style="margin-left: -34px; /* border: 2px solid black; */ height: 37px;">
 					<div class="form-group">
 						<div class="input-group">
-							<select class="form-control" id="sel1"></select> <span class="input-group-addon"> <i
+							<select class="form-control" id="sel1" ></select> <span class="input-group-addon"> <i
 								class="fa fa-search"></i>
 							</span>
 						</div>
@@ -56,7 +58,7 @@
 
 	<!--=========================================================================================  -->
 	<div class="modal fade" id="searchStudentModal" role="dialog">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-md">
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
@@ -65,19 +67,20 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<div class="col-sm-12">
+						<div class="col-sm-12 text-center">
+							<!-- 
 							<div class="col-sm-4">
 								<div class="form-group " style="margin-bottom: 0px;">
 									<select required class="form-control" id="p-faculty-box" name="faculty_id">
 									</select>
 								</div>
-							</div>
-							<div class="form-group col-sm-4" style="margin-bottom: 0px;">
+							</div>   -->
+							<div class="form-group col-sm-6" style="margin-bottom: 0px;">
 								<select required class="form-control" id="p-program-box" name="program_id">
 									<option value="" disabled selected>Select Programme</option>
 								</select>
 							</div>
-							<div class="form-group col-sm-4" style="margin-bottom: 0px;">
+							<div class="form-group col-sm-6" style="margin-bottom: 0px;">
 								<select required class="form-control" name="batch_id" id="p-batch-box">
 									<option value="" disabled selected>Select Batch</option>
 								</select>
@@ -94,7 +97,45 @@
 			</div>
 		</div>
 	</div>
+	
+		<!--=========================================================================================  -->
 
+				<div id="promoteBox" class="danger" style="display:none;">
+					<div class="row">
+						<div class="col-sm-12" id="promote-inputs">
+							<div class="form-group col-sm-6" style="margin-bottom: 0px;">
+								<select required class="form-control" id="pr-program-box" name="pr_program_id">
+									<option value="" disabled selected>Select Programme</option>
+								</select>
+							</div>
+							<div class="form-group col-sm-6" style="margin-bottom: 0px;">
+								<select required class="form-control" name="pr_batch_id" id="pr-batch-box">
+									<option value="" disabled selected>Select Batch</option>
+								</select>
+							</div>
+							<div class="form-group col-sm-12 text-center" style="margin-top: 1rem;">
+								<select class="form-control" name="pr_increment_value">
+									<option value="0" selected disabled>Select Semester</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9 (Pass Out)</option>
+								</select>							
+							</div>
+
+						</div>
+					</div>
+					<br>
+					<div class="form-group text-center">
+						<button class="btn btn-warning" id="promoteClicked">Promote Semester</button>
+					</div>
+				</div>
+			
 
 	<form id="edit-student-form" method="post" class="form-horizontal well" style="display: none;">
 		<div class="form-group">
@@ -238,15 +279,73 @@ var studentid2=0;
     		loadStudentInformation(url, method, data);
     	}
     	// ----------------------------------
-    	
         load_all_program("all-program-box");
+    	
+    	// ------------------ promote students input modal ----------------------------
+        load_all_program("pr-program-box");
+        $("#pr-program-box").change(function (event) {
+            load_batch_year(event, "pr-batch-box");
+        });
+        $("#promote-btn").click(function (event) {
+        	bootbox.dialog({
+                title : 'Update Student Semester',
+                message : $('#promoteBox'),
+                show : false
+            // We will show it manually later
+            }).on('shown.bs.modal', function () {
+                $('#promoteBox').show() // Show the modal form
+            }).on('hide.bs.modal', function (e) {
+                // Bootbox will remove the modal (including the body which contains the form)
+                // after hiding the modal
+                // Therefor, we need to backup the form
+                $('#promoteBox').hide().appendTo('body');
+            }).modal('show');
+        });
+        
+        $("#promoteClicked").click(function (event) {
+        	var program_id = $("#promote-inputs").find('[name="pr_program_id"]').val();
+        	var batch_year = $("#promote-inputs").find('[name="pr_batch_id"]').val();
+        	var program_name = $( "#pr-program-box option:selected" ).text();
+        	var increment_value = $("#promote-inputs").find('[name="pr_increment_value"]').val();
+        	if(!program_id || !batch_year || !increment_value){
+        		alert("Please select both Program & Batch_year & semester and Try Again !");
+        	}
+        	else {
+				// promote student semester
+				var batch = prompt("Update semester of: "+program_name+" ("+ batch_year +") students", "Enter Batch_year here to confirm");
+				if(batch == batch_year){
+	        		$.ajax({
+	        			 url : window.context + "/ApiStudent/UpdateSemester",
+	        	            method : "POST",
+	        	            data: { program_id: program_id, batch_year: batch_year, increment_value: increment_value }, // parameters
+	        	            dataType: "text",
+	        	            async: false,
+	        	            cache : true,
+	            			success : function(data) {
+	            				alert(data);
+	            				 var url = window.context + "/ApiStudent/SearchStudentsByProgram/"+program_id+"/"+batch_year;
+	            		         var method = "GET";
+	            		         var data="";
+	            		         loadStudentInformation(url,method,data);
+	            			},
+	            			error : function() {
+	            				alert("Error...!!!, Something went wrong with the server");
+	            			}
+	            		});
+	        	} else { alert ("Wrong Input"); }
+        	}
+        });
+        // ----------------------------------------------------------------------------
 
+        /*
         $("#modal-box").click(function (event) {
             load_faculty(event, "p-faculty-box");
         });
         $("#p-faculty-box").change(function (event) {
             load_program(event, "p-program-box");
         });
+        */
+        load_all_program("p-program-box");
         $("#p-program-box").change(function (event) {
             load_batch_year(event, "p-batch-box");
         });
@@ -584,6 +683,7 @@ var studentid2=0;
                $("#success_message").html(message);
                 //alert("Thanks for the submission!");
                // $("#edit-student-form")[0].reset();
+               $('#view_student').DataTable().ajax.reload();
                updateStudentProgram();
             },
             error : function () {
@@ -609,7 +709,6 @@ var studentid2=0;
 				"status" : $('#edit-student-form').find('[name="status"]:checked').val(),	
 
 			});
-			alert(data);
 			return data;
 		}
         function updateStudentProgram(){
@@ -646,7 +745,7 @@ var studentid2=0;
 					},
 					
 			});
-			alert(data);
+			//alert(data);
 			return data;
 		}
     });

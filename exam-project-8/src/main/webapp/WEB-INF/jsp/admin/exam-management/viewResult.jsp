@@ -462,7 +462,7 @@
 					console.log(data);
 
 					// Populate the form fields
-					$('#studentedit').find('[name="s_id"]').val(data.student.s_id).end().find('[name="student_exam_id"]').val(data['students_exams_id']).end().find('[name="exam_id"]').val(data.exam.exam_id).end().find('[name="obtained_marks"]').val(data['obtained_marks']).end().find('[name="grade"]').val(data['grade']).end()
+					$('#studentedit').find('[name="s_id"]').val(data['s_id']).end().find('[name="student_exam_id"]').val(data['students_exams_id']).end().find('[name="exam_id"]').val(data['exam_id']).end().find('[name="obtained_marks"]').val(data['obtained_marks']).end().find('[name="grade"]').val(data['grade']).end()
 
 					$("input[name=attendance][value=" + data['attendance_status'] + "]").prop('checked', true);
 					$("input[name=status][value=" + data['status'] + "]").prop('checked', true);

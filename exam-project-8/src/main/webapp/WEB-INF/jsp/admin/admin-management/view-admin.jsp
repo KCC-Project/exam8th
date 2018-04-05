@@ -52,7 +52,6 @@
 			<tr class="info">
 				<th>Id</th>
 				<th>Name</th>
-				<th>Password</th>
 				<th>Status</th>
 				<th>Email</th>
 				<th>Option</th>
@@ -66,13 +65,13 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label"> Username</label>
 			<div class="col-md-9">
-				<input type="text" class="form-control" name="admin_username" required />
+				<input type="text" class="form-control" name="admin_username" required autofocus/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-md-3 control-label">Password</label>
 			<div class="col-md-9">
-				<input type="text" class="form-control" name="password" required />
+				<input type="password" class="form-control" name="password" required />
 			</div>
 		</div>
 		<div class="form-group">
@@ -114,7 +113,7 @@
 		<div class="form-group">
 			<label class="col-md-3 control-label">Password</label>
 			<div class="col-md-9">
-				<input type="text" class="form-control" name="password" required />
+				<input type="password" class="form-control" name="password" required />
 			</div>
 		</div>
 		<div class="form-group">
@@ -183,9 +182,7 @@
 				"data" : "admin_id"
 			}, {
 				"data" : "admin_username"
-			},  {
-				"data" : "password"
-			},{
+			}, {
 				data : null,
 				render : function(data, type, row) {
 					console.log(JSON.stringify(data));
@@ -382,6 +379,7 @@
             success : function (data) {
                 alert("Thanks for the submission!");
                 $("#admin-edit-form")[0].reset();
+                $('#view_admin').DataTable().ajax.reload();
             },
             error : function () {
                 alert("Error...!!!");

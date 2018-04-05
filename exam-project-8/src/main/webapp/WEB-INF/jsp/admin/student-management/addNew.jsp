@@ -32,7 +32,7 @@
 						<label class="col-md-3 control-label">Student Name</label>
 						<div class="col-md-9">
 							<div class="col-md-4">
-								<input type="text" class="form-control" name="first_name" placeholder="First Name"/>
+								<input type="text" class="form-control" name="first_name" placeholder="First Name" autofocus/>
 							</div>
 							<div class="col-md-4">
 							<input type="text" class="form-control" name="middle_name" placeholder="Middle Name" />

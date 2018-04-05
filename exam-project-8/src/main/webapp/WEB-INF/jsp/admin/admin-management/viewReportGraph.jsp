@@ -203,7 +203,7 @@ google.charts.setOnLoadCallback(drawChartFail);
 // Draw the chart and set the chart values
 function drawChartTotal() {
 	var data = google.visualization.arrayToDataTable([
-			[ 'Task', 'Hours per Day' ], [ 'Science and Tech', scienceTotal ], [ 'Management', managementTotal ],
+			[ 'Subject', 'Total Students Count' ], [ 'Science and Tech', scienceTotal ], [ 'Management', managementTotal ],
 			[ 'Arts', artsTotal ], [ 'Law', lawTotal ] ]);
 
 	// Optional; add a title and set the width and height of the chart
@@ -226,7 +226,7 @@ function drawChartTotal() {
 
 function drawChartFail() {
 	var data = google.visualization.arrayToDataTable([
-			[ 'Task', 'Hours per Day' ], [ 'Science and Tech', (science_fail/scienceTotal)*100 ], [ 'Management', (management_fail/managementTotal)*100 ],
+			[ 'Subject', 'Pass:fail' ], [ 'Science and Tech', (science_fail/scienceTotal)*100 ], [ 'Management', (management_fail/managementTotal)*100 ],
 			[ 'Arts', (arts_fail/artsTotal)*100 ], [ 'Law', (law_fail/lawTotal)*100 ] ]);
 
 	// Optional; add a title and set the width and height of the chart
@@ -247,7 +247,7 @@ function drawChartFail() {
 
 function drawChartMaxFailSubject() {
 	var data = google.visualization.arrayToDataTable([
-		[ 'Task', 'Hours per Day' ], [ 'Science and Tech', (science_fail/scienceTotal)*100 ], [ 'Management', (management_fail/managementTotal)*100 ],
+		[ 'Subject', 'Max fail' ], [ 'Science and Tech', (science_fail/scienceTotal)*100 ], [ 'Management', (management_fail/managementTotal)*100 ],
 		[ 'Arts', (arts_fail/artsTotal)*100 ], [ 'Law', (law_fail/lawTotal)*100 ] ]);
 
 	alert("data = "+ data);

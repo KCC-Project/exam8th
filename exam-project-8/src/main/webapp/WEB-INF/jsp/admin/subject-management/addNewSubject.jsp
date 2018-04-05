@@ -37,7 +37,7 @@
 				<div class="form-group">
 					<label class="col-md-3 control-label">Subject name</label>
 					<div class="col-md-9">
-						<input type="text" class="form-control" name="subject_name" />
+						<input type="text" class="form-control" name="subject_name" autofocus/>
 					</div>
 				</div>
 				<div class="form-group">
@@ -283,7 +283,7 @@
 					}
 
 				});
-				alert(data);
+				//alert(data);
 				return data;
 			}
 		});

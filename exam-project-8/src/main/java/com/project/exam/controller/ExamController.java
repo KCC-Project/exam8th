@@ -95,4 +95,5 @@ public class ExamController {
 	public List<Exam> getAllRunningExams() {
 		return examService.getRunningExams();
 	}
+	
 }

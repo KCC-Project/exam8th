@@ -14,6 +14,6 @@ public interface StudentsProgramDAO {
 
 	public List<StudentsProgram> getStudentsProgramByStudentId(int s_Id);
 	public List<StudentsProgram> getStudentsProgramByProgramId(int s_Id);
-
+	
 	
 }
