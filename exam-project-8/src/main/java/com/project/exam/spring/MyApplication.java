@@ -17,6 +17,7 @@ import com.project.exam.controller.StudentParentInfoController;
 import com.project.exam.controller.StudentsExamController;
 import com.project.exam.controller.StudentsProgramController;
 import com.project.exam.controller.SubjectController;
+import com.project.exam.controller.ViewController;
 
 public class MyApplication extends ResourceConfig {
 
@@ -44,6 +45,7 @@ public class MyApplication extends ResourceConfig {
 		register(LoginLogOutController.class);
 		register(StudentParentInfoController.class);
 		register(CountController.class);
+		register(ViewController.class);
 		
 		
 	}
