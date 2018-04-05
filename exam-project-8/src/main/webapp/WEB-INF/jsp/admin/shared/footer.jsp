@@ -63,7 +63,7 @@ function drawChartTotal() {
 	
 	
 	var options = {
-		'width' : 618,
+		'width' : 590,
 		'height' : 300
 		
 	};
@@ -85,7 +85,7 @@ function drawChartFail() {
 	
 	
 	var options = {
-		'width' : 618,
+		'width' : 400,
 		'height' : 300
 		
 	};
