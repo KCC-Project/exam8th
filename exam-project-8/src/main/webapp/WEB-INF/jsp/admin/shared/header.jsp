@@ -94,6 +94,11 @@
 				$("#close-menu").hide();
 				$("#open-menu").show();
 		 });
+		 
+		 
+		 $('.breadcrumb').addClass('hidden-print');
+		 $('#side-menu').addClass('hidden-print');
+		 $('.box-default').addClass('hidden-print');
 	});
 
 </script>
