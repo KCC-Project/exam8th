@@ -4,7 +4,7 @@
 <c:if test="${ empty sessionScope.studentUserName }">
 	<c:redirect url="/index " />
 </c:if>
-<div id="side-menu">
+<div id="side-menu" class="sidenav">
 	<div class="profile-userpic">
 		<img alt="User Pic" src="${cp}/assets/images/blank_user.png" class="img-responsive">
 	</div>
@@ -34,14 +34,4 @@
 	<!-- END MENU -->
 </div>
 
-
-
-<script>
-    $(document).ready(function () {
-        // get student_id from session
-        var s_id;
-
-     
-
-    });
 </script>

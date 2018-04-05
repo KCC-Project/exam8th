@@ -15,7 +15,8 @@
 
 <!-- CSS Directory -->
 <spring:url value="/assets/css/" var="css" />
-<spring:url value="/assets/font-awesome/css/font-awesome.min.css" var="fontAwasome" />
+<spring:url value="/assets/font-awesome/css/font-awesome.min.css"
+	var="fontAwasome" />
 
 <!-- JS Directory -->
 <spring:url value="/assets/js/extraJs/" var="extraJs" />
@@ -59,6 +60,26 @@
 
 <script>
 	window.context = '${cp}';
+
+	$(document).ready(function() {
+		$("#open-menu").hide();
+		$("#side-menu").css("width", "18%");
+
+		$("#open-menu").click(function(event) {
+			$("#side-menu").css("width", "250px");
+			$("#page-content-wrapper").css("margin-left", "250px");
+
+			$("#open-menu").hide();
+			$("#close-menu").show();
+		});
+		$("#close-menu").click(function(event) {
+			$("#side-menu").css("width", "0");
+			$("#page-content-wrapper").css("margin-left", "0");
+
+			$("#close-menu").hide();
+			$("#open-menu").show();
+		});
+	});
 </script>
 </body>
 
@@ -74,14 +95,17 @@
 				<!-- Dash info display -->
 				<div class="hidden-xs pull-left" id="dash-info">
 					<h4>
-						<a href="#menu-toggle" class="btn btn-default menu-toggle">Toggle
-							Menu</a> <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+						<button id="open-menu" class="btn btn-default menu-toggle">Open &#9776; </button>
+						<button id="close-menu" class="btn btn-default closebtn">Close &times;</button>
+						
+							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						Dashboard <small>View</small>
 
 					</h4>
 				</div>
-<div class="hidden-xs pull-right" id="dash-info">
-					<a href="${cp }/logoutStudent"><input type="submit" class="btn btn-defult pull-right" value="logout"></
+				<div class="hidden-xs pull-right" id="dash-info">
+					<a href="${cp }/logoutStudent"><input type="submit"
+						class="btn btn-danger pull-right" value="logout"></ 
 				</div>
 				<!-- Dashboard search bar -->
 				<div class="search-field pull-left">
@@ -95,5 +119,3 @@
 		<div id="sidebar-wrapper">
 			<jsp:include page="student-sidebar.jsp" />
 		</div>
-
-		

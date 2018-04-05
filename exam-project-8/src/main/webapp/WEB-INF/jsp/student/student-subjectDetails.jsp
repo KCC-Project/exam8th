@@ -73,7 +73,7 @@
 					success : function(data) {
 						$("#sembtn").empty();
 						var content = '';
-						for (var i = 1; i <= data[0].current_semester; i++) {
+						for (var i = 1; i <= 8; i++) {
 
 							content += '<input style="margin-right:10px;" id='+i+'  ids='+data[0].s_id+' type="button"  class="btn btn-default btnSelected" values='
 																							+ data[0].s_id
@@ -83,8 +83,10 @@
 							count = i;
 
 						}
+						
 						current_sem = data[0].current_semester;
 						student_id = data[0].s_id;
+						count = current_sem;
 
 						studentFullName = data[0].first_name + " " + data[0].middle_name + " " + data[0].last_name;
 
@@ -188,13 +190,13 @@
                     "data" : "syllabus_file",
                     render : function (data, type, row) {
                         // Combine the two data
-                        return '<a href='+window.context +'file/'+data+'>view Syllabus</a>';
+                        return '<a href='+window.context +'/file/'+data+'>view Syllabus</a>';
                     },
                 }, {
                     "data" : null,
                     render : function (data, type, row) {
                     	//alert(data.program.program_name);
-                        return '<a href='+ window.context +'/program/'+data+'>' + data.program.program_name + '</a>';
+                        return ''+ data.program.program_name;
                     },
                 }, {
                     "data" : "semester_no"

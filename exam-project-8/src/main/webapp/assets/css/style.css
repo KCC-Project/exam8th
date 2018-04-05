@@ -1,3 +1,6 @@
+ul {
+  list-style-type: none;
+}
 .dashboard-container {
 	top: 0;
 	position: fixed;
@@ -6,12 +9,12 @@
 	background: #293846;
 	color: #ffffff;
 	margin-bottom: 2px;
-	height: 60px;
+	height: 8%;
 	position: fixed;
 }
 
 #dashboard-header>div {
-	float: left;
+	//float: left;
 }
 
 #dash-info {
@@ -24,6 +27,14 @@
 	padding: 10px 0px;
 	display: none; //
 	width: 145px;
+}
+.dash-msg {
+	padding: 5px;
+	letter-spacing: 0.2em;
+	font-weight: bold;
+	font-size: 1em;
+	background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);
+	color: midnightblue;
 }
 
 #side-menu {

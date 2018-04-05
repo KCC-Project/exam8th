@@ -33,13 +33,13 @@
 
 				<!--NOtice and message loading section  -->
 				<div class="callout callout-info msg-of-day">
-					<h4>
+					<h4 style="color: midnightblue;">
 						<i class="fa fa-bullhorn"></i> Message of day box
 					</h4>
 					<p>
-						<marquee onmouseout="this.setAttribute('scrollamount', 6, 0);"
+						<marquee class="dash-msg" onmouseout="this.setAttribute('scrollamount', 6, 0);"
 							onmouseover="this.setAttribute('scrollamount', 0, 0);"
-							scrollamount="6" behavior="scroll" direction="left">Each
+							scrollamount="8" behavior="alternate" direction="left">Each
 							Day is a GIFT don't send it BACK unopened. Have a nice Day !</marquee>
 					</p>
 				</div>
