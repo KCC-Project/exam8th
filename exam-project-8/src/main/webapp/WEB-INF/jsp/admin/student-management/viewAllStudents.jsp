@@ -8,7 +8,7 @@
       </c:if>
 <div id="page-content-wrapper">
 	<ol class="breadcrumb">
-		<li><a href="admin-dashboard.jsp"><span class="glyphicon glyphicon-home"> Home</span></a></li>
+		<li><a href="${cp}/home"><span class="glyphicon glyphicon-home"> Home</span></a></li>
 		<li><a><span class="glyphicon glyphicon-education black"> view</span></a></li>
 
 	</ol>

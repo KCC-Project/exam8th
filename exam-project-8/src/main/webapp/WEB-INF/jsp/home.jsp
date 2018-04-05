@@ -23,7 +23,7 @@
 			id="content-area">
 
 			<ol class="breadcrumb">
-				<li><a href="admin-dashboard.jsp"><span
+				<li><a href="${cp}/home"><span
 						class="glyphicon glyphicon-home"> Home</span></a></li>
 				<li><a><span class="glyphicon glyphicon-blackboard black">
 							Dashboard</span></a></li>
@@ -37,9 +37,7 @@
 						<i class="fa fa-bullhorn"></i> Message of day box
 					</h4>
 					<p>
-						<marquee class="dash-msg" onmouseout="this.setAttribute('scrollamount', 6, 0);"
-							onmouseover="this.setAttribute('scrollamount', 0, 0);"
-							scrollamount="8" behavior="alternate" direction="left">Each
+						<marquee class="dash-msg" scrollamount="7" behavior="alternate" direction="left">Each
 							Day is a GIFT don't send it BACK unopened. Have a nice Day !</marquee>
 					</p>
 				</div>

@@ -66,7 +66,7 @@
 									<label for="category"> <span
 										class="glyphicon glyphicon-user"></span> Login as
 									</label> <select required class="form-control form-element"
-										name='category' id="category">
+										name='category' id="category" autofocus>
 										<option class='drop-down' value="" disabled selected>
 											Select One</option>
 										<option class='drop-down' value='admin'>Admin</option>
