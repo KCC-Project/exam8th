@@ -112,13 +112,13 @@
 										<div  style="background-color: white;">
 
 											<div class="table table-responsive">
-												<table class="table table-hover table-striped" id="max_fail_subject" width="100%">
+												<table class="table table-hover table-striped" id="max_fail_subject" width="100%" >
 												<thead>
 													<tr class="info">
 
-														<th>#</th>
+														<!-- <th>#</th> -->
 														<th>Subject Name</th>
-														<th>NOS</th>
+														<th>No.Of Students</th>
 														<th>Program</th>
 
 													</tr>
@@ -278,7 +278,8 @@ function maxFailSubject(){
 		searching : true,
 		"processing" : true,
 		"serverSide" : false,
-		"order" : [ [ 0, "asc" ] ],
+		 "lengthMenu": [[4, 15, 50, -1], [4, 15, 50, "All"]],
+		"order" : [ [ 1, "desc" ] ],
 		"ajax" : {
 			"url" : url,
 			"type" : method,
@@ -288,11 +289,6 @@ function maxFailSubject(){
 			"async" : true
 		},
 		"columns" : [ {
-			data : null,
-			render : function(data, type, row,i) {
-				return (i.row)+1;
-			},
-		}, {
 			data : null,
 			render : function(data, type, row) {
 
