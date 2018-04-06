@@ -16,10 +16,10 @@
 	<div class="box box-default with-border">
 		<div>
 			<div style="margin: 0px; padding-left: 10px; height: 35px;">
-				<button type="button" class="btn btn-warning" id="promote-btn">Update Semester 
-						<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> </button>
 				<a><button type="button" class="btn btn-info pull-right" data-toggle="modal"
 						data-target="#searchStudentModal" id="modal-box">Filter</button></a>
+						<button type="button" class="btn btn-warning pull-right" id="promote-btn" style="margin-right:1%;">Update Semester 
+						<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> </button>
 				<div class="col-xs-3" style="margin-left: -34px; /* border: 2px solid black; */ height: 37px;">
 					<div class="form-group">
 						<div class="input-group">

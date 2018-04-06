@@ -35,16 +35,28 @@
 #page-content-wrapper {
 	margin-top: 4%;
 	margin-left: 18%;
-	padding: 20px;
+	padding: 1%;
 	//position: relative;
 	//width: 100%;
 }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+@media screen and (max-width: 550px) and (min-width: 350px) {
+  .sidenav {padding-top: 15px; width: 18%;}
+  .sidenav a {font-size: 9px;}
+  #page-content-wrapper {margin-top: 15%;padding: 2%;}
 }
 
+@media screen and (max-width: 750px) and (min-width: 550px) {
+  .sidenav {padding-top: 15px; width: 18%;}
+  .sidenav a {font-size: 9px;}
+  #page-content-wrapper {margin-top: 11%;padding: 2%;}
+}
+
+@media screen and (max-width: 1350px) and (min-width: 750px) {
+  .sidenav {padding-top: 15px; width: 18%;}
+  .sidenav a {font-size: 9px;}
+  #page-content-wrapper {margin-top: 6%;padding: 2%;}
+}
 
 
 

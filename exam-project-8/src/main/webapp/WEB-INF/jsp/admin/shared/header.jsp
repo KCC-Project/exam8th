@@ -81,8 +81,8 @@
 		$("#side-menu").css("width", "18%");
 		
 		 $("#open-menu").click(function (event) {
-				$("#side-menu").css("width", "250px");
-				$("#page-content-wrapper").css("margin-left", "250px");
+				$("#side-menu").css("width", "18%");
+				$("#page-content-wrapper").css("margin-left", "18%");
 				
 				$("#open-menu").hide();
 				$("#close-menu").show();
@@ -99,6 +99,12 @@
 		 $('.breadcrumb').addClass('hidden-print');
 		 $('#side-menu').addClass('hidden-print');
 		 $('.box-default').addClass('hidden-print');
+		 
+		if ($(window).width() < 960) {
+			 $( "#sel1" ).parent( ".input-group" ).css({"width": "200%" , "margin-left": "10%"});
+		}
+		$( "#sel1" ).parent( ".input-group" ).css("margin-left", "4%");
+		
 	});
 
 </script>
@@ -114,18 +120,18 @@
 				<!-- Side-bar toggler -->
 
 				<!-- Dash info display -->
-				<div class="hidden-xs pull-left" id="dash-info">
+				<div class="pull-left" id="dash-info">
 					<h4>
 						<button id="open-menu" class="btn btn-default menu-toggle">Open &#9776; </button>
 						<button id="close-menu" class="btn btn-default closebtn">Close &times;</button>
 						
-						<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-						Dashboard <small>Manage</small>
+						<span class="hidden-xs"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+						Dashboard <small>Manage</small></span>
 
 
 					</h4>
 				</div>
-				<div class="hidden-xs pull-right" id="dash-info">
+				<div class="pull-right" id="dash-info">
 					<a href="${cp }/logoutAdmin"><input type="submit"
 						class="btn btn-danger pull-right" value="logout"></a>
 				</div>
