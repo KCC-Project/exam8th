@@ -9,9 +9,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.Check;
+
 @XmlRootElement
 @Entity
 @Table(name="student_exam")
+
 public class StudentsExam {
 
 	

@@ -363,7 +363,15 @@
 						"data" : data,
 						"dataSrc" : "",
 						"dataType" : "json",
-						"async" : false
+						"async" : false,
+						dataSrc: function(json) {
+				            var rows = [];
+				            for (var i=0;i<json.length;i++) {
+				            	//console.log(json[i].grade);
+				                if (json[i].grade) rows.push(json[i]); 
+				            }
+				            return rows;
+				        }
 					},
 					"columns" : [ {
 						data : null,
