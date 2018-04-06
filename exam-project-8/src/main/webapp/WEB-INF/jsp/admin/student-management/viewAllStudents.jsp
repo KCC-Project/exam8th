@@ -405,9 +405,17 @@ var batchYearForUpdate;
                 },
                 "columns" : [ {
                     "data" : "s_id"
-                }, {
-                    "data" : "first_name"
-                }, {
+                },{
+                    data : null,
+                    render : function (data, type, row) {
+                    	 if (data.gender == 1) {
+                    		 return '<img alt="User Pic" src="${cp}/assets/images/profileIcon.png" class="img-responsive">';
+                         } else {
+                        	 return '<img alt="User Pic" src="${cp}/assets/images/girlICon.png" class="img-responsive">';
+                         }
+                        
+                    },
+                } , {
                     data : null,
                     render : function (data, type, row) {
                         console.log("data = "+JSON.stringify(data));
