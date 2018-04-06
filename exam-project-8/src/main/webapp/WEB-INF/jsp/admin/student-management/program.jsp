@@ -280,7 +280,8 @@
              
                 }
             });
-            bootbox.dialog({
+            
+            var boot = bootbox.dialog({
                 title : 'Edit the program',
                 message : $('#program-edit-form'),
                 show : false
@@ -292,7 +293,10 @@
                 // after hiding the modal
                 // Therefor, we need to backup the form
                 $('#program-edit-form').hide().appendTo('body');
+               
             }).modal('show');
+            
+            bootbox.dialog('hide');
 
         });
         // ---------------------------------------- edit btn function end --------------------

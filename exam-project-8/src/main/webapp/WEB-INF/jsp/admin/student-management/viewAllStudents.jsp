@@ -528,7 +528,8 @@ var studentid2=0;
                     	$(this).prop("selected", true);
                     }
                 });
-
+                
+                
                 bootbox.dialog({
                     title : 'Edit the Student',
                     message : $('#edit-student-form'),
@@ -542,6 +543,8 @@ var studentid2=0;
                     // Therefor, we need to backup the form
                     $('#edit-student-form').hide().appendTo('body');
                 }).modal('show');
+                
+                //bootbox.modal('hide');
 
             });
 
