@@ -44,10 +44,8 @@
 		</div>
 	</div>
 
-
-	<table id="view_admin"
-		class="table table-hover table-striped table-responsive"
-		cellspacing="0" width="100%">
+<div class="table table-responsive">
+	<table class="table table-hover table-striped" id="view_admin" width="100%">
 		<thead>
 			<tr class="info">
 				<th>Id</th>
@@ -58,6 +56,7 @@
 			</tr>
 		</thead>
 	</table>
+</div>
 
 <!-- This Form is for adding new admin  -->
 	<form id="admin-add-form" method="post" class="form-horizontal well" style="display: none;">

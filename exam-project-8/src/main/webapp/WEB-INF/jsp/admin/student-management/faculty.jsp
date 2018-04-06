@@ -22,10 +22,9 @@
 		<button class="btn btn-info" id="add-faculty-modal">Add
 			Faculty</button>
 	</div>
-
-	<table id="view_faculty"
-		class="table table-hover table-striped table-responsive"
-		cellspacing="0" width="100%">
+		
+<div class="table table-responsive">
+	<table class="table table-hover table-striped" id="view_faculty" width="100%">
 		<thead>
 			<tr class="info">
 				<th>Id</th>
@@ -35,6 +34,7 @@
 			</tr>
 		</thead>
 	</table>
+</div>
 
 	<div class="modal fade" id="faculty-edit-modal" role="dialog">
 		<div class="modal-dialog">

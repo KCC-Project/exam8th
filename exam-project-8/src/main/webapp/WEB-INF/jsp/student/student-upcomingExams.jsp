@@ -14,11 +14,9 @@
 		<li><a href="${cp}/home"><span class="glyphicon glyphicon-home"> Home </span></a></li>
 		<li><a><span class="glyphicon glyphicon-user black"> Upcoming Exams </span></a></li>
 	</ol>
-
-
-	<table id="view_exam"
-		class="table table-hover table-striped table-responsive"
-		cellspacing="0" width="100%">
+		
+<div class="table table-responsive">
+	<table class="table table-hover table-striped" id="view_exam" width="100%">
 		<thead>
 			<tr class="info">
 
@@ -35,7 +33,7 @@
 			</tr>
 		</thead>
 	</table>
-	
+</div>
 
 
 </div>

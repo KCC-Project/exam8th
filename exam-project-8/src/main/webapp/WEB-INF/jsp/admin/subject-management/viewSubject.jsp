@@ -179,9 +179,9 @@
 		</div>
 	</form>
 
-
-
-	<table id="view_subject" class="table table-hover table-striped" cellspacing="0" width="100%">
+	
+<div class="table table-responsive">
+	<table class="table table-hover table-striped" id="view_subject" width="100%">
 		<thead>
 			<tr class="info">
 				<th>Id</th>
@@ -196,6 +196,7 @@
 			</tr>
 		</thead>
 	</table>
+</div>
 
 	<script>
         var programId = 0;

@@ -46,9 +46,8 @@
 	</div>
 
 
-	<table id="view_exam_Type"
-		class="table table-hover table-striped table-responsive"
-		cellspacing="0" width="100%">
+<div class="table table-responsive">
+	<table class="table table-hover table-striped" id="view_exam_Type" width="100%">
 		<thead>
 			<tr class="info">
 				<th>Id</th>
@@ -58,6 +57,8 @@
 			</tr>
 		</thead>
 	</table>
+</div>
+
 	<form id="examType-add-form" method="post" class="form-horizontal well"
 		style="display: none;">
 

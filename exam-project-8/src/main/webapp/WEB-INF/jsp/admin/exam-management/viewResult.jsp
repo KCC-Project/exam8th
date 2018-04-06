@@ -42,9 +42,8 @@
 	</div>
 
 
-	<table id="view-student-exam"
-		class="table table-hover table-striped table-responsive"
-		cellspacing="0" width="100%">
+<div class="table table-responsive">
+	<table class="table table-hover table-striped" id="view-student-exam" width="100%">
 		<thead>
 			<tr class="info">
 
@@ -62,6 +61,7 @@
 			</tr>
 		</thead>
 	</table>
+</div>
 
 
 	<!--=========================================================================================  -->

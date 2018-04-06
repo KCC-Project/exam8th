@@ -111,9 +111,8 @@
 								<div class="content  " >
 										<div  style="background-color: white;">
 
-											<table id="max_fail_subject"
-												class="table table-hover table-striped table-responsive"
-												cellspacing="0" width="100%">
+											<div class="table table-responsive">
+												<table class="table table-hover table-striped" id="max_fail_subject" width="100%">
 												<thead>
 													<tr class="info">
 
@@ -125,6 +124,7 @@
 													</tr>
 												</thead>
 											</table>
+											</div>
 
 										</div>
 								</div>

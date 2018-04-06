@@ -55,10 +55,8 @@
 		</div>
 	</div>
 
-
-	<table id="parents_mode"
-		class="table table-hover table-striped table-responsive"
-		cellspacing="0" width="100%">
+<div class="table table-responsive">
+	<table class="table table-hover table-striped" id="parents_mode" width="100%">
 		<thead>
 			<tr class="info">
 				<th>Id</th>
@@ -71,7 +69,7 @@
 			</tr>
 		</thead>
 	</table>
-
+</div>
 
 </div>
 <!--=========================================================================================  -->

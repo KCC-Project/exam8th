@@ -26,11 +26,9 @@
 			</div>
 		</div>
 	</div>
-
-
-	<table id="view_exam"
-		class="table table-hover table-striped table-responsive"
-		cellspacing="0" width="100%">
+		
+<div class="table table-responsive">
+	<table class="table table-hover table-striped" id="view_exam" width="100%">
 		<thead>
 			<tr class="info">
 
@@ -48,6 +46,7 @@
 			</tr>
 		</thead>
 	</table>
+</div>
 
 	<form id="exam-edit-form" method="post" class="form-horizontal well"
 		style="display: none;">

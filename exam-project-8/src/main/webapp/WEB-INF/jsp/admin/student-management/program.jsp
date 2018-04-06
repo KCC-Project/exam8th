@@ -37,8 +37,8 @@
 	</div>
 
 
-	<table id="view_program" class="table table-hover table-striped table-responsive" cellspacing="0"
-		width="100%">
+<div class="table table-responsive">
+	<table class="table table-hover table-striped" id="view_program" width="100%">
 		<thead>
 			<tr class="info">
 				<th>Id</th>
@@ -50,6 +50,7 @@
 			</tr>
 		</thead>
 	</table>
+</div>
 
 	<!-- This Form is for adding new Program  -->
 	<form id="program-add-form" method="post" class="form-horizontal well" style="display: none;">
