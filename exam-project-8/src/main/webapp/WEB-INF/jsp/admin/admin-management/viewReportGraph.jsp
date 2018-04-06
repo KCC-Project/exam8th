@@ -245,7 +245,7 @@ function drawChartFail() {
 	chart.draw(data, options);
 }
 
-function drawChartMaxFailSubject() {
+/* function drawChartMaxFailSubject() {
 	var data = google.visualization.arrayToDataTable([
 		[ 'Subject', 'Max fail' ], [ 'Science and Tech', (science_fail/scienceTotal)*100 ], [ 'Management', (management_fail/managementTotal)*100 ],
 		[ 'Arts', (arts_fail/artsTotal)*100 ], [ 'Law', (law_fail/lawTotal)*100 ] ]);
@@ -265,7 +265,7 @@ function drawChartMaxFailSubject() {
 			.getElementById('piechart3'));
 	
 	chart.draw(data, options);
-}
+} */
 
 function maxFailSubject(){
 	var url = window.context + "/ApiViewController/MaxFailFubjectView";

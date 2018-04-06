@@ -205,7 +205,7 @@ public class StudentsExamDAOImpl implements StudentsExamDAO {
 				+ "INNER JOIN subjects sub ON sub.subject_id=ex.subject_id INNER JOIN student_exam stex ON stex.exam_id=ex.exam_id "
 				+ "INNER JOIN student stu ON stu.s_id= stex.student_id INNER JOIN studentprogram stupro ON stupro.student_id=stu.s_id "
 				+ "INNER JOIN program p ON p.program_id=stupro.program_id WHERE exty.exam_type_id="+examtypeId+" AND sub.semester_no="+semesterNo+" AND "
-				+ "stupro.batch_year="+batchyear+" AND p.program_id="+programId+"");
+				+ "stupro.batch_year="+batchyear+" AND sub.subject_id="+subjectId+" AND p.program_id="+programId+"");
 		List<Object[]>  result = query.getResultList();
 		System.out.println("Result size = "+result.size());
 		List list = new ArrayList<>();
