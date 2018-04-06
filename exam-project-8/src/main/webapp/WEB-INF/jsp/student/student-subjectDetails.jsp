@@ -71,9 +71,10 @@
 					data : data,
 					cache : true,
 					success : function(data) {
+						//alert(data[0].current_semester);
 						$("#sembtn").empty();
 						var content = '';
-						for (var i = 1; i <= 8; i++) {
+						for (var i = 1; i <= data[0].current_semester; i++) {
 
 							content += '<input style="margin-right:10px;" id='+i+'  ids='+data[0].s_id+' type="button"  class="btn btn-default btnSelected" values='
 																							+ data[0].s_id
