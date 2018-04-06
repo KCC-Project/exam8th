@@ -152,7 +152,7 @@
 				//parent_badge
 				if (from=="newrequest") {
 					if (table.data().count() != 0) {
-						alert("Total number of new request = " + table.data().count());
+						//alert("Total number of new request = " + table.data().count());
 					}
 				}
 			},

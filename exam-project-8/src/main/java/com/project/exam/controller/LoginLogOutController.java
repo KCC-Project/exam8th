@@ -27,6 +27,7 @@ import com.project.exam.model.Student;
 import com.project.exam.services.AdminService;
 import com.project.exam.services.ForgetPasswordService;
 import com.project.exam.services.StudentService;
+import com.project.exam.util.MD5Hash;
 import com.project.exam.util.MailUtil;
 
 @Path("/")
@@ -223,7 +224,7 @@ public class LoginLogOutController {
 			for (Admin admin2 : admin) {
 
 				if (admin2.getAdmin_username().equalsIgnoreCase(InputEmail1User)
-						&& admin2.getPassword().equals(InputPassword1)) {
+						&& admin2.getPassword().equals(MD5Hash.MD5(InputPassword1))) {//=>InputPassword1
 
 					id = admin2.getAdmin_id();
 
@@ -233,7 +234,7 @@ public class LoginLogOutController {
 
 					session.setAttribute("adminUserName", InputEmail1User);
 
-					session.setAttribute("adminPassword", InputPassword1);
+					session.setAttribute("adminPassword", MD5Hash.MD5(InputPassword1));
 
 					System.out.println("Admin login sucess  & id =" + id);
 
@@ -246,7 +247,7 @@ public class LoginLogOutController {
 			List<Student> student = studentService.getStudentList();
 			for (Student student1 : student) {
 				if (student1.getUsername().equalsIgnoreCase(InputEmail1User)
-						&& student1.getPassword().equals(InputPassword1)) {
+						&& student1.getPassword().equals(MD5Hash.MD5(InputPassword1))) {//
 
 					id = student1.getS_id();
 

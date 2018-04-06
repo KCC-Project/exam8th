@@ -35,7 +35,7 @@ public class AdminDAOImpl implements AdminDAO {
 	@Transactional
 	public Admin addAdmin(Admin admin) {
 		session = sessionFactory.getCurrentSession();
-		//admin.setPassword(MD5Hash.MD5(admin.getPassword()));
+		admin.setPassword(MD5Hash.MD5(admin.getPassword()));
 		session.save(admin);
 		return admin;
 	}
@@ -54,6 +54,7 @@ public class AdminDAOImpl implements AdminDAO {
 	@Transactional
 	public Admin updateAdmin(Admin admin) {
 		session = sessionFactory.getCurrentSession();
+		admin.setPassword(MD5Hash.MD5(admin.getPassword()));
 		session.update(admin);
 		return admin;
 	}

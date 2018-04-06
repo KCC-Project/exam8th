@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.exam.model.Student;
 import com.project.exam.model.StudentsProgram;
+import com.project.exam.util.MD5Hash;
 
 @Repository("studentDao")
 public class StudentDAOImpl implements StudentDAO {
@@ -36,8 +37,8 @@ public class StudentDAOImpl implements StudentDAO {
 	@Transactional
 	public int addStudent(Student student) {
 		session = sessionFactory.getCurrentSession();
+		student.setPassword(MD5Hash.MD5(student.getPassword()));
 	int studentId=(Integer)session.save(student);
-	System.out.println("student id after save is = "+studentId);
 		return studentId;
 	}
 
@@ -55,6 +56,7 @@ public class StudentDAOImpl implements StudentDAO {
 	@Transactional
 	public Student updateStudent(Student student) {
 		session = sessionFactory.getCurrentSession();
+		student.setPassword(MD5Hash.MD5(student.getPassword()));
 		session.update(student);
 		return student;
 	}
