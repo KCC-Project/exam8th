@@ -55,6 +55,7 @@ public class StudentsProgramController {
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public StudentsProgram updateStudentsProgram(StudentsProgram studentsProgram) {
+		System.out.println("inside st program update = "+studentsProgram.toString());
 		return studentsProgramService.updateStudentsProgram(studentsProgram);
 	}
 	

@@ -88,13 +88,19 @@
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">Program</label>
-						<div class="col-md-9">
-							<div class="col-md-6">
+						<div class="col-md-9" id="sp-inputs">
+							<div class="col-md-4">
 								<select required class="form-control" id="all-program-box" name="program_id">
 									<option value="" selected>Select Program</option>
 								</select>
 							</div>
-							<div class="col-md-6">
+							
+							<div class="col-md-4">
+								<input type="date"  class="form-control" id="batchYear" name="batchYear" placeholder="Enter batch year"/>
+							</div>
+							
+							<div class="col-md-4">
+							
 							<select class="form-control" id="s-semester-no" name="s_semester_no">
 									<option value="" selected>Select Semester</option>
 									<option value="1">1</option>
@@ -142,8 +148,12 @@
 var semesterno;
 var p_id;
 var studentId;
+
+var batchYear;
+
     $(document).ready(function () {
     	
+
         $.when( $.ajax(load_all_program("all-program-box")) ).done(function() {
            	$("#all-program-box").append("<option value='' selected disabled>Select Program</option>");
     		});
@@ -219,6 +229,7 @@ var studentId;
 
             // Prevent form submission
             e.preventDefault();
+             batchYear = $('#add-student-form').find('[name="batchYear"]').val();
 
             var data = $('#add-student-form').serializeArray();
             console.log(data);
@@ -295,14 +306,11 @@ var studentId;
         		});
         	}
             function formToJSONtostudentprogram() {
-            	var utc = new Date().toJSON().slice(0,10).replace(/-/g,'-');
-            	//alert(utc);
-            	var today = new Date();
-            	var yyyy = today.getFullYear();
-            	//alert(yyyy);
+            
+         
 				var data = JSON.stringify({
-					"enroll_date" : utc,
-					"batch_year" :yyyy,
+					"enroll_date" : batchYear,
+					"batch_year" : batchYear.split("-")[0],
 					"status" : 1,
 					
 					"student" :{
@@ -313,7 +321,7 @@ var studentId;
 					}
 
 				});
-				//alert(data);
+				alert(data);
 				return data;
 			}
            

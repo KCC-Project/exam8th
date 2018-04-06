@@ -225,6 +225,13 @@
 			</div>
 		</div>
 
+<div class="form-group">
+			<label class="col-md-3 control-label">Batch</label>
+			<div class="col-md-9">
+				<input type="date"  class="form-control" id="batchYear" name="batchYear" placeholder="Enter batch year"/>
+			</div>
+		</div>
+		
 		<div class="form-group">
 			<label class="col-md-3 control-label">Image</label>
 			<div class="col-md-9">
@@ -262,9 +269,10 @@ var studentProgramId2=0;
 var batchyear2=0;
 var enrolldate2=0;
 var studentid2=0;
+var batchYearForUpdate;
 
     $(document).ready(function () {
-    	
+  
     	// check if the url comes from dashboard
     	var url_string = window.location.href;
     	var url = new URL(url_string);
@@ -462,7 +470,10 @@ var studentid2=0;
             
                 //initializing selected student id to get student program
                 idOfSelectedIteam=data.s_id;
+                
+                loadStudentProgram();
                
+                
                 // Populate the form fields
                 $('#edit-student-form').find('[name="s_id"]').val(data['s_id']).end()
                 .find('[name="first_name"]').val(data['first_name']).end()
@@ -473,6 +484,7 @@ var studentid2=0;
                 .find('[name="email"]').val(data['email']).end()
                 .find('[name="date_of_birth"]').val(data['date_of_birth']).end()
                 .find('[name="phone"]').val(data['phone']).end()
+                 .find('[name="batchYear"]').val(enrolldate2).end()
                 .find('[name="address"]').val(data['address']).end()
                 .find('[name="image"]').val(data['image']).end();
 
@@ -493,7 +505,7 @@ var studentid2=0;
                 
                 //loading student program to find which student belong to which program and to select that program in 
                 //update automatically
-                loadStudentProgram();
+                
                
                 function loadStudentProgram() {
                 	
@@ -513,8 +525,9 @@ var studentid2=0;
             			 batchyear2=data[0].batch_year;
             			enrolldate2=data[0].enroll_date;
             			 studentid2=data[0].student.s_id;
-            			//alert(studentid2);
-            			//alert(studentProgramId2);
+            		
+            			 //alert("batch = "+batchyear2);
+            			//alert("year = "+enrolldate2);
             			},
             			error : function() {
             				alert("Error...!!!");
@@ -659,6 +672,9 @@ var studentid2=0;
         // Prevent form submission
         e.preventDefault();
 
+        batchYearForUpdate = $('#edit-student-form').find('[name="batchYear"]').val();
+        //alert("lats = "+batchYearForUpdate);
+        
         var data = $('#edit-student-form').serializeArray();
         console.log(data);
 
@@ -683,16 +699,17 @@ var studentid2=0;
             success : function (data) {
                 var message = "Student has been updated Successfully";
                $("#success_message").html(message);
-                //alert("Thanks for the submission!");
+                alert(message);
                // $("#edit-student-form")[0].reset();
                $('#view_student').DataTable().ajax.reload();
-               updateStudentProgram();
+               
+             
             },
             error : function () {
                 alert("Error...!!!");
             }
         }); 
-        
+         updateStudentProgram();
         function formToJSON() {
 			var data = JSON.stringify({
 				"s_id" : $('#edit-student-form').find('[name="s_id"]').val(),
@@ -714,6 +731,7 @@ var studentid2=0;
 			return data;
 		}
         function updateStudentProgram(){
+        
          $.ajax({
             url : window.context + "/ApiStudentsProgram/UpdateStudentsProgram",
             method : "PUT",
@@ -723,9 +741,9 @@ var studentid2=0;
             async:false,
             cache : true,
             success : function (data) {
-                var message = "Student has been updated Successfully";
+                var message = "Student program has been updated Successfully";
                 $("#success_message").html(message);
-                alert("Thanks for the submission!");
+                alert(message);
                 $("#edit-student-form")[0].reset();
             },
             error : function () {
@@ -738,8 +756,8 @@ var studentid2=0;
 			var data = JSON.stringify({
 
 				"student_program_id":studentProgramId2,
-				"batch_year":batchyear2,
-				"enroll_date":enrolldate2,
+				"enroll_date" : batchYearForUpdate,
+				"batch_year" : batchYearForUpdate.split("-")[0],
 				"status":$('#edit-student-form').find('[name="status"]:checked').val(),	
 				"student":{"s_id":studentid2,},
 				"program":{
