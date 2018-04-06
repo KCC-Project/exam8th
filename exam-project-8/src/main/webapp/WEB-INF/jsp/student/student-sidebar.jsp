@@ -6,7 +6,18 @@
 </c:if>
 <div id="side-menu" class="sidenav">
 	<div class="profile-userpic">
-		<img alt="User Pic" src="${cp}/assets/images/blank_user.png" class="img-responsive">
+			<c:choose>
+							<c:when test="${ gender =='Male'}">
+								<img alt="User Pic" src="${cp}/assets/images/profileIcon.png"
+									class="img-responsive">
+
+							</c:when>
+
+							<c:otherwise>
+								<img alt="User Pic" src="${cp}/assets/images/girlICon.png"
+									class="img-responsive">
+							</c:otherwise>
+						</c:choose>
 	</div>
 	<div class="profile-usertitle">
 		<div class="profile-usertitle-name">

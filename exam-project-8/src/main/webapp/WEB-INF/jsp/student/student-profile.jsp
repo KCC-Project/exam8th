@@ -20,10 +20,25 @@
 					class="col-lg-4 col-sm-8 col-sm-offset-2 col-lg-offset-0 profile-info ">
 					<h4 class="text-center" id="full-name"></h4>
 					<div align="center" class="profile-userpic">
-						<img alt="User Pic" src="${cp}/assets/images/blank_user.png"
-							class="img-responsive">
+
+
+
+						<c:choose>
+							<c:when test="${ gender =='Male'}">
+								<img alt="User Pic" src="${cp}/assets/images/profileIcon.png"
+									class="img-responsive">
+
+							</c:when>
+
+							<c:otherwise>
+								<img alt="User Pic" src="${cp}/assets/images/girlICon.png"
+									class="img-responsive">
+							</c:otherwise>
+						</c:choose>
+						
+						
 					</div>
-					<h6 class="text-center">${ studentUserName }</h6>
+					<h2 class="text-center">${ studentUserName } ${ middle_name } ${ last_name }</h2>
 				</div>
 
 				<div class="col-lg-4 col-sm-6 profile-info" id="first_details">
@@ -81,9 +96,7 @@
 				<!-- edit-profile -->
 				<div id="edit-profile" class="tab-pane">
 					<div class="panel">
-						<div class="panel-body profile-panel">
-					
-						</div>
+						<div class="panel-body profile-panel"></div>
 					</div>
 				</div>
 
