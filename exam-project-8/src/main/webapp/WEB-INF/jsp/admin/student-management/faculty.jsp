@@ -245,7 +245,7 @@
 					// Therefor, we need to backup the form
 					$('#faculty-edit-form').hide().appendTo('body');
 				}).modal('show');
-
+				bootbox.modal('hide');
 			});
 			// ---------------------------------------- edit btn function end --------------------
 

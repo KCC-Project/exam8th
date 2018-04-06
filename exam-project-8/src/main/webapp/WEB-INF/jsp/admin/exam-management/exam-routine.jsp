@@ -548,7 +548,7 @@
 				// Therefor, we need to backup the form
 				$('#exam-edit-form').hide().appendTo('body');
 			}).modal('show');
-
+			bootbox.modal('hide');
 		});
 	}
 </script>

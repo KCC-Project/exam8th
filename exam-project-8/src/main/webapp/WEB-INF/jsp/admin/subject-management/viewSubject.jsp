@@ -361,6 +361,8 @@
                     // Therefor, we need to backup the form
                     $('#subject-edit-form').hide().appendTo('body');
                 }).modal('show');
+                
+                bootbox.modal('hide');
 
             });
 

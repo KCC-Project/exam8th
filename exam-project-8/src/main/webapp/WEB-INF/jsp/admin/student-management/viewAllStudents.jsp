@@ -544,7 +544,7 @@ var studentid2=0;
                     $('#edit-student-form').hide().appendTo('body');
                 }).modal('show');
                 
-                //bootbox.modal('hide');
+                bootbox.modal('hide');
 
             });
 

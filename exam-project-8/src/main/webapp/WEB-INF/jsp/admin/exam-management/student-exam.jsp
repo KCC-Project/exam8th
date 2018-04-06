@@ -356,7 +356,8 @@
 						// Therefor, we need to backup the form
 						$('#studentedit').hide().appendTo('body');
 					}).modal('show');
-
+					
+					bootbox.modal('hide');
 				});
 			}
 
