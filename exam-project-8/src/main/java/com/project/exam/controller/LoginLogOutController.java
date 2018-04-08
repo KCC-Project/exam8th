@@ -247,7 +247,7 @@ public class LoginLogOutController {
 			List<Student> student = studentService.getStudentList();
 			for (Student student1 : student) {
 				if (student1.getUsername().equalsIgnoreCase(InputEmail1User)
-						&& student1.getPassword().equals(MD5Hash.MD5(InputPassword1))) {//
+						&& student1.getPassword().equals(InputPassword1)) {//
 
 					id = student1.getS_id();
 
